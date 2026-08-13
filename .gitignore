@@ -1,0 +1,16 @@
+# .NET build files
+backend/bin/
+backend/obj/
+
+# React dependencies and build output
+frontend/node_modules/
+frontend/dist/
+
+# Local secrets
+.env
+.env.*
+backend/appsettings.Development.json
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
