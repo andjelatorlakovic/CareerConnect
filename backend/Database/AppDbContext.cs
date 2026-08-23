@@ -1,4 +1,5 @@
 using backend.Domain.Models;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Database;
@@ -23,7 +24,8 @@ public class AppDbContext : DbContext
 
     public DbSet<CandidateSkill> CandidateSkills
         => Set<CandidateSkill>();
-
+    public DbSet<CompanyProfile> CompanyProfiles
+        => Set<CompanyProfile>();   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -65,5 +67,8 @@ public class AppDbContext : DbContext
                 s.CandidateProfileId,
                 s.Skill
             });
+        modelBuilder.Entity<CompanyProfile>()
+            .HasIndex(c => c.UserId)
+            .IsUnique();
     }
 }
