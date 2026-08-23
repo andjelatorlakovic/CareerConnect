@@ -1,3 +1,4 @@
+namespace backend.Domain.DTOs.CandidateProfile;
 public class AddWorkExperienceRequest
 {
     public string Company { get; set; } = string.Empty;
