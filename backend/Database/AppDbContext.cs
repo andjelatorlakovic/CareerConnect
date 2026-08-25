@@ -30,6 +30,8 @@ public class AppDbContext : DbContext
         =>Set<JobListing>();
     public DbSet<JobSkill>JobSkills
         =>Set<JobSkill>();
+    public DbSet<JobApplication> JobApplications
+        =>Set<JobApplication>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -80,6 +82,26 @@ public class AppDbContext : DbContext
             .HasMany(j=> j.JobSkills)
             .WithOne()
             .HasForeignKey(s=>s.JobListingId)
+            .OnDelete(DeleteBehavior.Cascade);
+        //JobApplication part
+        modelBuilder.Entity<JobApplication>()
+        .HasIndex(a => new
+        {
+            a.CandidateProfileId,
+            a.JobListingId
+        })
+        .IsUnique();
+
+        modelBuilder.Entity<JobApplication>()
+            .HasOne<CandidateProfile>()
+            .WithMany()
+            .HasForeignKey(a => a.CandidateProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<JobApplication>()
+            .HasOne<JobListing>()
+            .WithMany()
+            .HasForeignKey(a => a.JobListingId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
