@@ -22,6 +22,7 @@ public class JobListing
     public JobListing(Guid companyProfileId, string title, string description, string location,
         ExperienceLevel experienceLevel, JobStatus status, DateTime expiresAt, List<JobSkill>? jobSkills = null)
     {
+        Id = Guid.NewGuid();
         CompanyProfileId = companyProfileId;
         Title = title;
         Description = description;

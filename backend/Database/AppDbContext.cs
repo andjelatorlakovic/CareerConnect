@@ -26,6 +26,10 @@ public class AppDbContext : DbContext
         => Set<CandidateSkill>();
     public DbSet<CompanyProfile> CompanyProfiles
         => Set<CompanyProfile>();   
+    public DbSet<JobListing>JobListings
+        =>Set<JobListing>();
+    public DbSet<JobSkill>JobSkills
+        =>Set<JobSkill>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -70,5 +74,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<CompanyProfile>()
             .HasIndex(c => c.UserId)
             .IsUnique();
+        modelBuilder.Entity<JobSkill>()
+            .HasKey(s=> new {s.JobListingId, s.Skill});
+        modelBuilder.Entity<JobListing>()
+            .HasMany(j=> j.JobSkills)
+            .WithOne()
+            .HasForeignKey(s=>s.JobListingId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

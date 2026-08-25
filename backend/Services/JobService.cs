@@ -1,0 +1,122 @@
+using backend.Database;
+using backend.Domain.Enums;
+using Domain.DTOs.JobListing;
+using Domain.Models;
+using Domain.Services;
+using Microsoft.EntityFrameworkCore;
+
+namespace backend.Services;
+
+public class JobService : IJobService
+{
+    private AppDbContext _context;
+    public JobService(AppDbContext context)
+    {
+        _context=context;
+    }
+    //Zatvaranje oglasa
+    public async Task<bool> CloseAsync(Guid companyProfileId, Guid JobId)
+    {
+        var job = await _context.JobListings.FirstOrDefaultAsync(j=> j.Id== JobId  &&  j.CompanyProfileId==companyProfileId);
+        if(job==null) return false;
+        job.Status=JobStatus.Closed;
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    //Kreiranje oglasa 
+    public async Task<JobListingDto> CreateAsync(Guid companyProfileId, CreateJobListingRequest request)
+    {
+        var job = new JobListing
+        {
+            CompanyProfileId =companyProfileId,
+            Title= request.Title,
+            Description= request.Description,
+            Location = request.Location,
+            ExperienceLevel=request.ExperienceLevel,
+            ExpiresAt = request.ExpiresAt,
+            JobSkills = request.Skills.Select(s=>new JobSkill{Skill = s}).ToList()
+        };
+        _context.JobListings.Add(job);
+        await _context.SaveChangesAsync();
+        return  MapToDto(job);
+    }
+    public async Task<List<JobListingDto>> GetAllAsync(string? location, ExperienceLevel? experienceLevel, List<Skill> skills)
+    {
+        var query = _context.JobListings
+        .Include(j=>j.JobSkills)
+        .Where(j=> j.Status==JobStatus.Active && (j.ExpiresAt==null || j.ExpiresAt>DateTime.UtcNow));
+        if (!string.IsNullOrEmpty(location))
+        {
+            query = _context.JobListings.Where(j=> j.Location.ToLower().Contains(location.ToLower()));
+        }
+        if (experienceLevel.HasValue)
+        {
+            query = _context.JobListings.Where(j=> j.ExperienceLevel==experienceLevel);
+        }
+        if(skills!=null && skills.Any())
+        {
+            query = _context.JobListings.Where(j=> skills.All(s=> j.JobSkills.Any(js=> js.Skill==s)));
+        }
+        var jobs = await query.ToListAsync();
+        return jobs.Select(MapToDto).ToList();
+    }
+    //Pronadji po kompaniji
+    public async Task<List<JobListingDto>> GetByCompanyAsync(Guid companyProfileId)
+    {
+        var jobs = await _context.JobListings
+        .Include(j=> j.JobSkills)
+        .Where(j=> j.CompanyProfileId==companyProfileId)
+        .ToListAsync();
+        return jobs.Select(MapToDto).ToList();
+    }
+
+    public async Task<JobListingDto> GetByIdAsync(Guid jobId)
+    {
+        var job = await _context.JobListings
+        .Include(j=> j.JobSkills)
+        .FirstOrDefaultAsync(j=> j.Id==jobId) 
+        ?? throw new InvalidOperationException("Job  not found.");
+        return MapToDto(job);
+    }
+
+    public async Task<JobListingDto> UpdateAsync(Guid companyProfileId,Guid jobId, UpdateJobListingRequest request)
+    {
+        var job = await _context.JobListings
+        .Include(j=>j.JobSkills)
+        .FirstOrDefaultAsync(j=>j.CompanyProfileId==companyProfileId && j.Id==jobId) ?? throw new InvalidOperationException("Job for update not found");
+
+        job.Title= request.Title;
+        job.Description=request.Description;
+        job.Location=request.Location;
+        job.ExperienceLevel=request.ExperienceLevel;
+        job.ExpiresAt=request.ExpiresAt;
+
+        await _context.SaveChangesAsync();
+        return MapToDto(job);
+    }
+
+    public async Task<bool> UpdateExpiresAtasync(Guid companyProfileId, Guid jobId, DateTime expiresAt)
+    {
+        var job = await _context.JobListings
+        .FirstOrDefaultAsync(j=>j.CompanyProfileId==companyProfileId && j.Id==jobId);
+
+        if(job==null) return false;
+        job.ExpiresAt=expiresAt;
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    private static JobListingDto MapToDto(JobListing job)=> new()
+    {
+        Id = job.Id,
+        CompanyProfileId = job.CompanyProfileId,
+        Title = job.Title,
+        Description = job.Description,
+        Location = job.Location,
+        ExperienceLevel = job.ExperienceLevel,
+        Status = job.Status,
+        CreatedAt = job.CreatedAt,
+        ExpiresAt = job.ExpiresAt,
+        Skills = job.JobSkills.Select(s=> s.Skill).ToList()
+    };
+}

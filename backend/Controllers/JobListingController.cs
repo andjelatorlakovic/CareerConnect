@@ -1,0 +1,100 @@
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using backend.Domain.Enums;
+using Domain.DTOs.CompanyProfile;
+using Domain.DTOs.JobListing;
+using Domain.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
+
+[ApiController]
+[Route("api/jobs")]
+[Authorize]
+public class JobListingController : ControllerBase
+{
+     private readonly IJobService _jobService;
+     private readonly ICompanyService _companyService;
+     public JobListingController(IJobService jobService, ICompanyService companyService)
+    {
+        _jobService=jobService;
+        _companyService=companyService;
+    }
+    //Korisnici mogu da pogledaju oglase
+    [HttpGet]
+    public async Task<IActionResult> GetAll(string? location, ExperienceLevel? experienceLevel, List<Skill> skills)
+    {
+        var jobs= await _jobService.GetAllAsync(location,experienceLevel,skills);
+        return Ok(jobs);
+    }
+    //Pronadji oglas po id-ju
+    [HttpGet("{jobId}")]
+    public async Task<IActionResult> GetById(Guid jobId)
+    {
+        try
+        {
+            var job = await _jobService.GetByIdAsync(jobId);
+            return Ok(job);
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound(new {message="JobListing not found."});
+        }
+    }
+    //Kompanija moze i da vidi samo svoje oglase
+    [HttpGet("my")]
+    [Authorize(Roles ="Company")]
+    public async Task<IActionResult> GetMyJobs()
+    {
+        var profile= await  GetCompanyProfileAsync();
+        var jobs = await _jobService.GetByCompanyAsync(profile.Id);
+        return Ok(jobs);
+    }
+    private async Task<CompanyProfileDto> GetCompanyProfileAsync()
+    {
+        var userIdValue= User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if(!Guid.TryParse(userIdValue,out var userId))
+        {
+            throw new UnauthorizedAccessException("User not valid.");
+        }
+        return await _companyService.GetOrCreateAsync(userId);
+    }
+    [HttpPost]
+    [Authorize(Roles ="Company")]
+    public async Task<IActionResult> Create(CreateJobListingRequest request)
+    {
+        var profile = await GetCompanyProfileAsync();
+        var job = await _jobService.CreateAsync(profile.Id,request);
+        return CreatedAtAction(nameof(GetById), new { jobId = job.Id }, job);
+    }
+    [HttpPut("{jobId}")]
+    [Authorize(Roles ="Company")]
+    public async Task<IActionResult> Update(Guid jobId,UpdateJobListingRequest request)
+    {
+        try
+        {
+            var profile = await GetCompanyProfileAsync();
+            var job = await _jobService.UpdateAsync(profile.Id,jobId,request);
+            return Ok(job);
+        }
+        catch (InvalidOperationException)
+        {
+            return NotFound(new {message="JobListing not found."});
+        }
+    }
+    [HttpPatch("{jobId}/close")]
+    [Authorize(Roles ="Company")]
+    public async Task<IActionResult> Close(Guid jobId)
+    {
+        var profile = await GetCompanyProfileAsync();
+        var closed = await _jobService.CloseAsync(profile.Id,jobId);
+        if (!closed)
+        {
+            return NotFound(new
+            {
+                message = "JobListing not found."
+            });
+        }
+        return NoContent();
+    }
+}
