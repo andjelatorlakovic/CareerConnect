@@ -1,4 +1,5 @@
 using backend.Domain.Enums;
+using Domain.Enums;
 namespace Domain.DTOs.JobListing;
 public class UpdateJobListingRequest
 {
@@ -6,6 +7,7 @@ public class UpdateJobListingRequest
     public string Description {get; set;} = string.Empty;
     public string Location {get; set;} = string.Empty;
     public ExperienceLevel ExperienceLevel {get; set;}
+    public JobCategory JobCategory { get; set; }
     public DateTime ExpiresAt {get; set;}
-    public List<Skill> Skills =new();
+    public List<Skill> Skills { get; set; } = new();
 }

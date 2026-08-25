@@ -33,6 +33,7 @@ public class JobService : IJobService
             Description= request.Description,
             Location = request.Location,
             ExperienceLevel=request.ExperienceLevel,
+            JobCategory = request.JobCategory,
             ExpiresAt = request.ExpiresAt,
             JobSkills = request.Skills.Select(s=>new JobSkill{Skill = s}).ToList()
         };
@@ -89,6 +90,7 @@ public class JobService : IJobService
         job.Description=request.Description;
         job.Location=request.Location;
         job.ExperienceLevel=request.ExperienceLevel;
+        job.JobCategory=request.JobCategory;
         job.ExpiresAt=request.ExpiresAt;
 
         await _context.SaveChangesAsync();
@@ -114,6 +116,7 @@ public class JobService : IJobService
         Description = job.Description,
         Location = job.Location,
         ExperienceLevel = job.ExperienceLevel,
+        JobCategory = job.JobCategory,
         Status = job.Status,
         CreatedAt = job.CreatedAt,
         ExpiresAt = job.ExpiresAt,

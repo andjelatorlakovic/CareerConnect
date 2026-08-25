@@ -1,5 +1,6 @@
 using backend.Domain.Models;
 using backend.Domain.Enums;
+using Domain.Enums;
 namespace backend.Domain.DTOs.CandidateProfile;
 public class CandidateProfileDto
 {
@@ -11,4 +12,5 @@ public class CandidateProfileDto
     public List<EducationDto> Education { get; set; } = new();
     public List<WorkExperienceDto> WorkExperience { get; set; } = new();
     public List<Skill> Skills { get; set; } = new();
+    public List<JobCategory> DesiredJobCategories { get; set; } = new();
 }

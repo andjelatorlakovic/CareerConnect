@@ -11,6 +11,7 @@ public class CandidateProfile
     public List<Education> Education { get; set; } = new();
     public List<WorkExperience> WorkExperience { get; set; } = new();
     public List<CandidateSkill> Skills { get; set; } = new();
+    public List<CandidateDesiredJobCategory> DesiredJobCategories { get; set; } = new();
 
     public CandidateProfile(Guid userId, string? bio, string? location, ExperienceLevel experienceLevel)
     {

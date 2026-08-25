@@ -24,6 +24,8 @@ public class AppDbContext : DbContext
 
     public DbSet<CandidateSkill> CandidateSkills
         => Set<CandidateSkill>();
+    public DbSet<CandidateDesiredJobCategory> CandidateDesiredJobCategories
+        => Set<CandidateDesiredJobCategory>();
     public DbSet<CompanyProfile> CompanyProfiles
         => Set<CompanyProfile>();   
     public DbSet<JobListing>JobListings
@@ -72,6 +74,19 @@ public class AppDbContext : DbContext
             {
                 s.CandidateProfileId,
                 s.Skill
+            });
+
+        modelBuilder.Entity<CandidateProfile>()
+            .HasMany(p => p.DesiredJobCategories)
+            .WithOne()
+            .HasForeignKey(c => c.CandidateProfileId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<CandidateDesiredJobCategory>()
+            .HasKey(c => new
+            {
+                c.CandidateProfileId,
+                c.JobCategory
             });
         modelBuilder.Entity<CompanyProfile>()
             .HasIndex(c => c.UserId)
