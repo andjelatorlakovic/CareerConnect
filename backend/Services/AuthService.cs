@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using backend.Domain.Enums;
 using System.Security.Claims;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt; 
 using backend.Domain.Services;
 namespace backend.Services;
 public class AuthService : IAuthService
@@ -45,7 +45,7 @@ public class AuthService : IAuthService
     public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
     {
         var email = loginDto.Email.ToLower();
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email && u.IsActive);
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
         {
             throw new InvalidOperationException("Invalid email or password.");
@@ -81,5 +81,10 @@ public class AuthService : IAuthService
             signingCredentials: credentials
         );
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public Task Logoutasync()
+    {
+        return Task.CompletedTask;
     }
 }

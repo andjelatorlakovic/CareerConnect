@@ -1,5 +1,6 @@
 using backend.Domain.DTOs;
 using backend.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -38,5 +39,11 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
-
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await _authService.Logoutasync();
+        return Ok(new {message = "Successfully logged out."});
+    }
 }
