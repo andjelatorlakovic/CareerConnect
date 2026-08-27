@@ -10,4 +10,7 @@ public class UpdateJobListingRequest
     public JobCategory JobCategory { get; set; }
     public DateTime ExpiresAt {get; set;}
     public List<Skill> Skills { get; set; } = new();
+    public EmploymentType EmploymentType{get; set;}
+    public decimal? SalaryMin {get; set;}
+    public decimal? SalaryMax {get; set;}
 }

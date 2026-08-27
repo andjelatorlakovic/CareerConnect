@@ -35,7 +35,10 @@ public class JobService : IJobService
             ExperienceLevel=request.ExperienceLevel,
             JobCategory = request.JobCategory,
             ExpiresAt = request.ExpiresAt,
-            JobSkills = request.Skills.Select(s=>new JobSkill{Skill = s}).ToList()
+            JobSkills = request.Skills.Select(s=>new JobSkill{Skill = s}).ToList(),
+            EmploymentType= request.EmploymentType,
+            SalaryMin= request.SalaryMin,
+            SalaryMax = request.SalaryMax
         };
         _context.JobListings.Add(job);
         await _context.SaveChangesAsync();
@@ -92,6 +95,9 @@ public class JobService : IJobService
         job.ExperienceLevel=request.ExperienceLevel;
         job.JobCategory=request.JobCategory;
         job.ExpiresAt=request.ExpiresAt;
+        job.EmploymentType=request.EmploymentType;
+        job.SalaryMin=request.SalaryMin;
+        job.SalaryMax= request.SalaryMax;
 
         await _context.SaveChangesAsync();
         return MapToDto(job);
@@ -120,6 +126,9 @@ public class JobService : IJobService
         Status = job.Status,
         CreatedAt = job.CreatedAt,
         ExpiresAt = job.ExpiresAt,
-        Skills = job.JobSkills.Select(s=> s.Skill).ToList()
+        Skills = job.JobSkills.Select(s=> s.Skill).ToList(),
+        EmploymentType= job.EmploymentType,
+        SalaryMin= job.SalaryMin,
+        SalaryMax = job.SalaryMax
     };
 }

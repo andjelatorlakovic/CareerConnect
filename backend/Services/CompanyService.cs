@@ -23,7 +23,9 @@ public class CompanyService: ICompanyService
                 Description = string.Empty,
                 Location = string.Empty,
                 Website = string.Empty,
-                Industry = string.Empty
+                Industry = string.Empty,
+                ContactEmail= string.Empty,
+                ContactPhone= string.Empty
             };
             _context.CompanyProfiles.Add(profile);
             _context.SaveChangesAsync();
@@ -41,6 +43,8 @@ public class CompanyService: ICompanyService
         profile.Location = profileDto.Location;
         profile.Website = profileDto.Website;
         profile.Industry = profileDto.Industry;
+        profile.ContactEmail=profileDto.ContactEmail;
+        profile.ContactPhone=profileDto.ContactPhone;
 
         _context.SaveChangesAsync();
         return MapToDto(profile);
@@ -55,7 +59,9 @@ public class CompanyService: ICompanyService
             Description = profile.Description,
             Location = profile.Location,
             Website = profile.Website,
-            Industry = profile.Industry
+            Industry = profile.Industry,
+            ContactEmail=profile.ContactEmail,
+            ContactPhone = profile.ContactPhone
         };
         return Task.FromResult(dto);
     }

@@ -8,8 +8,10 @@ public class CompanyProfile
     public string Location { get; set; } = string.Empty;
     public string Website { get; set; } = string.Empty;
     public string Industry { get; set; } = string.Empty;
+    public string ContactEmail {get;set;}=string.Empty;
+    public string ContactPhone {get;set;}= string.Empty;
 
-    public CompanyProfile(Guid userId, string name, string description, string location, string website, string industry)
+    public CompanyProfile(Guid userId, string name, string description, string location, string website, string industry, string contactEmail, string contactPhone)
     {
         Id = Guid.NewGuid();
         UserId = userId;
@@ -18,6 +20,8 @@ public class CompanyProfile
         Location = location;
         Website = website;
         Industry = industry;
+        ContactEmail=contactEmail;
+        ContactPhone=contactPhone;
     }
     public CompanyProfile()
     {

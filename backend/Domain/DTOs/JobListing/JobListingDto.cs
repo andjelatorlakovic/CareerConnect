@@ -15,4 +15,7 @@ public class JobListingDto
     public DateTime CreatedAt {get; set;}= DateTime.UtcNow;
     public DateTime ExpiresAt {get; set;}
     public List<Skill> Skills { get; set; } = new();
+    public EmploymentType EmploymentType{get; set;}
+    public decimal? SalaryMin {get; set;}
+    public decimal? SalaryMax {get; set;}
 }

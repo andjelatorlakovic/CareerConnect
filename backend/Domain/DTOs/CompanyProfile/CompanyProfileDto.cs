@@ -8,4 +8,6 @@ public class CompanyProfileDto
     public string Location { get; set; } = string.Empty;
     public string Website { get; set; } = string.Empty;
     public string Industry { get; set; } = string.Empty;
+    public string ContactEmail {get; set;}= string.Empty;
+    public string ContactPhone {get; set;}= string.Empty;
 }

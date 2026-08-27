@@ -16,13 +16,16 @@ public class JobListing
     public DateTime ExpiresAt {get; set;}
     public List<JobSkill> JobSkills =new();
     public JobCategory JobCategory { get; set; }
+    public EmploymentType EmploymentType {get; set;}
+    public decimal? SalaryMin{get;set;}
+    public decimal? SalaryMax{get; set;}
 
     public JobListing()
     {
     }
 
     public JobListing(Guid companyProfileId, string title, string description, string location,
-        ExperienceLevel experienceLevel, JobStatus status, DateTime expiresAt, JobCategory jobCategory, List<JobSkill>? jobSkills = null)
+        ExperienceLevel experienceLevel, JobStatus status, DateTime expiresAt, JobCategory jobCategory,EmploymentType employmentType,decimal? salaryMin, decimal? salaryMax, List<JobSkill>? jobSkills = null)
     {
         Id = Guid.NewGuid();
         CompanyProfileId = companyProfileId;
@@ -34,6 +37,9 @@ public class JobListing
         ExpiresAt = expiresAt;
         JobSkills = jobSkills ?? new List<JobSkill>();
         JobCategory=jobCategory;
+        EmploymentType=employmentType;
+        SalaryMin=salaryMin;
+        SalaryMax=salaryMax;
     }
 
 }
