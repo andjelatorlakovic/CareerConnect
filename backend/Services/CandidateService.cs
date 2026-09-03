@@ -22,6 +22,7 @@ public class CandidateService : ICandidateService
         var education = new Education
         {
             Id = Guid.NewGuid(),
+            CandidateProfileId= profile.Id,
             Institution = request.Institution,
             Degree = request.Degree,
             FieldOfStudy = request.FieldOfStudy,
@@ -47,6 +48,7 @@ public class CandidateService : ICandidateService
         var experience = new WorkExperience
         {
             Id = Guid.NewGuid(),
+            CandidateProfileId=profile.Id,
             CompanyName = request.Company,
             Position = request.Position,
             Description = request.Description,

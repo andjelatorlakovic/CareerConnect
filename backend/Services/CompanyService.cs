@@ -2,6 +2,7 @@ using backend.Database;
 using Domain.DTOs.CompanyProfile;
 using Domain.Models;
 using Domain.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
 public class CompanyService: ICompanyService
@@ -11,9 +12,9 @@ public class CompanyService: ICompanyService
     {
         _context = context;
     }
-    public Task<CompanyProfileDto> GetOrCreateAsync(Guid userId)
+    public async Task<CompanyProfileDto> GetOrCreateAsync(Guid userId)
     {
-        var profile = _context.CompanyProfiles.FirstOrDefault(p => p.UserId == userId);
+        var profile = await _context.CompanyProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
         if(profile == null)
         {
             profile = new CompanyProfile
@@ -28,14 +29,14 @@ public class CompanyService: ICompanyService
                 ContactPhone= string.Empty
             };
             _context.CompanyProfiles.Add(profile);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
         return MapToDto(profile);
     }
 
-    public Task<CompanyProfileDto> UpdateCompanyProfileAsync(Guid userId, UpdateCompanyProfileDto profileDto)
+    public async Task<CompanyProfileDto> UpdateCompanyProfileAsync(Guid userId, UpdateCompanyProfileDto profileDto)
     {
-        var profile = _context.CompanyProfiles.FirstOrDefault(p => p.UserId == userId) 
+        var profile = await _context.CompanyProfiles.FirstOrDefaultAsync(p => p.UserId == userId) 
             ?? throw new Exception("Company profile not found.");
         
         profile.Name = profileDto.Name;
@@ -46,12 +47,10 @@ public class CompanyService: ICompanyService
         profile.ContactEmail=profileDto.ContactEmail;
         profile.ContactPhone=profileDto.ContactPhone;
 
-        _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return MapToDto(profile);
     }
-    private Task<CompanyProfileDto> MapToDto(CompanyProfile profile)
-    {
-        var dto = new CompanyProfileDto
+    private static CompanyProfileDto MapToDto(CompanyProfile profile)=>new()
         {
             Id = profile.Id,
             UserId = profile.UserId,
@@ -63,6 +62,16 @@ public class CompanyService: ICompanyService
             ContactEmail=profile.ContactEmail,
             ContactPhone = profile.ContactPhone
         };
-        return Task.FromResult(dto);
+
+    public async Task<bool> DeleteAsync(Guid companyProfileId)
+    {
+        var profile = await _context.CompanyProfiles.FirstOrDefaultAsync(p=>p.Id==companyProfileId);
+        if (profile == null)
+        {
+            return false;
+        }
+        _context.CompanyProfiles.Remove(profile);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

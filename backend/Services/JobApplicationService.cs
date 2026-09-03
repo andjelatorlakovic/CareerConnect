@@ -26,7 +26,7 @@ public class JobApplicationService : IJobApplicationService
             throw new InvalidOperationException("Job listing not found.");
         }
         var alreadyApplied = await _context.JobApplications.AnyAsync(a=> a.CandidateProfileId==candidateProfileId && a.JobListingId==jobListingId);
-        if (!alreadyApplied)
+        if (alreadyApplied)
         {
             throw new InvalidOperationException("You already applied for this job.");
         }

@@ -14,7 +14,7 @@ public class JobListing
     public JobStatus Status {get; set;} = JobStatus.Active;
     public DateTime CreatedAt {get; set;}= DateTime.UtcNow;
     public DateTime ExpiresAt {get; set;}
-    public List<JobSkill> JobSkills =new();
+    public List<JobSkill> JobSkills {get; set;} =new();
     public JobCategory JobCategory { get; set; }
     public EmploymentType EmploymentType {get; set;}
     public decimal? SalaryMin{get;set;}

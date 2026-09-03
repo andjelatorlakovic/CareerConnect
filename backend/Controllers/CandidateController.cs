@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using backend.Domain.DTOs.CandidateProfile;
 [ApiController]
-[Route("api/candidat-profile")]
+[Route("api/candidate-profile")]
 [Authorize(Roles = "Candidate")]
 public class CandidateController : ControllerBase
 {

@@ -51,15 +51,15 @@ public class JobService : IJobService
         .Where(j=> j.Status==JobStatus.Active && (j.ExpiresAt==null || j.ExpiresAt>DateTime.UtcNow));
         if (!string.IsNullOrEmpty(location))
         {
-            query = _context.JobListings.Where(j=> j.Location.ToLower().Contains(location.ToLower()));
+            query = query.Where(j=> j.Location.ToLower().Contains(location.ToLower()));
         }
         if (experienceLevel.HasValue)
         {
-            query = _context.JobListings.Where(j=> j.ExperienceLevel==experienceLevel);
+            query = query.Where(j=> j.ExperienceLevel==experienceLevel);
         }
         if(skills!=null && skills.Any())
         {
-            query = _context.JobListings.Where(j=> skills.All(s=> j.JobSkills.Any(js=> js.Skill==s)));
+            query = query.Where(j=> skills.All(s=> j.JobSkills.Any(js=> js.Skill==s)));
         }
         var jobs = await query.ToListAsync();
         return jobs.Select(MapToDto).ToList();
