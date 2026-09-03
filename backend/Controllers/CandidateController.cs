@@ -84,5 +84,5 @@ public class CandidateController : ControllerBase
         }
         return Ok(deletedWorkExperience);
     }
-    
+
 }
