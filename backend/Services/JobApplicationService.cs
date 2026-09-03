@@ -10,13 +10,14 @@ namespace backend.Services;
 
 public class JobApplicationService : IJobApplicationService
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
+    private readonly INotificationService _notificationService;
 
-    public JobApplicationService(AppDbContext context)
+    public JobApplicationService(AppDbContext context, INotificationService notificationService)
     {
-        _context=context;
+        _context = context;
+        _notificationService = notificationService;
     }
-
     //Apliciranje za posao, prijava na oglas
     public async Task<JobApplicationDto> ApplyJobApplicationAsync(Guid candidateProfileId, Guid jobListingId, CreateJobApplicationRequest request)
     {
@@ -111,7 +112,14 @@ public class JobApplicationService : IJobApplicationService
         }
 
         application.Status = request.Status;
+    var candidateProfile = await _context.CandidateProfiles
+    .FirstOrDefaultAsync(p => p.Id == application.CandidateProfileId);
 
+    if (candidateProfile != null)
+    {
+        var message = $"Status vase prijave je promenjen na: {request.Status}";
+        await _notificationService.CreateAsync(candidateProfile.UserId, message);
+    }
         await _context.SaveChangesAsync();
 
         return MapToDto(application);
