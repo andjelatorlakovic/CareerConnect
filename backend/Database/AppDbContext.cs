@@ -1,4 +1,5 @@
 using backend.Domain.Models;
+using CareerConnect.Domain.Models;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,8 @@ public class AppDbContext : DbContext
         =>Set<JobSkill>();
     public DbSet<JobApplication> JobApplications
         =>Set<JobApplication>();
+    public DbSet<Notification> Notifications
+        =>Set<Notification>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -117,6 +120,11 @@ public class AppDbContext : DbContext
             .HasOne<JobListing>()
             .WithMany()
             .HasForeignKey(a => a.JobListingId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Notification>()
+            .HasOne<backend.Domain.Models.User>()
+            .WithMany()
+            .HasForeignKey(n => n.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

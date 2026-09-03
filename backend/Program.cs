@@ -25,6 +25,8 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IJobService,JobService>();
 builder.Services.AddScoped<IJobApplicationService,JobApplicationService>();
 builder.Services.AddScoped<IMatchingService,MatchingService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("JWT ključ nije podešen.");
 
