@@ -27,6 +27,7 @@ builder.Services.AddScoped<IJobApplicationService,JobApplicationService>();
 builder.Services.AddScoped<IMatchingService,MatchingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IQuizService, QuizService>();
 var jwtKey = builder.Configuration["Jwt:Key"]
     ?? throw new InvalidOperationException("JWT ključ nije podešen.");
 

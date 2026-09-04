@@ -37,6 +37,10 @@ public class AppDbContext : DbContext
         =>Set<JobApplication>();
     public DbSet<Notification> Notifications
         =>Set<Notification>();
+    public DbSet<JobListingQuestion> JobListingQuestions
+        => Set<JobListingQuestion>();
+    public DbSet<QuizAnswer> QuizAnswers
+        => Set<QuizAnswer>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -125,6 +129,17 @@ public class AppDbContext : DbContext
             .HasOne<backend.Domain.Models.User>()
             .WithMany()
             .HasForeignKey(n => n.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<JobListingQuestion>()
+            .HasOne<JobListing>()
+            .WithMany()
+            .HasForeignKey(q => q.JobListingId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<QuizAnswer>()
+            .HasOne<JobApplication>()
+            .WithMany()
+            .HasForeignKey(a => a.JobApplicationId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

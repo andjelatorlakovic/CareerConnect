@@ -13,6 +13,8 @@ public class JobApplication
     public string CoverLetter {get; set;} = String.Empty;
     public ApplicationStatus Status {get; set;} = ApplicationStatus.Pending;
     public DateTime AppliedAt {get; set;} = DateTime.UtcNow;
+
+
     
     public JobApplication(Guid candidateProfileId, Guid jobListingId, string coverLetter, ApplicationStatus status)
     {

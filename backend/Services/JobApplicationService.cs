@@ -12,11 +12,13 @@ public class JobApplicationService : IJobApplicationService
 {
     private readonly AppDbContext _context;
     private readonly INotificationService _notificationService;
+    private readonly IQuizService _quizService;
 
-    public JobApplicationService(AppDbContext context, INotificationService notificationService)
+    public JobApplicationService(AppDbContext context, INotificationService notificationService, IQuizService quizService)
     {
         _context = context;
         _notificationService = notificationService;
+        _quizService = quizService;
     }
     //Apliciranje za posao, prijava na oglas
     public async Task<JobApplicationDto> ApplyJobApplicationAsync(Guid candidateProfileId, Guid jobListingId, CreateJobApplicationRequest request)
@@ -41,6 +43,10 @@ public class JobApplicationService : IJobApplicationService
         };
         _context.JobApplications.Add(application);
         await _context.SaveChangesAsync();
+        if (request.Answers.Any())
+        {
+            await _quizService.SaveAnswersAsync(application.Id, request.Answers);
+}
         return MapToDto(application);
     }
     private static JobApplicationDto MapToDto(
