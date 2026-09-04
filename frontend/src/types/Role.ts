@@ -1,0 +1,1 @@
+export type Role = 'Candidate' | 'Company' | 'Admin';
