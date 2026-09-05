@@ -1,46 +1,55 @@
 import {
   createContext,
-  useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from 'react';
 
-import type { AuthUser } from '../types/AuthUser';
+import type { AuthResponse } from '../types/auth/AuthResponse';
+import type { AuthUser } from '../types/auth/AuthUser';
 
 interface AuthContextType {
   user: AuthUser | null;
-  login: (user: AuthUser) => void;
-  logout: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (response: AuthResponse) => void;
+  logout: () => void;
 }
 
-const AuthContext =
+export const AuthContext =
   createContext<AuthContextType | null>(null);
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 export function AuthProvider({
   children,
-}: AuthProviderProps) {
-  const [user, setUser] = useState<AuthUser | null>(() => {
+}: {
+  children: ReactNode;
+}) {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
     const rawUser = localStorage.getItem('user');
 
-    if (!rawUser) {
-      return null;
+    try {
+      if (rawUser) {
+        setUser(JSON.parse(rawUser) as AuthUser);
+      }
+    } catch {
+      localStorage.removeItem('user');
+    } finally {
+      setIsLoading(false);
     }
+  }, []);
 
-    return JSON.parse(rawUser);
-  });
+  const login = (response: AuthResponse) => {
+    const authUser: AuthUser = {
+      email: response.email,
+      role: response.role,
+      token: response.token,
+    };
 
-  const login = (user: AuthUser) => {
-    localStorage.setItem(
-      'user',
-      JSON.stringify(user)
-    );
-
-    setUser(user);
+    localStorage.setItem('user', JSON.stringify(authUser));
+    setUser(authUser);
   };
 
   const logout = () => {
@@ -52,24 +61,13 @@ export function AuthProvider({
     <AuthContext.Provider
       value={{
         user,
+        isAuthenticated: user !== null,
+        isLoading,
         login,
         logout,
-        isAuthenticated: user !== null,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth(): AuthContextType {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error(
-      'useAuth must be used inside AuthProvider'
-    );
-  }
-
-  return context;
 }

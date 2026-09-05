@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { register } from '../../api/auth';
-import ErrorMessage from '../shared/ErrorMessage';
-
-import type { RegisterRequest } from '../../types/RegisterRequest';
+import { authApi } from '../../api_services/auth/AuthApiService';
+import { Role } from '../../models/auth/Role';
+import type { RegisterRequest } from '../../types/auth/RegisterRequest';
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -14,87 +13,47 @@ export default function RegisterForm() {
     lastName: '',
     email: '',
     password: '',
-    role: 'Candidate',
+    role: Role.Candidate,
   });
 
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleChange = (
-    field: keyof RegisterRequest,
-    value: string
-  ) => {
-    setForm((previous) => ({
-      ...previous,
-      [field]: value,
-    }));
-  };
-
-  const handleSubmit = async (
+  async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>
-  ) => {
+  ) {
     event.preventDefault();
-
-    setLoading(true);
     setError('');
 
-    try {
-      await register(form);
+    const response = await authApi.register(form);
 
-      navigate('/login');
-    } catch (error: unknown) {
-      const response = (
-        error as {
-          response?: {
-            data?: {
-              message?: string;
-            };
-          };
-        }
-      ).response;
-
-      setError(
-        response?.data?.message ??
-          'Greška pri registraciji.'
-      );
-    } finally {
-      setLoading(false);
+    if (!response.success) {
+      setError(response.message);
+      return;
     }
-  };
+
+    navigate('/login');
+  }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={formStyle}
-    >
-      {error && (
-        <ErrorMessage message={error} />
-      )}
+    <form onSubmit={handleSubmit}>
+      {error && <p>{error}</p>}
 
       <input
         placeholder="Ime"
         value={form.firstName}
         onChange={(event) =>
-          handleChange(
-            'firstName',
-            event.target.value
-          )
+          setForm({ ...form, firstName: event.target.value })
         }
         required
-        style={input}
       />
 
       <input
         placeholder="Prezime"
         value={form.lastName}
         onChange={(event) =>
-          handleChange(
-            'lastName',
-            event.target.value
-          )
+          setForm({ ...form, lastName: event.target.value })
         }
         required
-        style={input}
       />
 
       <input
@@ -102,13 +61,9 @@ export default function RegisterForm() {
         placeholder="Email"
         value={form.email}
         onChange={(event) =>
-          handleChange(
-            'email',
-            event.target.value
-          )
+          setForm({ ...form, email: event.target.value })
         }
         required
-        style={input}
       />
 
       <input
@@ -116,67 +71,26 @@ export default function RegisterForm() {
         placeholder="Lozinka"
         value={form.password}
         onChange={(event) =>
-          handleChange(
-            'password',
-            event.target.value
-          )
+          setForm({ ...form, password: event.target.value })
         }
+        minLength={6}
         required
-        style={input}
       />
 
       <select
         value={form.role}
         onChange={(event) =>
-          handleChange(
-            'role',
-            event.target.value
-          )
+          setForm({
+            ...form,
+            role: event.target.value as RegisterRequest['role'],
+          })
         }
-        style={input}
       >
-        <option value="Candidate">
-          Kandidat
-        </option>
-
-        <option value="Company">
-          Kompanija
-        </option>
+        <option value={Role.Candidate}>Kandidat</option>
+        <option value={Role.Company}>Kompanija</option>
       </select>
 
-      <button
-        type="submit"
-        disabled={loading}
-        style={button}
-      >
-        {loading
-          ? 'Registracija...'
-          : 'Registruj se'}
-      </button>
+      <button type="submit">Registruj se</button>
     </form>
   );
 }
-
-const formStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 12,
-};
-
-const input: React.CSSProperties = {
-  padding: '12px 14px',
-  border: '1px solid #ddd',
-  borderRadius: 8,
-  fontSize: 15,
-};
-
-const button: React.CSSProperties = {
-  padding: 14,
-  background: '#e94560',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 8,
-  cursor: 'pointer',
-  fontWeight: 700,
-  fontSize: 15,
-};

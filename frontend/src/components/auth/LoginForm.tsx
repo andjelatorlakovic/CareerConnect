@@ -1,60 +1,52 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '../../api/auth';
-import { useAuth } from '../../context/AuthContext';
-import ErrorMessage from '../shared/ErrorMessage';
+import { authApi } from '../../api_services/auth/AuthApiService';
+import { useAuth } from '../../hooks/auth/useAuth';
+import { Role } from '../../models/auth/Role';
 
 export default function LoginForm() {
-  const { login: setUser } = useAuth();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (
+  async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>
-  ) => {
+  ) {
     event.preventDefault();
-
-    setLoading(true);
     setError('');
 
-    try {
-      const user = await login({
-        email,
-        password,
-      });
+    const response = await authApi.login({ email, password });
 
-      setUser(user);
-
-      if (user.role === 'Candidate') {
-        navigate('/jobs');
-      } else if (user.role === 'Company') {
-        navigate('/my-jobs');
-      } else {
-        navigate('/admin/users');
-      }
-    } catch {
-      setError('Pogrešan email ili lozinka.');
-    } finally {
-      setLoading(false);
+    if (!response.success || !response.data) {
+      setError(response.message);
+      return;
     }
-  };
+
+    login(response.data);
+
+    if (response.data.role === Role.Company) {
+      navigate('/my-jobs');
+    } else if (response.data.role === Role.Candidate) {
+      navigate('/jobs');
+    } else {
+      navigate('/admin/users');
+    }
+  }
 
   return (
-    <form onSubmit={handleSubmit} style={form}>
-      {error && <ErrorMessage message={error} />}
+    <form onSubmit={handleSubmit}>
+      {error && <p>{error}</p>}
 
       <input
         type="email"
-        placeholder="Email adresa"
+        placeholder="Email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         required
-        style={input}
       />
 
       <input
@@ -63,36 +55,9 @@ export default function LoginForm() {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         required
-        style={input}
       />
 
-      <button type="submit" disabled={loading} style={button}>
-        {loading ? 'Prijava...' : 'Prijavi se'}
-      </button>
+      <button type="submit">Prijavi se</button>
     </form>
   );
 }
-
-const form: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 12,
-};
-
-const input: React.CSSProperties = {
-  padding: '12px 14px',
-  border: '1px solid #ddd',
-  borderRadius: 8,
-  fontSize: 15,
-};
-
-const button: React.CSSProperties = {
-  padding: 14,
-  background: '#e94560',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 8,
-  cursor: 'pointer',
-  fontWeight: 700,
-  fontSize: 15,
-};
