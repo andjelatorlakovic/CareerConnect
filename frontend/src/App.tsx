@@ -15,6 +15,8 @@ import MyJobsPage from './pages/company/MyJobsPage';
 import CreateJobPage from './pages/company/CreateJobPage';
 import MyJobDetailsPage from './pages/company/MyJobDetailsPage';
 import JobQuestionsPage from './pages/company/JobQuestionsPage';
+import JobApplicationsPage from './pages/company/JobApplicationsPage';
+import EditJobPage from './pages/company/EditJobPage';
 function App() {
   return (
     <AuthProvider>
@@ -77,6 +79,22 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/my-jobs/:id/applications"
+            element={
+              <ProtectedRoute roles={[Role.Company]}>
+                <JobApplicationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-job/:id"
+            element={
+              <ProtectedRoute roles={[Role.Company]}>
+                <EditJobPage />
+              </ProtectedRoute>
+            }
+          />         
         </Routes>
       </BrowserRouter>
     </AuthProvider>
