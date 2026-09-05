@@ -6,10 +6,11 @@ import {
 } from 'react-router-dom';
 
 import { AuthProvider } from './context/AuthContext';
-
+import { Role } from './models/auth/Role';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
-
+import ProtectedRoute from './components/protected_route/ProtectedRoute';
+import CompanyProfilePage from './pages/company/CompanyProfilePage';
 function App() {
   return (
     <AuthProvider>
@@ -32,6 +33,14 @@ function App() {
                 to="/login"
                 replace
               />
+            }
+          />
+          <Route
+            path="/company-profile"
+            element={
+              <ProtectedRoute roles={[Role.Company]}>
+                <CompanyProfilePage />
+              </ProtectedRoute>
             }
           />
         </Routes>
