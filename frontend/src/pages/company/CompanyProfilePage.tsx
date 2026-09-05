@@ -53,7 +53,7 @@ export default function CompanyProfilePage() {
 
   return (
     <CompanyLayout>
-      <h1>Profil kompanije</h1>
+
 
       {loading && <p>Učitavanje...</p>}
       {error && <p>{error}</p>}
