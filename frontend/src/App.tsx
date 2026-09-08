@@ -17,6 +17,8 @@ import MyJobDetailsPage from './pages/company/MyJobDetailsPage';
 import JobQuestionsPage from './pages/company/JobQuestionsPage';
 import JobApplicationsPage from './pages/company/JobApplicationsPage';
 import EditJobPage from './pages/company/EditJobPage';
+import CandidateProfilePage from './pages/candidate/CandidateProfilePage';
+
 function App() {
   return (
     <AuthProvider>
@@ -94,7 +96,15 @@ function App() {
                 <EditJobPage />
               </ProtectedRoute>
             }
-          />         
+          />     
+          <Route
+            path="/candidate-profile"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <CandidateProfilePage />
+              </ProtectedRoute>
+            }
+          />    
         </Routes>
       </BrowserRouter>
     </AuthProvider>
