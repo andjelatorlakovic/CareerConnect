@@ -1,6 +1,7 @@
 import type { JobListing } from '../../models/jobs/JobListing';
 import type { CreateJobRequest } from '../../types/jobs/CreateJobRequest';
 import type { UpdateJobRequest } from '../../types/jobs/UpdateJobRequest';
+import type { JobFilters } from '../../types/jobs/JobFilters';
 
 export interface IJobsApiService {
   getMyJobs(): Promise<JobListing[]>;
@@ -11,4 +12,7 @@ export interface IJobsApiService {
     request: UpdateJobRequest
   ): Promise<JobListing>;
   closeJob(jobId: string): Promise<void>;
+   getJobs(
+    filters?: JobFilters
+  ): Promise<JobListing[]>;
 }

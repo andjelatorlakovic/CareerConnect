@@ -5,6 +5,22 @@ import type { UpdateApplicationStatusRequest } from '../../types/applications/Up
 import type { IJobApplicationsApiService } from './IJobApplicationsApiService';
 
 export const jobApplicationsApi: IJobApplicationsApiService = {
+  async applyForJob(jobId, request) {
+      return (
+        await api.post<JobApplication>(
+          `/job-applications/jobs/${jobId}`,
+          request
+        )
+      ).data;
+    },
+
+    async getMyApplications() {
+      return (
+        await api.get<JobApplication[]>(
+          '/job-applications/my'
+        )
+      ).data;
+    },
   async getApplicationsForJob(jobId: string) {
     return (
       await api.get<JobApplication[]>(
