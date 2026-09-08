@@ -637,7 +637,7 @@ export default function JobApplicationsPage() {
                                       <div
                                         key={
                                           answer.id ??
-                                          index
+                                          `${answer.jobListingQuestionId}-${index}`
                                         }
                                         className="answer-item"
                                       >
@@ -652,8 +652,12 @@ export default function JobApplicationsPage() {
                                             Pitanje {index + 1}
                                           </span>
 
+                                          <small>
+                                            ID pitanja: {answer.jobListingQuestionId}
+                                          </small>
+
                                           <p>
-                                            {answer.answerText}
+                                            {answer.answer}
                                           </p>
 
                                         </div>
@@ -685,6 +689,7 @@ export default function JobApplicationsPage() {
             )}
 
         </div>
+
       </div>
 
       <style>{`
@@ -1594,6 +1599,16 @@ export default function JobApplicationsPage() {
           font-weight: 700;
         }
 
+        .answer-content small {
+          display: block;
+
+          margin-bottom: 0.35rem;
+
+          color: #aaa9b5;
+
+          font-size: 8px;
+        }
+
         .answer-content p {
           margin: 0;
 
@@ -1701,6 +1716,7 @@ export default function JobApplicationsPage() {
         }
 
       `}</style>
+
     </CompanyLayout>
   );
 }

@@ -1,5 +1,6 @@
 export interface QuizAnswer {
-  questionId: string;
-  question: string;
+  id?: string;
+  jobApplicationId: string;
+  jobListingQuestionId: string;
   answer: string;
 }
