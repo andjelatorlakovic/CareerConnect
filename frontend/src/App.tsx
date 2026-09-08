@@ -18,6 +18,12 @@ import JobQuestionsPage from './pages/company/JobQuestionsPage';
 import JobApplicationsPage from './pages/company/JobApplicationsPage';
 import EditJobPage from './pages/company/EditJobPage';
 import CandidateProfilePage from './pages/candidate/CandidateProfilePage';
+import JobsPage from './pages/candidate/JobsPage';
+import JobDetailsPage from './pages/candidate/JobDetailsPage';
+import MyApplicationsPage from './pages/candidate/MyApplicationsPage';
+import MatchingJobsPage from './pages/candidate/MatchingJobsPage';
+import NotificationsPage from './pages/candidate/NotificationsPage';
+import CandidateAccountPage from './pages/candidate/CandidateAccountPage';
 
 function App() {
   return (
@@ -105,6 +111,59 @@ function App() {
               </ProtectedRoute>
             }
           />    
+          <Route
+            path="/jobs"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <JobsPage />
+              </ProtectedRoute>
+            }
+          />
+            <Route
+            path="/jobs/:id"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <JobDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/my-applications"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <MyApplicationsPage />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/matching-jobs"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <MatchingJobsPage />
+              </ProtectedRoute>
+            }
+          />
+            <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <NotificationsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/candidate-account"
+            element={
+              <ProtectedRoute roles={[Role.Candidate]}>
+                <CandidateAccountPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="*"
+            element={<Navigate to="/login" replace />}
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
