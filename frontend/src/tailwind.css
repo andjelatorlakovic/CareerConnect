@@ -5,3 +5,5 @@
 
 @source "./components/candidate";
 @source "./pages/candidate";
+@source "./components/shared";
+@source "./pages/shared";

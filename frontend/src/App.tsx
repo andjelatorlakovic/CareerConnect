@@ -23,7 +23,7 @@ import JobDetailsPage from './pages/candidate/JobDetailsPage';
 import MyApplicationsPage from './pages/candidate/MyApplicationsPage';
 import MatchingJobsPage from './pages/candidate/MatchingJobsPage';
 import NotificationsPage from './pages/candidate/NotificationsPage';
-import CandidateAccountPage from './pages/candidate/CandidateAccountPage';
+import AccountPage from './pages/shared/AccountPage';
 
 function App() {
   return (
@@ -152,10 +152,10 @@ function App() {
             }
           />
           <Route
-            path="/candidate-account"
+            path="/account"
             element={
-              <ProtectedRoute roles={[Role.Candidate]}>
-                <CandidateAccountPage />
+              <ProtectedRoute>
+                <AccountPage />
               </ProtectedRoute>
             }
           />

@@ -115,7 +115,7 @@ export default function CandidateLayout({
                 </div>
 
                 <Link
-                  to="/candidate-account"
+                  to="/account"
                   onClick={() => setProfileOpen(false)}
                   className="border-0 border-t border-solid border-[#ebe9f1] pt-4 text-sm font-semibold text-[#c8385c] no-underline"
                 >
