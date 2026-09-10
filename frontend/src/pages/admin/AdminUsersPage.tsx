@@ -123,14 +123,19 @@ export default function AdminUsersPage() {
 
   return (
     <AdminLayout>
-      <div className="grid min-h-[86vh] content-start gap-6 rounded-2xl border border-solid border-[#dedde8] bg-white p-5 shadow-xl sm:p-8">
-        <header className="border-0 border-b border-solid border-[#ebe9f1] pb-6">
-          <h1 className="m-0 text-3xl font-bold tracking-tight text-[#ef476f] sm:text-4xl">
+      <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
+        <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
+          <div aria-hidden="true" className="pointer-events-none absolute -top-16 -right-12 -z-10 size-64 rounded-full border-[40px] border-solid border-[#ef476f]/15" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-4 -bottom-20 -z-10 size-48 rounded-full bg-[#ef476f]/10" />
+          <span className="mb-4 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#ffb4c8] uppercase">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-[#ef476f]" />
+            Administracija
+          </span>
+          <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Korisnici
           </h1>
-
-          <p className="m-0 mt-2 text-sm text-[#8c8c9a]">
-            Upravljajte korisnicima. Klik na kompaniju otvara njene oglase.
+          <p className="m-0 mt-3 max-w-lg text-sm leading-relaxed text-[#d3d1e0]">
+            Upravljajte nalozima i pregledajte oglase kompanija na jednom mestu.
           </p>
         </header>
 
@@ -169,48 +174,8 @@ export default function AdminUsersPage() {
 
         {!loading && !error && (
           <>
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-              <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
-                <span className="text-xs text-[#858092]">
-                  Ukupno korisnika
-                </span>
-
-                <strong className="text-2xl">{users.length}</strong>
-              </div>
-
-              <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
-                <span className="text-xs text-[#858092]">
-                  Kandidati
-                </span>
-
-                <strong className="text-2xl">
-                  {users.filter((user) => user.role === Role.Candidate).length}
-                </strong>
-              </div>
-
-              <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
-                <span className="text-xs text-[#858092]">
-                  Kompanije
-                </span>
-
-                <strong className="text-2xl">
-                  {users.filter((user) => user.role === Role.Company).length}
-                </strong>
-              </div>
-
-              <div className="grid gap-2 rounded-xl border border-solid border-[#d5ebdd] bg-[#edf8f1] p-4">
-                <span className="text-xs text-[#6d8b75]">
-                  Aktivni korisnici
-                </span>
-
-                <strong className="text-2xl">
-                  {users.filter((user) => user.isActive).length}
-                </strong>
-              </div>
-            </div>
-
-            <div className="grid gap-4 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5 md:grid-cols-3">
-              <label className="grid gap-2 text-sm font-semibold">
+            <div className="grid items-end gap-5 rounded-2xl border border-solid border-[#e5e4ed] bg-white p-5 shadow-[0_4px_16px_-10px_rgba(25,24,45,0.15)] sm:p-6 md:grid-cols-[2fr_1fr_1fr]">
+              <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
                 Pretraga
 
                 <input
@@ -219,11 +184,11 @@ export default function AdminUsersPage() {
                   onChange={(event) => {
                     setSearch(event.target.value);
                   }}
-                  className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
+                  className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e2dfe9] bg-[#f8f8fc] px-4 py-3 text-sm text-[#333344] outline-none transition-colors placeholder:text-[#857b86] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 />
               </label>
 
-              <label className="grid gap-2 text-sm font-semibold">
+              <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
                 Uloga
 
                 <select
@@ -231,7 +196,7 @@ export default function AdminUsersPage() {
                   onChange={(event) => {
                     setRoleFilter(event.target.value as Role | '');
                   }}
-                  className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
+                  className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e2dfe9] bg-[#f8f8fc] px-4 py-3 text-sm text-[#333344] outline-none transition-colors placeholder:text-[#857b86] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
                   <option value="">Sve uloge</option>
                   <option value={Role.Candidate}>Kandidati</option>
@@ -240,7 +205,7 @@ export default function AdminUsersPage() {
                 </select>
               </label>
 
-              <label className="grid gap-2 text-sm font-semibold">
+              <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
                 Status
 
                 <select
@@ -250,7 +215,7 @@ export default function AdminUsersPage() {
                       event.target.value as 'all' | 'active' | 'inactive'
                     );
                   }}
-                  className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
+                  className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e2dfe9] bg-[#f8f8fc] px-4 py-3 text-sm text-[#333344] outline-none transition-colors placeholder:text-[#857b86] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
                   <option value="all">Svi korisnici</option>
                   <option value="active">Aktivni</option>
@@ -259,12 +224,12 @@ export default function AdminUsersPage() {
               </label>
             </div>
 
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-3 px-1">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
                 Lista korisnika
               </h2>
 
-              <span className="text-xs text-[#858592]">
+              <span className="rounded-full border border-solid border-[#f4ccd7] bg-[#ffe8ef] px-3 py-1.5 text-xs font-semibold text-[#a83053]">
                 Pronađeno: {filteredUsers.length}
               </span>
             </div>

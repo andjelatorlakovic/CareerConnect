@@ -29,15 +29,16 @@ export default function AdminUserCard({
       .toUpperCase() || user.email.charAt(0).toUpperCase();
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-solid border-[#e5e2ed] bg-white text-left shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between sm:p-6">
+    <article className="relative overflow-hidden rounded-[22px] border border-solid border-[#e5e3ec] bg-white text-left shadow-[0_3px_12px_-6px_rgba(36,35,61,0.12)] transition-[border-color,box-shadow] duration-200 hover:border-[#e8b6c5] hover:shadow-[0_8px_24px_-10px_rgba(36,35,61,0.2)]">
+      <div aria-hidden="true" className={isCompany ? 'absolute top-5 bottom-5 left-0 w-1 rounded-r-full bg-[#ef476f]' : 'absolute top-5 bottom-5 left-0 w-1 rounded-r-full bg-[#24233d]/20'} />
+      <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between sm:px-6 sm:py-5">
         <div className="flex min-w-0 items-center gap-4">
           <div
             aria-hidden="true"
             className={
               isCompany
-                ? 'grid size-14 shrink-0 place-items-center rounded-2xl border border-solid border-[#f5d5df] bg-[#fff0f4] text-lg font-bold tracking-wide text-[#c8385c]'
-                : 'grid size-14 shrink-0 place-items-center rounded-2xl border border-solid border-[#e4def0] bg-[#f1edf8] text-lg font-bold tracking-wide text-[#665079]'
+                ? 'grid size-14 shrink-0 place-items-center rounded-2xl border border-solid border-[#f4ced9] bg-[#fff0f5] text-lg font-bold tracking-wide text-[#b73359] shadow-sm'
+                : 'grid size-14 shrink-0 place-items-center rounded-2xl border border-solid border-[#24233d] bg-[#24233d] text-lg font-bold tracking-wide text-[#ffd5e0] shadow-sm'
             }
           >
             {initials}
@@ -70,7 +71,7 @@ export default function AdminUserCard({
         </div>
 
         <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
-          <span className="inline-flex items-center rounded-full border border-solid border-[#e6e1ee] bg-[#f7f5fb] px-3 py-1.5 text-xs font-semibold text-[#6b5c80]">
+          <span className="inline-flex items-center rounded-full border border-solid border-[#e6e4ed] bg-[#f5f4f8] px-3 py-1.5 text-xs font-semibold text-[#24233d]">
             {isCompany
               ? 'Kompanija'
               : user.role === Role.Candidate
@@ -99,7 +100,7 @@ export default function AdminUserCard({
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 border-0 border-t border-solid border-[#eeebf3] bg-[#fcfbfe] px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="flex flex-col gap-3 border-0 border-t border-solid border-[#f0edf3] bg-[#fcfafc] px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex shrink-0 items-center gap-2 text-xs text-[#858292]">
           <svg
             aria-hidden="true"
@@ -143,8 +144,8 @@ export default function AdminUserCard({
             }}
             className={
               user.isActive
-                ? 'inline-flex min-h-10 items-center justify-center rounded-lg border border-solid border-[#ebd4dc] bg-white px-4 py-2 text-xs font-semibold text-[#b34463] transition-colors hover:border-[#dfafbf] hover:bg-[#fff2f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-45 enabled:cursor-pointer'
-                : 'inline-flex min-h-10 items-center justify-center rounded-lg border border-solid border-[#cfe3d5] bg-[#eef8f1] px-4 py-2 text-xs font-semibold text-[#327449] transition-colors hover:border-[#aacfb6] hover:bg-[#e1f2e7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#327449] disabled:cursor-not-allowed disabled:opacity-45 enabled:cursor-pointer'
+                ? 'inline-flex min-h-10 items-center justify-center rounded-xl border border-solid border-[#ebd4dc] bg-white px-4 py-2 text-xs font-semibold text-[#b34463] transition-colors hover:border-[#dfafbf] hover:bg-[#fff2f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-45 enabled:cursor-pointer'
+                : 'inline-flex min-h-10 items-center justify-center rounded-xl border border-solid border-[#cfe3d5] bg-[#eef8f1] px-4 py-2 text-xs font-semibold text-[#327449] transition-colors hover:border-[#aacfb6] hover:bg-[#e1f2e7] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#327449] disabled:cursor-not-allowed disabled:opacity-45 enabled:cursor-pointer'
             }
           >
             {updating
@@ -159,7 +160,7 @@ export default function AdminUserCard({
           {isCompany && (
             <Link
               to={`/admin/companies/${user.id}/jobs`}
-              className="group inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-solid border-[#24233d] bg-[#24233d] px-4 py-2 text-xs font-semibold text-white no-underline transition-colors hover:border-[#393750] hover:bg-[#393750] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f]"
+              className="group inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-solid border-[#24233d] bg-[#24233d] px-4 py-2 text-xs font-semibold text-white no-underline transition-colors hover:border-[#393750] hover:bg-[#393750] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f]"
             >
               Pogledaj oglase
 

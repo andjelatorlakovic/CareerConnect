@@ -42,7 +42,7 @@ export default function AccountForm({
         className="m-0 grid min-w-0 gap-5 border-0 p-0"
       >
         <div className="grid gap-5 md:grid-cols-2">
-          <label className="grid gap-2 text-sm font-semibold">
+          <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
             Ime
 
             <input
@@ -52,11 +52,11 @@ export default function AccountForm({
               onChange={(event) => {
                 setForm({ ...form, firstName: event.target.value });
               }}
-              className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e0dce7] bg-[#f8f8fc] px-4 py-3 text-sm font-normal tracking-normal text-[#24233d] outline-none transition-colors placeholder:text-[#918a9d] hover:border-[#cbb9c8] focus:border-[#ef476f] focus:bg-white focus:ring-4 focus:ring-[#ef476f]/10 disabled:opacity-60"
             />
           </label>
 
-          <label className="grid gap-2 text-sm font-semibold">
+          <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
             Prezime
 
             <input
@@ -66,12 +66,12 @@ export default function AccountForm({
               onChange={(event) => {
                 setForm({ ...form, lastName: event.target.value });
               }}
-              className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e0dce7] bg-[#f8f8fc] px-4 py-3 text-sm font-normal tracking-normal text-[#24233d] outline-none transition-colors placeholder:text-[#918a9d] hover:border-[#cbb9c8] focus:border-[#ef476f] focus:bg-white focus:ring-4 focus:ring-[#ef476f]/10 disabled:opacity-60"
             />
           </label>
         </div>
 
-        <label className="grid gap-2 text-sm font-semibold">
+        <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
           Email
 
           <input
@@ -82,13 +82,13 @@ export default function AccountForm({
             onChange={(event) => {
               setForm({ ...form, email: event.target.value });
             }}
-            className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+            className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e0dce7] bg-[#f8f8fc] px-4 py-3 text-sm font-normal tracking-normal text-[#24233d] outline-none transition-colors placeholder:text-[#918a9d] hover:border-[#cbb9c8] focus:border-[#ef476f] focus:bg-white focus:ring-4 focus:ring-[#ef476f]/10 disabled:opacity-60"
           />
         </label>
 
         <button
           type="submit"
-          className="cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-1 w-fit max-w-full justify-self-end cursor-pointer rounded-xl border-0 bg-[#ef476f] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#df3d65] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? 'Čuvanje...' : 'Sačuvaj podatke'}
         </button>

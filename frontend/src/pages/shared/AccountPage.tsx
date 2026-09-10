@@ -10,6 +10,8 @@ import type { ChangePasswordRequest } from '../../types/users/ChangePasswordRequ
 
 import CandidateLayout from '../../components/candidate/CandidateLayout';
 import CompanyLayout from '../../components/company/CompanyLayout';
+import AdminLayout from '../../components/admin/AdminLayout';
+
 
 import AccountForm from '../../components/shared/AccountForm';
 import ChangePasswordForm from '../../components/shared/ChangePasswordForm';
@@ -22,6 +24,7 @@ export default function AccountPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -104,11 +107,13 @@ export default function AccountPage() {
   };
 
   const Layout =
-       authUser?.role === Role.Company
+      authUser?.role===Role.Admin
+      ? AdminLayout
+      : authUser?.role === Role.Company
         ? CompanyLayout
         : CandidateLayout;
 
-  return (
+  return ( 
     <Layout>
       <div
         className={
@@ -117,15 +122,12 @@ export default function AccountPage() {
             : ''
         }
       >
-        <div className="grid min-h-[86vh] content-start gap-6 rounded-2xl border border-solid border-[#dedde8] bg-white p-5 text-left font-sans text-sm leading-normal text-[#333344] shadow-xl [color-scheme:light] [&_*]:box-border [&_button]:font-sans [&_input]:font-sans sm:p-8">
-          <header className="border-0 border-b border-solid border-[#ebe9f1] pb-6">
-            <h1 className="m-0 text-3xl font-bold tracking-tight text-[#ef476f] sm:text-4xl">
-              Podešavanja naloga
-            </h1>
-
-            <p className="m-0 mt-2 text-sm text-[#8c8c9a]">
-              Izmenite lične podatke i lozinku.
-            </p>
+        <div className="grid min-h-[86vh] content-start gap-6 rounded-[28px] border border-solid border-[#dedde8] bg-[#f7f7fb] p-5 text-left font-sans text-sm leading-normal text-[#333344] shadow-xl [color-scheme:light] [&_*]:box-border [&_button]:font-sans [&_input]:font-sans sm:p-8">
+          <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
+            <div aria-hidden="true" className="pointer-events-none absolute -top-16 -right-12 -z-10 size-64 rounded-full border-[40px] border-solid border-[#ef476f]/15" />
+            <span className="mb-4 inline-block text-xs font-semibold tracking-[0.16em] text-[#ffb4c8] uppercase">Lični nalog</span>
+            <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">Moj nalog</h1>
+            <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">Vaši podaci i podešavanja na jednom mestu.</p>
           </header>
 
           {loading && (
@@ -154,27 +156,66 @@ export default function AccountPage() {
 
           {!loading && account && (
             <>
-              <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
-                <h2 className="m-0 border-0 border-l-4 border-solid border-[#ef476f] pl-3 text-lg font-bold text-[#333344]">
-                  Lični podaci
-                </h2>
-
-                <AccountForm
-                  initial={account}
-                  loading={saving}
-                  onSubmit={handleSaveAccount}
-                />
+              <section className="overflow-hidden rounded-3xl border border-solid border-[#e5e3ec] bg-white shadow-[0_6px_24px_-14px_rgba(36,35,61,0.25)]">
+                <div className="flex flex-wrap items-center gap-4 border-0 border-b border-solid border-[#f0edf3] p-6">
+                  <div aria-hidden="true" className="grid size-16 shrink-0 place-items-center rounded-2xl bg-[#24233d] text-xl font-bold text-[#ffd5e0]">
+                    {`${account.firstName.charAt(0)}${account.lastName.charAt(0)}`.toUpperCase() || account.email.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="m-0 text-xl font-bold break-words text-[#24233d]">{`${account.firstName} ${account.lastName}`.trim() || account.email}</h2>
+                    <p className="m-0 mt-1 text-sm break-all text-[#777586]">{account.email}</p>
+                  </div>
+                  <span className="rounded-full border border-solid border-[#f4ccd7] bg-[#ffe8ef] px-4 py-2 text-xs font-semibold text-[#a83053]">
+                    {account.role === Role.Admin ? 'Administrator' : account.role === Role.Company ? 'Kompanija' : 'Kandidat'}
+                  </span>
+                </div>
+                <dl className="m-0 grid gap-6 p-6 sm:grid-cols-2">
+                  <div><dt className="text-xs font-semibold text-[#777586]">Ime</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.firstName || '—'}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Prezime</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.lastName || '—'}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Email adresa</dt><dd className="m-0 mt-2 text-base font-semibold break-all text-[#24233d]">{account.email}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Datum registracije</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{new Date(account.createdAt).toLocaleDateString('sr-Latn-RS')}</dd></div>
+                </dl>
               </section>
 
-              <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
-                <h2 className="m-0 border-0 border-l-4 border-solid border-[#ef476f] pl-3 text-lg font-bold text-[#333344]">
-                  Promena lozinke
-                </h2>
-
-                <ChangePasswordForm
-                  loading={saving}
-                  onSubmit={handleChangePassword}
-                />
+              <section className="overflow-hidden rounded-3xl border border-solid border-[#eadce3] bg-white shadow-sm">
+                <button
+                  type="button"
+                  aria-expanded={settingsOpen}
+                  aria-controls="account-settings"
+                  disabled={saving}
+                  onClick={() => setSettingsOpen((previous) => !previous)}
+                  className="flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-[#fff0f5] p-6 text-left transition-colors hover:bg-[#ffe5ee] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <span>
+                    <span className="block text-base font-bold text-[#a83053]">Podešavanja naloga</span>
+                    <span className="mt-1 block text-sm text-[#77616d]">Izmenite lične podatke ili promenite lozinku.</span>
+                  </span>
+                  <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={settingsOpen ? 'shrink-0 rotate-180 text-[#a83053]' : 'shrink-0 text-[#a83053]'}><path d="m6 9 6 6 6-6" /></svg>
+                </button>
+                <div id="account-settings" hidden={!settingsOpen}>
+                  {settingsOpen && (
+                    <div className="grid gap-5 bg-[#f7f7fb] p-4 sm:p-6">
+                      <section className="grid gap-6 rounded-2xl border border-solid border-[#e7e2eb] bg-white p-5 shadow-[0_4px_16px_-10px_rgba(36,35,61,0.18)] sm:p-6">
+                        <div className="flex items-start gap-3 border-0 border-b border-solid border-[#f0eaf0] pb-5">
+                          <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#fff0f5] text-[#b73359]">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M4 21v-2a8 8 0 0 1 16 0v2" /></svg>
+                          </span>
+                          <div><h2 className="m-0 text-base font-bold text-[#24233d]">Lični podaci</h2><p className="m-0 mt-1 text-xs leading-relaxed text-[#777586]">Ažurirajte ime, prezime i email adresu svog naloga.</p></div>
+                        </div>
+                        <AccountForm initial={account} loading={saving} onSubmit={handleSaveAccount} />
+                      </section>
+                      <section className="grid gap-6 rounded-2xl border border-solid border-[#e7e2eb] bg-white p-5 shadow-[0_4px_16px_-10px_rgba(36,35,61,0.18)] sm:p-6">
+                        <div className="flex items-start gap-3 border-0 border-b border-solid border-[#f0eaf0] pb-5">
+                          <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#24233d] text-[#ffd5e0]">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><rect x="5" y="10" width="14" height="11" rx="3" /><path d="M8 10V7a4 4 0 0 1 8 0v3M12 15v2" /></svg>
+                          </span>
+                          <div><h2 className="m-0 text-base font-bold text-[#24233d]">Promena lozinke</h2><p className="m-0 mt-1 text-xs leading-relaxed text-[#777586]">Unesite trenutnu lozinku, zatim novu lozinku i njenu potvrdu.</p></div>
+                        </div>
+                        <ChangePasswordForm loading={saving} onSubmit={handleChangePassword} />
+                      </section>
+                    </div>
+                  )}
+                </div>
               </section>
             </>
           )}

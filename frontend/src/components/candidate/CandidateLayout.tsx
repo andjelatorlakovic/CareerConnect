@@ -69,6 +69,13 @@ export default function CandidateLayout({
             Obaveštenja
           </NavLink>
 
+          <NavLink
+            to="/account"
+            className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
+          >
+            Moj nalog
+          </NavLink>
+
           <div
             className="relative"
             onBlur={(event) => {
@@ -113,14 +120,6 @@ export default function CandidateLayout({
                     </strong>
                   </div>
                 </div>
-
-                <Link
-                  to="/account"
-                  onClick={() => setProfileOpen(false)}
-                  className="border-0 border-t border-solid border-[#ebe9f1] pt-4 text-sm font-semibold text-[#c8385c] no-underline"
-                >
-                  Podešavanja naloga
-                </Link>
 
                 <button
                   type="button"
