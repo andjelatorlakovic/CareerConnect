@@ -25,6 +25,7 @@ import MatchingJobsPage from './pages/candidate/MatchingJobsPage';
 import NotificationsPage from './pages/candidate/NotificationsPage';
 import AccountPage from './pages/shared/AccountPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
+import AdminCompanyJobsPage from './pages/admin/AdminCompanyJobsPage';
 
 function App() {
   return (
@@ -179,6 +180,14 @@ function App() {
             element={
               <ProtectedRoute roles={[Role.Admin]}>
                 <AdminUsersPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/companies/:userId/jobs"
+            element={
+              <ProtectedRoute roles={[Role.Admin]}>
+                <AdminCompanyJobsPage />
               </ProtectedRoute>
             }
           />
