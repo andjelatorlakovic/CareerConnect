@@ -15,4 +15,7 @@ export interface IJobsApiService {
    getJobs(
     filters?: JobFilters
   ): Promise<JobListing[]>;
+  getJobsByUser(
+    userId: string
+  ): Promise<JobListing[]>;
 }

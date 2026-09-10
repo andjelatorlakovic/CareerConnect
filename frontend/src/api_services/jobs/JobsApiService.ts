@@ -54,4 +54,11 @@ export const jobsApi: IJobsApiService = {
   async closeJob(jobId: string) {
     await api.patch(`/jobs/${jobId}/close`);
   },
+  async getJobsByUser(userId) {
+    return (
+      await api.get<JobListing[]>(
+        `/jobs/by-user/${userId}`
+      )
+    ).data;
+  }
 };

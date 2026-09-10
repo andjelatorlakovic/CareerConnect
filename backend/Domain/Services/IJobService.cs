@@ -12,4 +12,5 @@ public interface IJobService
     Task<List<JobListingDto>> GetAllAsync(string? location, ExperienceLevel? experienceLevel,List<Skill> skills);
     Task<JobListingDto> GetByIdAsync(Guid jobId);
     Task<List<JobListingDto>> GetByCompanyAsync(Guid companyProfileId);
+    Task<List<JobListingDto>> GetByUserAsync(Guid userId);
 }

@@ -49,4 +49,9 @@ export const userApi: IUserApiService = {
       `/users/${jobId}/remove-job-listing`
     );
   },
+  async getUserById(userId) {
+    return (
+      await api.get<User>(`/users/${userId}`)
+    ).data;
+  }
 };

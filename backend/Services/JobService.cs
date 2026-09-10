@@ -114,6 +114,37 @@ public class JobService : IJobService
         await _context.SaveChangesAsync();
         return true;
     }
+    public async Task<List<JobListingDto>> GetByUserAsync(Guid userId)
+    {
+        var user = await _context.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Id == userId);
+
+        if (user == null)
+        {
+            throw new InvalidOperationException(
+                "Korisnik nije pronađen."
+            );
+        }
+
+        if (user.Role != backend.Domain.Enums.UserRole.Company)
+        {
+            throw new InvalidOperationException(
+                "Izabrani korisnik nije kompanija."
+            );
+        }
+
+        var companyProfile = await _context.CompanyProfiles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(profile => profile.UserId == userId);
+
+        if (companyProfile == null)
+        {
+            return new List<JobListingDto>();
+        }
+
+        return await GetByCompanyAsync(companyProfile.Id);
+    }
     private static JobListingDto MapToDto(JobListing job)=> new()
     {
         Id = job.Id,

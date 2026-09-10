@@ -67,6 +67,24 @@ public class UserController : ControllerBase
         var users = await _userService.GetAllUsersAsync();
         return Ok(users);
     }
+    [HttpGet("{userId:guid}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetUserById(Guid userId)
+    {
+        try
+        {
+            var user = await _userService.GetByIdAsync(userId);
+
+            return Ok(user);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
     [HttpPatch("{userId}/deactivate")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeactivateUser(Guid userId)

@@ -97,4 +97,22 @@ public class JobListingController : ControllerBase
         }
         return NoContent();
     }
+    [HttpGet("by-user/{userId:guid}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetByUser(Guid userId)
+    {
+        try
+        {
+            var jobs = await _jobService.GetByUserAsync(userId);
+
+            return Ok(jobs);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return NotFound(new
+            {
+                message = exception.Message
+            });
+        }
+    }
 }

@@ -21,4 +21,6 @@ export interface IUserApiService {
   activateUser(userId: string): Promise<void>;
 
   adminRemoveJobListing(jobId: string): Promise<void>;
+  getUserById(userId: string): Promise<User>;
+
 }
