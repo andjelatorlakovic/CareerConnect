@@ -24,6 +24,7 @@ import MyApplicationsPage from './pages/candidate/MyApplicationsPage';
 import MatchingJobsPage from './pages/candidate/MatchingJobsPage';
 import NotificationsPage from './pages/candidate/NotificationsPage';
 import AccountPage from './pages/shared/AccountPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
 
 function App() {
   return (
@@ -163,6 +164,23 @@ function App() {
           <Route
             path="*"
             element={<Navigate to="/login" replace />}
+          />
+           <Route
+            path="/admin"
+            element={
+              <ProtectedRoute roles={[Role.Admin]}>
+                <Navigate to="/admin/users" replace />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute roles={[Role.Admin]}>
+                <AdminUsersPage />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </BrowserRouter>
