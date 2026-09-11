@@ -98,6 +98,9 @@ export default function EditJobPage() {
           }}
           loading={loading}
           submitLabel="Sačuvaj izmene"
+          title="Uredite oglas"
+          subtitle="Izmenite informacije o poziciji i sačuvajte promene."
+          onBack={() => navigate(`/my-jobs/${job.id}`)}
           onSubmit={(form) => void handleSubmit(form)}
         />
       )}

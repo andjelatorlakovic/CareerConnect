@@ -3,24 +3,45 @@ using CareerConnect.Domain.Models;
 using Domain.DTOs.Notification;
 using Domain.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
+using backend.Hubs;
 
 public class NotificationService : INotificationService
 {
     private readonly AppDbContext _context;
-    public NotificationService(AppDbContext context)
+    private readonly IHubContext<RealtimeHub> _hubContext;
+
+    public NotificationService(
+        AppDbContext context,
+        IHubContext<RealtimeHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
     }   
     
-    public async Task CreateAsync(Guid userId, string message)
+    public async Task CreateAsync(
+        Guid userId,
+        string message,
+        Guid? jobListingId = null)
     {
         var notification = new Notification
         {
             UserId = userId,
-            Message = message
+            Message = message,
+            JobListingId = jobListingId
         };
          _context.Notifications.Add(notification);
         await _context.SaveChangesAsync();
+
+        await _hubContext.Clients.User(userId.ToString())
+            .SendAsync("NotificationCreated", new NotificationDto
+            {
+                Id = notification.Id,
+                JobListingId = notification.JobListingId,
+                Message = notification.Message,
+                IsRead = notification.IsRead,
+                CreatedAt = notification.CreatedAt
+            });
     }
 
     public async Task<List<NotificationDto>> GetMyNotificationsAsync(Guid userId)
@@ -33,6 +54,7 @@ public class NotificationService : INotificationService
         return notifications.Select(n => new NotificationDto
         {
             Id = n.Id,
+            JobListingId = n.JobListingId,
             Message = n.Message,
             IsRead = n.IsRead,
             CreatedAt = n.CreatedAt
@@ -49,6 +71,8 @@ public class NotificationService : INotificationService
             n.IsRead = true;
 
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.User(userId.ToString())
+            .SendAsync("NotificationsMarkedRead");
     }
 
     public async Task MarkAsReadAsync(Guid userId, Guid notificationId)
@@ -57,5 +81,7 @@ public class NotificationService : INotificationService
             ?? throw new InvalidOperationException("Notification not found.");
         notification.IsRead = true;
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.User(userId.ToString())
+            .SendAsync("NotificationRead", notificationId.ToString());
     }
 }

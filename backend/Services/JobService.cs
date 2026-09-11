@@ -4,15 +4,22 @@ using Domain.DTOs.JobListing;
 using Domain.Models;
 using Domain.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
+using backend.Hubs;
 
 namespace backend.Services;
 
 public class JobService : IJobService
 {
     private AppDbContext _context;
-    public JobService(AppDbContext context)
+    private readonly IHubContext<RealtimeHub> _hubContext;
+
+    public JobService(
+        AppDbContext context,
+        IHubContext<RealtimeHub> hubContext)
     {
         _context=context;
+        _hubContext = hubContext;
     }
     //Zatvaranje oglasa
     public async Task<bool> CloseAsync(Guid companyProfileId, Guid JobId)
@@ -21,6 +28,7 @@ public class JobService : IJobService
         if(job==null) return false;
         job.Status=JobStatus.Closed;
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.All.SendAsync("JobListingsChanged");
         return true;
     }
     //Kreiranje oglasa 
@@ -42,6 +50,7 @@ public class JobService : IJobService
         };
         _context.JobListings.Add(job);
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.All.SendAsync("JobListingsChanged");
         return  MapToDto(job);
     }
     public async Task<List<JobListingDto>> GetAllAsync(string? location, ExperienceLevel? experienceLevel, List<Skill> skills)
@@ -100,6 +109,7 @@ public class JobService : IJobService
         job.SalaryMax= request.SalaryMax;
 
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.All.SendAsync("JobListingsChanged");
         return MapToDto(job);
     }
 

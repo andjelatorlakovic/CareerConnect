@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { jobApplicationsApi } from '../../api_services/applications/JobApplicationsApiService';
 import { jobsApi } from '../../api_services/jobs/JobsApiService';
@@ -10,6 +10,7 @@ import type { JobListing } from '../../models/jobs/JobListing';
 import { ApplicationStatus } from '../../models/applications/ApplicationStatus';
 
 import CandidateLayout from '../../components/candidate/CandidateLayout';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 const statusLabels: Record<ApplicationStatus, string> = {
   Pending: 'Na čekanju',
@@ -19,6 +20,8 @@ const statusLabels: Record<ApplicationStatus, string> = {
 };
 
 export default function MyApplicationsPage() {
+  const [searchParams] = useSearchParams();
+  const jobId = searchParams.get('jobId');
   const [applications, setApplications] =
     useState<JobApplication[]>([]);
 
@@ -30,6 +33,24 @@ export default function MyApplicationsPage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleApplicationStatusChanged = useCallback(
+    (updatedApplication: JobApplication) => {
+      setApplications((previous) =>
+        previous.map((application) =>
+          application.id === updatedApplication.id
+            ? updatedApplication
+            : application
+        )
+      );
+    },
+    []
+  );
+
+  useRealtimeEvent<JobApplication>(
+    'ApplicationStatusChanged',
+    handleApplicationStatusChanged
+  );
 
   useEffect(() => {
     let active = true;
@@ -77,22 +98,25 @@ export default function MyApplicationsPage() {
     };
   }, []);
 
-  const visibleApplications = status
-    ? applications.filter((item) => item.status === status)
-    : applications;
+  const visibleApplications = applications.filter((item) =>
+    (!status || item.status === status) &&
+    (!jobId || item.jobListingId === jobId)
+  );
 
   return (
     <CandidateLayout>
       <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
-        <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
-          <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Moje prijave
-          </h1>
+        {!jobId && (
+          <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
+            <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Moje prijave
+            </h1>
 
-          <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-            Pratite svoje prijave i odgovore kompanija.
-          </p>
-        </header>
+            <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
+              Pratite svoje prijave i odgovore kompanija.
+            </p>
+          </header>
+        )}
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
@@ -111,56 +135,60 @@ export default function MyApplicationsPage() {
 
         {!loading && !error && (
           <>
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-              <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
-                <span className="text-xs text-[#858092]">
-                  Ukupno prijava
-                </span>
+            {!jobId && (
+              <>
+                <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+                  <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
+                    <span className="text-xs text-[#858092]">
+                      Ukupno prijava
+                    </span>
 
-                <strong className="text-2xl">{applications.length}</strong>
-              </div>
+                    <strong className="text-2xl">{applications.length}</strong>
+                  </div>
 
-              {Object.values(ApplicationStatus).map((item) => (
-                <div
-                  key={item}
-                  className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4"
-                >
-                  <span className="text-xs text-[#858092]">
-                    {statusLabels[item]}
-                  </span>
+                  {Object.values(ApplicationStatus).map((item) => (
+                    <div
+                      key={item}
+                      className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4"
+                    >
+                      <span className="text-xs text-[#858092]">
+                        {statusLabels[item]}
+                      </span>
 
-                  <strong className="text-2xl">
-                    {
-                      applications.filter(
-                        (application) => application.status === item
-                      ).length
-                    }
-                  </strong>
+                      <strong className="text-2xl">
+                        {
+                          applications.filter(
+                            (application) => application.status === item
+                          ).length
+                        }
+                      </strong>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
 
-            <label className="grid gap-2 text-sm font-semibold">
-              Filtriraj po statusu
+                <label className="grid gap-2 text-sm font-semibold">
+                  Filtriraj po statusu
 
-              <select
-                value={status}
-                onChange={(event) => {
-                  setStatus(
-                    event.target.value as ApplicationStatus | ''
-                  );
-                }}
-                className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
-              >
-                <option value="">Sve prijave</option>
+                  <select
+                    value={status}
+                    onChange={(event) => {
+                      setStatus(
+                        event.target.value as ApplicationStatus | ''
+                      );
+                    }}
+                    className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
+                  >
+                    <option value="">Sve prijave</option>
 
-                {Object.values(ApplicationStatus).map((item) => (
-                  <option key={item} value={item}>
-                    {statusLabels[item]}
-                  </option>
-                ))}
-              </select>
-            </label>
+                    {Object.values(ApplicationStatus).map((item) => (
+                      <option key={item} value={item}>
+                        {statusLabels[item]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </>
+            )}
 
             {visibleApplications.length === 0 ? (
               <div className="grid justify-items-center gap-4 py-10 text-center">

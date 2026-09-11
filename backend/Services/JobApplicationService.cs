@@ -5,6 +5,8 @@ using Domain.Enums;
 using Domain.Models;
 using Domain.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
+using backend.Hubs;
 
 namespace backend.Services;
 
@@ -13,18 +15,28 @@ public class JobApplicationService : IJobApplicationService
     private readonly AppDbContext _context;
     private readonly INotificationService _notificationService;
     private readonly IQuizService _quizService;
+    private readonly IHubContext<RealtimeHub> _hubContext;
 
-    public JobApplicationService(AppDbContext context, INotificationService notificationService, IQuizService quizService)
+    public JobApplicationService(
+        AppDbContext context,
+        INotificationService notificationService,
+        IQuizService quizService,
+        IHubContext<RealtimeHub> hubContext)
     {
         _context = context;
         _notificationService = notificationService;
         _quizService = quizService;
+        _hubContext = hubContext;
     }
     //Apliciranje za posao, prijava na oglas
     public async Task<JobApplicationDto> ApplyJobApplicationAsync(Guid candidateProfileId, Guid jobListingId, CreateJobApplicationRequest request)
     {
-        var jobExists = await _context.JobListings.AnyAsync(j=> j.Id== jobListingId&& j.ExpiresAt>DateTime.UtcNow);
-        if (!jobExists)
+        var job = await _context.JobListings
+            .FirstOrDefaultAsync(j =>
+                j.Id == jobListingId &&
+                j.ExpiresAt > DateTime.UtcNow);
+
+        if (job == null)
         {
             throw new InvalidOperationException("Job listing not found.");
         }
@@ -47,7 +59,23 @@ public class JobApplicationService : IJobApplicationService
         {
             await _quizService.SaveAnswersAsync(application.Id, request.Answers);
 }
-        return MapToDto(application);
+        var applicationDto = MapToDto(application);
+        var company = await _context.CompanyProfiles
+            .FirstOrDefaultAsync(profile =>
+                profile.Id == job.CompanyProfileId);
+
+        if (company != null)
+        {
+            await _notificationService.CreateAsync(
+                company.UserId,
+                $"Stigla je nova prijava za oglas: {job.Title}."
+            );
+
+            await _hubContext.Clients.User(company.UserId.ToString())
+                .SendAsync("ApplicationCreated", applicationDto);
+        }
+
+        return applicationDto;
     }
     private static JobApplicationDto MapToDto(
             JobApplication application)
@@ -118,14 +146,33 @@ public class JobApplicationService : IJobApplicationService
         }
 
         application.Status = request.Status;
-    var candidateProfile = await _context.CandidateProfiles
-    .FirstOrDefaultAsync(p => p.Id == application.CandidateProfileId);
 
-    if (candidateProfile != null)
-    {
-        var message = $"Status vase prijave je promenjen na: {request.Status}";
-        await _notificationService.CreateAsync(candidateProfile.UserId, message);
-    }
+        var candidateProfile = await _context.CandidateProfiles
+            .FirstOrDefaultAsync(profile =>
+                profile.Id == application.CandidateProfileId);
+        var job = await _context.JobListings
+            .FirstOrDefaultAsync(listing =>
+                listing.Id == application.JobListingId);
+
+        if (candidateProfile != null && job != null)
+        {
+            var statusText = request.Status switch
+            {
+                ApplicationStatus.Accepted => "prihvaćena",
+                ApplicationStatus.Rejected => "odbijena",
+                ApplicationStatus.Reviewed => "pregledana",
+                _ => "ažurirana"
+            };
+
+            await _notificationService.CreateAsync(
+                candidateProfile.UserId,
+                $"Vaša prijava za oglas „{job.Title}” je {statusText}.",
+                job.Id
+            );
+
+            await _hubContext.Clients.User(candidateProfile.UserId.ToString())
+                .SendAsync("ApplicationStatusChanged", MapToDto(application));
+        }
         await _context.SaveChangesAsync();
 
         return MapToDto(application);

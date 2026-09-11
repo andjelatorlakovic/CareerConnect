@@ -1,7 +1,11 @@
-import { useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth/useAuth';
+import { notificationApi } from '../../api_services/notifications/NotificationApiService';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
+
+import type { UserNotification } from '../../models/notifications/UserNotification';
 
 interface CandidateLayoutProps {
   children: ReactNode;
@@ -14,6 +18,88 @@ export default function CandidateLayout({
   const navigate = useNavigate();
 
   const [profileOpen, setProfileOpen] = useState(false);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+
+  useEffect(() => {
+    if (!user) {
+      setUnreadNotifications(0);
+      return;
+    }
+
+    let active = true;
+
+    void notificationApi.getMyNotifications()
+      .then((notifications) => {
+        if (active) {
+          setUnreadNotifications(
+            notifications.filter((notification) => !notification.isRead)
+              .length
+          );
+        }
+      })
+      .catch(() => {
+        if (active) setUnreadNotifications(0);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  const handleNotificationCreated = useCallback(
+    (_notification: UserNotification) => {
+      setUnreadNotifications((previous) => previous + 1);
+    },
+    []
+  );
+
+  const handleNotificationRead = useCallback(() => {
+    setUnreadNotifications((previous) => Math.max(0, previous - 1));
+  }, []);
+
+  const handleNotificationsMarkedRead = useCallback(() => {
+    setUnreadNotifications(0);
+  }, []);
+
+  useEffect(() => {
+    const markOneAsRead = () => {
+      setUnreadNotifications((previous) => Math.max(0, previous - 1));
+    };
+
+    const markAllAsRead = () => {
+      setUnreadNotifications(0);
+    };
+
+    window.addEventListener(
+      'careerconnect:notification-read',
+      markOneAsRead
+    );
+    window.addEventListener(
+      'careerconnect:notifications-marked-read',
+      markAllAsRead
+    );
+
+    return () => {
+      window.removeEventListener(
+        'careerconnect:notification-read',
+        markOneAsRead
+      );
+      window.removeEventListener(
+        'careerconnect:notifications-marked-read',
+        markAllAsRead
+      );
+    };
+  }, []);
+
+  useRealtimeEvent<UserNotification>(
+    'NotificationCreated',
+    handleNotificationCreated
+  );
+  useRealtimeEvent<string>('NotificationRead', handleNotificationRead);
+  useRealtimeEvent<void>(
+    'NotificationsMarkedRead',
+    handleNotificationsMarkedRead
+  );
 
   const userLetter =
     user?.email?.charAt(0).toUpperCase() || 'K';
@@ -64,9 +150,14 @@ export default function CandidateLayout({
 
           <NavLink
             to="/notifications"
-            className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
+            className="inline-flex items-center gap-2 border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
             Obaveštenja
+            {unreadNotifications > 0 && (
+              <span className="grid min-w-5 place-items-center rounded-full bg-[#ef476f] px-1.5 py-0.5 text-[11px] font-bold leading-none text-white">
+                {unreadNotifications > 99 ? '99+' : unreadNotifications}
+              </span>
+            )}
           </NavLink>
 
           <NavLink

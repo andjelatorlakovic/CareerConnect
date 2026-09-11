@@ -26,6 +26,8 @@ interface JobFormProps {
   initial?: Partial<JobFormData>;
   loading: boolean;
   submitLabel: string;
+  title?: string;
+  subtitle?: string;
   onBack?: () => void;
   onSubmit: (data: JobFormData) => void;
 }
@@ -34,6 +36,8 @@ export default function JobForm({
   initial = {},
   loading,
   submitLabel,
+  title = 'Kreirajte novi oglas',
+  subtitle = 'Unesite informacije o poziciji koju želite da ponudite',
   onBack,
   onSubmit,
 }: JobFormProps) {
@@ -105,11 +109,11 @@ export default function JobForm({
           <div className="job-header !mb-8 !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!p-8">
 
             <h1 className="!m-0 !text-3xl !font-bold !tracking-tight !text-white sm:!text-4xl">
-              Kreirajte novi oglas
+              {title}
             </h1>
 
             <p className="!mb-0 !mt-2 !text-base !text-[#d3d1e0]">
-              Unesite informacije o poziciji koju želite da ponudite
+              {subtitle}
             </p>
 
           </div>
@@ -125,7 +129,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="title">
+                <label htmlFor="title" className="text-sm font-semibold text-[#45445a]">
                   Naziv pozicije
                 </label>
 
@@ -140,6 +144,7 @@ export default function JobForm({
                       title: event.target.value,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
                 />
 
@@ -147,7 +152,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="location">
+                <label htmlFor="location" className="text-sm font-semibold text-[#45445a]">
                   Lokacija
                 </label>
 
@@ -162,6 +167,7 @@ export default function JobForm({
                       location: event.target.value,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
                 />
 
@@ -175,7 +181,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="employmentType">
+                <label htmlFor="employmentType" className="text-sm font-semibold text-[#45445a]">
                   Tip zaposlenja
                 </label>
 
@@ -189,6 +195,7 @@ export default function JobForm({
                         event.target.value as EmploymentTypeValue,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
 
                   {Object.values(
@@ -210,7 +217,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="experienceLevel">
+                <label htmlFor="experienceLevel" className="text-sm font-semibold text-[#45445a]">
                   Nivo iskustva
                 </label>
 
@@ -224,6 +231,7 @@ export default function JobForm({
                         event.target.value as ExperienceLevelValue,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
 
                   {Object.values(
@@ -251,7 +259,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="jobCategory">
+                <label htmlFor="jobCategory" className="text-sm font-semibold text-[#45445a]">
                   Kategorija posla
                 </label>
 
@@ -265,6 +273,7 @@ export default function JobForm({
                         event.target.value as JobCategoryValue,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
 
                   {Object.values(
@@ -286,7 +295,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="expiresAt">
+                <label htmlFor="expiresAt" className="text-sm font-semibold text-[#45445a]">
                   Datum isteka
                 </label>
 
@@ -301,6 +310,7 @@ export default function JobForm({
                         event.target.value,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
                 />
 
@@ -314,7 +324,7 @@ export default function JobForm({
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="salaryMin">
+                <label htmlFor="salaryMin" className="text-sm font-semibold text-[#45445a]">
                   Minimalna plata
                 </label>
 
@@ -330,13 +340,14 @@ export default function JobForm({
                         event.target.value,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 />
 
               </div>
 
               <div className="job-form-group !grid !gap-2">
 
-                <label htmlFor="salaryMax">
+                <label htmlFor="salaryMax" className="text-sm font-semibold text-[#45445a]">
                   Maksimalna plata
                 </label>
 
@@ -352,6 +363,7 @@ export default function JobForm({
                         event.target.value,
                     })
                   }
+                  className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 />
 
               </div>
@@ -362,7 +374,7 @@ export default function JobForm({
 
             <div className="job-form-group !grid !gap-2">
 
-              <label htmlFor="description">
+              <label htmlFor="description" className="text-sm font-semibold text-[#45445a]">
                 Opis posla
               </label>
 
@@ -378,6 +390,7 @@ export default function JobForm({
                   })
                 }
                 rows={6}
+                className="min-h-36 w-full resize-y rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 py-3 text-sm leading-relaxed text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 required
               />
 
@@ -385,9 +398,9 @@ export default function JobForm({
 
             {/* VEŠTINE */}
 
-            <fieldset>
+            <fieldset className="m-0 grid gap-4 rounded-2xl border border-solid border-[#e6e2eb] bg-white p-5">
 
-              <legend>
+              <legend className="px-1 text-sm font-semibold text-[#45445a]">
                 Potrebne veštine
               </legend>
 
@@ -398,7 +411,7 @@ export default function JobForm({
 
                     <label
                       key={skill}
-                      className="job-skill !cursor-pointer !rounded-xl !border !border-solid !border-[#e2dfe9] !bg-white !px-3 !py-3 !text-sm !font-medium !text-[#555466] hover:!border-[#ef476f]"
+                      className="job-skill !flex !cursor-pointer !items-center !gap-2 !rounded-xl !border !border-solid !border-[#e2dfe9] !bg-[#fafafd] !px-3 !py-3 !text-sm !font-medium !text-[#555466] hover:!border-[#ef476f]"
                     >
 
                       <input
@@ -409,6 +422,7 @@ export default function JobForm({
                         onChange={() =>
                           toggleSkill(skill)
                         }
+                        className="size-4 accent-[#ef476f]"
                       />
 
                       <span>

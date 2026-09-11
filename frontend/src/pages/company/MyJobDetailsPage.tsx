@@ -150,7 +150,7 @@ export default function MyJobDetailsPage() {
 
           <button
             type="button"
-            className="back-button !mb-5 !inline-flex !items-center !gap-2 !border-0 !bg-transparent !p-0 !font-semibold !text-[#c8385c] hover:!underline"
+            className="back-button !mb-7 !inline-flex !items-center !gap-3 !border-0 !bg-transparent !p-0 !text-base !font-bold !text-[#c8385c] hover:!underline"
             onClick={() => navigate('/my-jobs')}
           >
             <span>←</span>
@@ -174,11 +174,11 @@ export default function MyJobDetailsPage() {
                   <h1 className="!m-0 !text-3xl !font-bold !tracking-tight !text-white sm:!text-4xl">{job.title}</h1>
 
                   <span
-                    className={
+                    className={`${
                       isActive
                         ? 'status active'
                         : 'status closed'
-                    }
+                    } !rounded-full !px-3 !py-1 !text-xs !font-bold ${isActive ? '!bg-[#e9f7ed] !text-[#2c7b48]' : '!bg-[#f3f1f5] !text-[#777686]'}`}
                   >
                     <span className="status-dot" />
 
@@ -197,13 +197,13 @@ export default function MyJobDetailsPage() {
 
             </div>
 
-            <div className="expiration-card !rounded-2xl !bg-white/10 !px-5 !py-4 !text-white">
+            <div className="expiration-card !grid !gap-1 !rounded-2xl !bg-white/10 !px-5 !py-4 !text-white">
 
-              <span className="expiration-label">
+              <span className="expiration-label !text-xs !font-bold !tracking-wide !text-[#d3d1e0]">
                 ROK ZA PRIJAVE
               </span>
 
-              <strong>
+              <strong className="!text-lg !font-bold">
                 {job.expiresAt
                   ? formatDate(job.expiresAt)
                   : 'Nije naveden'}
@@ -217,16 +217,16 @@ export default function MyJobDetailsPage() {
 
           <div className="management-panel !mt-6 !flex !flex-col !gap-5 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5 lg:!flex-row lg:!items-center lg:!justify-between">
 
-            <div className="management-info">
+            <div className="management-info !flex !items-center !gap-4">
 
-              <div className="management-icon">
+              <div className="management-icon !grid !size-11 !place-items-center !rounded-xl !bg-[#fce8ee] !text-lg">
                 ⚙
               </div>
 
               <div>
-                <h2>Upravljanje oglasom</h2>
+                <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">Upravljanje oglasom</h2>
 
-                <p>
+                <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
                   Izaberite akciju koju želite da izvršite
                 </p>
               </div>
@@ -314,16 +314,16 @@ export default function MyJobDetailsPage() {
 
               <section className="content-section !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5">
 
-                <div className="section-heading">
+                <div className="section-heading !mb-5 !flex !items-start !gap-3">
 
-                  <div className="section-accent" />
+                  <div className="section-accent !mt-1 !h-9 !w-1 !rounded-full !bg-[#ef476f]" />
 
                   <div>
-                    <h2>
+                    <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
                       Osnovne informacije
                     </h2>
 
-                    <p>
+                    <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
                       Informacije o poziciji i uslovima rada
                     </p>
                   </div>
@@ -338,12 +338,12 @@ export default function MyJobDetailsPage() {
                       📍
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Lokacija
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {job.location}
                       </strong>
                     </div>
@@ -356,12 +356,12 @@ export default function MyJobDetailsPage() {
                       💼
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Tip zaposlenja
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {job.employmentType}
                       </strong>
                     </div>
@@ -374,12 +374,12 @@ export default function MyJobDetailsPage() {
                       🎓
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Iskustvo
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {job.experienceLevel}
                       </strong>
                     </div>
@@ -392,12 +392,12 @@ export default function MyJobDetailsPage() {
                       🏷
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Kategorija
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {job.jobCategory}
                       </strong>
                     </div>
@@ -410,12 +410,12 @@ export default function MyJobDetailsPage() {
                       💰
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Plata
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {formatSalary(
                           job.salaryMin,
                           job.salaryMax
@@ -431,12 +431,12 @@ export default function MyJobDetailsPage() {
                       📅
                     </span>
 
-                    <div>
-                      <span className="info-label">
+                    <div className="!grid !gap-1">
+                      <span className="info-label !text-xs !font-semibold !text-[#858592]">
                         Rok za prijavu
                       </span>
 
-                      <strong>
+                      <strong className="!text-base !font-bold !text-[#333344]">
                         {job.expiresAt
                           ? formatDate(job.expiresAt)
                           : 'Nije naveden'}
@@ -451,27 +451,27 @@ export default function MyJobDetailsPage() {
 
               {/* DESCRIPTION */}
 
-              <section className="content-section">
+              <section className="content-section !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5">
 
-                <div className="section-heading">
+                <div className="section-heading !mb-5 !flex !items-start !gap-3">
 
-                  <div className="section-accent" />
+                  <div className="section-accent !mt-1 !h-9 !w-1 !rounded-full !bg-[#ef476f]" />
 
                   <div>
-                    <h2>
+                    <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
                       Opis pozicije
                     </h2>
 
-                    <p>
+                    <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
                       Detaljan opis radnog mesta
                     </p>
                   </div>
 
                 </div>
 
-                <div className="description-card">
+                <div className="description-card !rounded-xl !bg-[#f8f8fc] !p-5 !text-[#4d4c5e]">
 
-                  <p>
+                  <p className="!m-0 !leading-relaxed !whitespace-pre-wrap">
                     {job.description}
                   </p>
 
@@ -481,18 +481,18 @@ export default function MyJobDetailsPage() {
 
               {/* SKILLS */}
 
-              <section className="content-section">
+              <section className="content-section !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5">
 
-                <div className="section-heading">
+                <div className="section-heading !mb-5 !flex !items-start !gap-3">
 
-                  <div className="section-accent" />
+                  <div className="section-accent !mt-1 !h-9 !w-1 !rounded-full !bg-[#ef476f]" />
 
                   <div>
-                    <h2>
+                    <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
                       Potrebne veštine
                     </h2>
 
-                    <p>
+                    <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
                       Veštine i tehnologije koje kandidat treba da poseduje
                     </p>
                   </div>
@@ -501,13 +501,13 @@ export default function MyJobDetailsPage() {
 
                 {job.skills && job.skills.length > 0 ? (
 
-                  <div className="skills-container">
+                  <div className="skills-container !flex !flex-wrap !gap-2">
 
                     {job.skills.map(
                       (skill, index) => (
                         <span
                           key={`${skill}-${index}`}
-                          className="skill-tag"
+                          className="skill-tag !rounded-full !border !border-solid !border-[#f3ccd7] !bg-[#fcebf0] !px-3 !py-2 !text-sm !font-semibold !text-[#c8385c]"
                         >
                           {skill}
                         </span>
@@ -518,7 +518,7 @@ export default function MyJobDetailsPage() {
 
                 ) : (
 
-                  <div className="no-skills">
+                  <div className="no-skills !rounded-xl !bg-[#f8f8fc] !p-4 !text-sm !text-[#777686]">
                     Nisu navedene posebne veštine.
                   </div>
 
@@ -531,7 +531,7 @@ export default function MyJobDetailsPage() {
           </div>
 
           {error && (
-            <div className="action-error">
+            <div className="action-error !mt-5 !rounded-xl !border !border-solid !border-[#f2c5ce] !bg-[#fff2f4] !p-4 !text-[#a43651]">
               <span>!</span>
               {error}
             </div>

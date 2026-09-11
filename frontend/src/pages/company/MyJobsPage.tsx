@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { jobsApi } from '../../api_services/jobs/JobsApiService';
@@ -6,6 +6,7 @@ import CompanyLayout from '../../components/company/CompanyLayout';
 
 import type { JobListing } from '../../models/jobs/JobListing';
 import { JobStatus } from '../../models/jobs/JobStatus';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 export default function MyJobsPage() {
   const navigate = useNavigate();
@@ -13,6 +14,13 @@ export default function MyJobsPage() {
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshMyJobs = useCallback(() => {
+    setRefreshKey((previous) => previous + 1);
+  }, []);
+
+  useRealtimeEvent<void>('JobListingsChanged', refreshMyJobs);
 
   useEffect(() => {
     const loadJobs = async () => {
@@ -30,7 +38,7 @@ export default function MyJobsPage() {
     };
 
     void loadJobs();
-  }, []);
+  }, [refreshKey]);
 
   const activeJobs = jobs.filter(
     (job) => job.status === JobStatus.Active

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { matchingApi } from '../../api_services/matching/MatchingApiService';
@@ -6,11 +6,19 @@ import { matchingApi } from '../../api_services/matching/MatchingApiService';
 import type { MatchResult } from '../../models/matching/MatchResult';
 
 import CandidateLayout from '../../components/candidate/CandidateLayout';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 export default function MatchingJobsPage() {
   const [matches, setMatches] = useState<MatchResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshMatches = useCallback(() => {
+    setRefreshKey((previous) => previous + 1);
+  }, []);
+
+  useRealtimeEvent<void>('JobListingsChanged', refreshMatches);
 
   useEffect(() => {
     let active = true;
@@ -38,7 +46,7 @@ export default function MatchingJobsPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [refreshKey]);
 
   return (
     <CandidateLayout>

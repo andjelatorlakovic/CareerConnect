@@ -34,7 +34,7 @@ export default function QuestionForm({
 
         <button
           type="button"
-          className="back-button !mb-5 !inline-flex !items-center !gap-2 !border-0 !bg-transparent !p-0 !font-semibold !text-[#c8385c] hover:!underline"
+          className="back-button !mb-7 !inline-flex !items-center !gap-3 !border-0 !bg-transparent !p-0 !text-base !font-bold !text-[#c8385c] hover:!underline"
           onClick={() => {
             if (jobId) {
               navigate(`/my-jobs/${jobId}`);
@@ -46,9 +46,9 @@ export default function QuestionForm({
         </button>
 
         <div className="question-header !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!p-8">
-          <h1>Dodavanje pitanja</h1>
+          <h1 className="!m-0 !text-3xl !font-bold !text-white">Dodavanje pitanja</h1>
 
-          <p>
+          <p className="!mb-0 !mt-2 !text-sm !leading-relaxed !text-[#d3d1e0]">
             Dodajte pitanje koje će kandidatima pomoći
             da bolje razumeju poziciju.
           </p>
@@ -59,7 +59,7 @@ export default function QuestionForm({
           onSubmit={handleSubmit}
         >
           <div className="form-field">
-            <label htmlFor="question">
+            <label htmlFor="question" className="text-sm font-semibold text-[#45445a]">
               Pitanje
             </label>
 
@@ -71,6 +71,7 @@ export default function QuestionForm({
               }
               placeholder="Unesite pitanje..."
               rows={4}
+              className="min-h-28 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 py-3 text-sm text-[#333344] outline-none placeholder:text-[#aaa8b4] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
               required
             />
           </div>

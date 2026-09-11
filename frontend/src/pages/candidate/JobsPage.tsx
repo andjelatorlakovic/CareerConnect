@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 
 import { jobsApi } from '../../api_services/jobs/JobsApiService';
 
@@ -10,6 +10,7 @@ import { Skill } from '../../models/jobs/Skill';
 
 import CandidateLayout from '../../components/candidate/CandidateLayout';
 import JobCard from '../../components/candidate/JobCard';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState<JobListing[]>([]);
@@ -23,6 +24,12 @@ export default function JobsPage() {
 
   const [skills, setSkills] = useState<Skill[]>([]);
   const [filters, setFilters] = useState<JobFilters>({});
+
+  const refreshJobs = useCallback(() => {
+    setFilters((previous) => ({ ...previous }));
+  }, []);
+
+  useRealtimeEvent<void>('JobListingsChanged', refreshJobs);
 
   useEffect(() => {
     let active = true;

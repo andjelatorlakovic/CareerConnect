@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { jobApplicationsApi } from '../../api_services/applications/JobApplicationsApiService';
 import { quizApi } from '../../api_services/quiz/QuizApiService';
 
 import CompanyLayout from '../../components/company/CompanyLayout';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 import {
   ApplicationStatus,
@@ -29,6 +30,24 @@ export default function JobApplicationsPage() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const handleApplicationCreated = useCallback(
+    (application: JobApplication) => {
+      if (application.jobListingId !== jobId) return;
+
+      setApplications((previous) =>
+        previous.some((item) => item.id === application.id)
+          ? previous
+          : [application, ...previous]
+      );
+    },
+    [jobId]
+  );
+
+  useRealtimeEvent<JobApplication>(
+    'ApplicationCreated',
+    handleApplicationCreated
+  );
 
   // ========================================
   // LOAD APPLICATIONS
@@ -125,24 +144,6 @@ export default function JobApplicationsPage() {
     }
   };
 
-  // ========================================
-  // STATISTICS
-  // ========================================
-
-  const pendingApplications =
-    applications.filter(
-      (application) =>
-        application.status ===
-        ApplicationStatus.Pending
-    ).length;
-
-  const acceptedApplications =
-    applications.filter(
-      (application) =>
-        application.status ===
-        ApplicationStatus.Accepted
-    ).length;
-
   return (
     <CompanyLayout>
       <div className="applications-page !min-h-0 !bg-transparent !p-0">
@@ -155,7 +156,7 @@ export default function JobApplicationsPage() {
 
           <button
             type="button"
-            className="back-button !mb-5 !inline-flex !items-center !gap-2 !border-0 !bg-transparent !p-0 !font-semibold !text-[#c8385c] hover:!underline"
+            className="back-button !mb-7 !inline-flex !items-center !gap-3 !border-0 !bg-transparent !p-0 !text-base !font-bold !text-[#c8385c] hover:!underline"
             onClick={() =>
               navigate(`/my-jobs/${jobId}`)
             }
@@ -163,46 +164,6 @@ export default function JobApplicationsPage() {
             <span>←</span>
             Nazad
           </button>
-
-          {/* ========================================
-              HEADER
-          ======================================== */}
-
-          <div className="applications-header !rounded-3xl !bg-[#24233d] !p-6 sm:!p-8">
-
-            <div className="header-left !flex !items-center !gap-4">
-
-              <div className="header-icon !grid !size-12 !place-items-center !rounded-2xl !bg-[#ef476f] !text-xl !text-white">
-                <span>▤</span>
-              </div>
-
-              <div>
-
-                <div className="title-row !flex !flex-wrap !items-center !gap-3">
-
-                  <h1 className="!m-0 !text-3xl !font-bold !tracking-tight !text-white sm:!text-4xl">
-                    Job Applications
-                  </h1>
-
-                  {!loading &&
-                    !error &&
-                    applications.length > 0 && (
-                      <span className="total-badge !rounded-full !bg-[#ef476f] !px-3 !py-1 !text-sm !font-bold !text-white">
-                        {applications.length}
-                      </span>
-                    )}
-
-                </div>
-
-                <p className="!mb-0 !mt-2 !text-base !text-[#d3d1e0]">
-                  Pregled prijava kandidata za vaš oglas.
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
 
           {/* ========================================
               LOADING
@@ -293,86 +254,18 @@ export default function JobApplicationsPage() {
               <div className="applications-content">
 
                 {/* ========================================
-                    STATISTICS
-                ======================================== */}
-
-                <div className="stats-grid !grid !grid-cols-1 !gap-4 sm:!grid-cols-2 lg:!grid-cols-3">
-
-                  <div className="stat-card total-card !flex !items-center !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5 !shadow-sm">
-
-                    <div className="stat-icon">
-                      <span>▤</span>
-                    </div>
-
-                    <div className="stat-info">
-
-                      <span>
-                        Ukupno prijava
-                      </span>
-
-                      <strong>
-                        {applications.length}
-                      </strong>
-
-                    </div>
-
-                  </div>
-
-                  <div className="stat-card pending-card !flex !items-center !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5 !shadow-sm">
-
-                    <div className="stat-icon">
-                      <span>◷</span>
-                    </div>
-
-                    <div className="stat-info">
-
-                      <span>
-                        Na čekanju
-                      </span>
-
-                      <strong>
-                        {pendingApplications}
-                      </strong>
-
-                    </div>
-
-                  </div>
-
-                  <div className="stat-card accepted-card !flex !items-center !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5 !shadow-sm">
-
-                    <div className="stat-icon">
-                      <span>✓</span>
-                    </div>
-
-                    <div className="stat-info">
-
-                      <span>
-                        Prihvaćene
-                      </span>
-
-                      <strong>
-                        {acceptedApplications}
-                      </strong>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                {/* ========================================
                     LIST HEADER
                 ======================================== */}
 
-                <div className="list-header !mt-8 !flex !flex-wrap !items-center !justify-between !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5">
+                <div className="list-header !mt-6 !flex !flex-wrap !items-center !justify-between !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-5">
 
                   <div>
 
-                    <h2>
+                    <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
                       Prijave kandidata
                     </h2>
 
-                    <span>
+                    <span className="!mt-1 !block !text-sm !text-[#777686]">
                       Pregledajte informacije i odgovore kandidata.
                     </span>
 

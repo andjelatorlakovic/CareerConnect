@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { notificationApi } from '../../api_services/notifications/NotificationApiService';
 
 import type { UserNotification } from '../../models/notifications/UserNotification';
 
 import CandidateLayout from '../../components/candidate/CandidateLayout';
+import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] =
@@ -15,6 +17,22 @@ export default function NotificationsPage() {
   const [error, setError] = useState('');
   const [actionError, setActionError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const handleNotificationCreated = useCallback(
+    (notification: UserNotification) => {
+      setNotifications((previous) =>
+        previous.some((item) => item.id === notification.id)
+          ? previous
+          : [notification, ...previous]
+      );
+    },
+    []
+  );
+
+  useRealtimeEvent<UserNotification>(
+    'NotificationCreated',
+    handleNotificationCreated
+  );
 
   useEffect(() => {
     let active = true;
@@ -57,6 +75,10 @@ export default function NotificationsPage() {
           item.id === id ? { ...item, isRead: true } : item
         )
       );
+
+      window.dispatchEvent(
+        new CustomEvent('careerconnect:notification-read')
+      );
     } catch {
       setActionError('Obaveštenje nije označeno kao pročitano.');
     } finally {
@@ -74,6 +96,10 @@ export default function NotificationsPage() {
 
       setNotifications((previous) =>
         previous.map((item) => ({ ...item, isRead: true }))
+      );
+
+      window.dispatchEvent(
+        new CustomEvent('careerconnect:notifications-marked-read')
       );
 
       setSuccess('Sva obaveštenja su označena kao pročitana.');
@@ -188,6 +214,15 @@ export default function NotificationsPage() {
                       <p className="m-0 text-sm leading-relaxed break-words">
                         {notification.message}
                       </p>
+
+                      {notification.jobListingId && (
+                        <Link
+                          to={`/my-applications?jobId=${notification.jobListingId}`}
+                          className="w-fit rounded-lg bg-[#24233d] px-4 py-2 text-sm font-semibold text-white no-underline hover:bg-[#353451]"
+                        >
+                          Pogledaj moju prijavu
+                        </Link>
+                      )}
 
                       {!notification.isRead && (
                         <button
