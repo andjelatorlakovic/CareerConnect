@@ -45,12 +45,16 @@ export default function CreateJobPage() {
 
   return (
     <CompanyLayout>
-
-      {error && <p>{error}</p>}
+      {error && (
+        <p className="mb-4 rounded-xl border border-solid border-[#f2c5ce] bg-[#fff2f4] p-4 text-[#a43651]">
+          {error}
+        </p>
+      )}
 
       <JobForm
         loading={loading}
         submitLabel="Objavi oglas"
+        onBack={() => navigate(-1)}
         onSubmit={(form) => void handleSubmit(form)}
       />
     </CompanyLayout>

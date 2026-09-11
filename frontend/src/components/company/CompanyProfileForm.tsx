@@ -464,13 +464,13 @@ export default function CompanyProfileForm({
 
           {/* HEADER */}
 
-          <div className="company-profile-header">
+          <div className="company-profile-header !text-left">
 
-            <h1>
+            <h1 className="!text-left">
               Profil kompanije
             </h1>
 
-            <p>
+            <p className="!text-left">
               Unesite informacije o vašoj kompaniji
             </p>
 

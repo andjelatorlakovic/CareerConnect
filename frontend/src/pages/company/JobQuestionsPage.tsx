@@ -106,8 +106,8 @@ export default function JobQuestionsPage() {
 
   return (
     <CompanyLayout>
-      <div className="questions-page">
-        <div className="questions-content">
+      <div className="questions-page !min-h-0 !bg-transparent !p-0">
+        <div className="questions-content !min-h-[86vh] !rounded-[28px] !border !border-solid !border-[#e3dfe8] !bg-[#f7f7fb] !p-4 !shadow-xl sm:!p-8">
 
           <QuestionForm
             loading={loading}
@@ -117,18 +117,18 @@ export default function JobQuestionsPage() {
           />
 
           {error && (
-            <div className="error-message">
+            <div className="error-message !mx-auto !mt-4 !max-w-3xl !rounded-xl !border !border-solid !border-[#f2ccd8] !bg-[#fff3f6] !p-4 !font-semibold !text-[#c8385c]">
               {error}
             </div>
           )}
 
           {questions.length > 0 && (
-            <div className="questions-list">
+            <div className="questions-list !mx-auto !mt-6 !grid !max-w-3xl !gap-3">
 
-              <div className="questions-list-header">
-                <h2>Pitanja</h2>
+              <div className="questions-list-header !flex !items-center !gap-3">
+                <h2 className="!m-0 !text-2xl !font-bold !text-[#333344]">Pitanja</h2>
 
-                <span>
+                <span className="!grid !size-8 !place-items-center !rounded-full !bg-[#fce8ee] !text-sm !font-bold !text-[#c8385c]">
                   {questions.length}
                 </span>
               </div>
@@ -136,25 +136,25 @@ export default function JobQuestionsPage() {
               {questions.map((question) => (
                 <article
                   key={question.id}
-                  className="question-item"
+                  className="question-item !flex !items-center !gap-4 !rounded-2xl !border !border-solid !border-[#e6e2eb] !bg-white !p-4 !shadow-sm"
                 >
-                  <div className="question-number">
+                  <div className="question-number !grid !size-9 !shrink-0 !place-items-center !rounded-full !bg-[#24233d] !font-bold !text-white">
                     {question.orderIndex}
                   </div>
 
-                  <div className="question-content">
+                  <div className="question-content !min-w-0 !flex-1">
                     <span>
                       Pitanje {question.orderIndex}
                     </span>
 
-                    <p>
+                    <p className="!mb-0 !mt-1 !text-[#555466]">
                       {question.questionText}
                     </p>
                   </div>
 
                   <button
                     type="button"
-                    className="delete-button"
+                    className="delete-button !rounded-lg !border !border-solid !border-[#f0c4d0] !bg-[#fff3f6] !px-3 !py-2 !text-sm !font-semibold !text-[#c8385c] hover:!bg-[#fce5ec]"
                     onClick={() =>
                       void handleDelete(
                         question.id
@@ -168,184 +168,6 @@ export default function JobQuestionsPage() {
             </div>
           )}
         </div>
-      </div>
-
-      <style>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        .questions-page {
-          width: 100%;
-          min-height: 92vh;
-          padding: 1% 0;
-          background: #19182d;
-        }
-
-        .questions-content {
-          width: 100%;
-          margin-top: 0;
-        }
-
-        .error-message {
-          width: 68%;
-          margin: 0.8rem auto 0;
-          padding: 0.8rem 1rem;
-          background: #fff3f6;
-          border: 1px solid #f2ccd8;
-          border-radius: 9px;
-          color: #c8385c;
-          font-size: 14px;
-          font-weight: 600;
-        }
-
-        .questions-list {
-          width: 68%;
-          margin: 0.8rem auto 0;
-          display: flex;
-          flex-direction: column;
-          gap: 0.7rem;
-        }
-
-        .questions-list-header {
-          display: flex;
-          align-items: center;
-          gap: 0.7rem;
-          margin-bottom: 0.2rem;
-        }
-
-        .questions-list-header h2 {
-          margin: 0;
-          color: #ffffff;
-          font-size: clamp(20px, 1.8vw, 26px);
-          font-weight: 700;
-        }
-
-        .questions-list-header span {
-          min-width: 28px;
-          height: 28px;
-          padding: 0 0.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #fce8ee;
-          border-radius: 50%;
-          color: #c8385c;
-          font-size: 12px;
-          font-weight: 800;
-        }
-
-        .question-item {
-          width: 100%;
-          padding: 1rem 1.1rem;
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          background: #ffffff;
-          border: 1px solid #dedde8;
-          border-radius: 12px;
-          box-shadow:
-            0 4px 12px
-            rgba(0, 0, 0, 0.08);
-          transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease;
-        }
-
-        .question-item:hover {
-          background: #fafafd;
-          transform: translateY(-1px);
-          box-shadow:
-            0 7px 18px
-            rgba(0, 0, 0, 0.1);
-        }
-
-        .question-number {
-          width: 35px;
-          height: 35px;
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 9px;
-          background: #24233d;
-          color: #ffffff;
-          font-size: 13px;
-          font-weight: 800;
-        }
-
-        .question-content {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .question-content span {
-          display: block;
-          margin-bottom: 0.25rem;
-          color: #92919e;
-          font-size: 11px;
-          font-weight: 700;
-        }
-
-        .question-content p {
-          margin: 0;
-          color: #333344;
-          font-size: 14px;
-          line-height: 1.5;
-          word-break: break-word;
-        }
-
-        .delete-button {
-          flex-shrink: 0;
-          padding: 0.55rem 0.85rem;
-          border: 1px solid #f0c4d0;
-          border-radius: 8px;
-          background: #fff3f6;
-          color: #c8385c;
-          font-family: inherit;
-          font-size: 12px;
-          font-weight: 700;
-          cursor: pointer;
-          transition:
-            background 0.2s ease,
-            border-color 0.2s ease,
-            color 0.2s ease;
-        }
-
-        .delete-button:hover {
-          background: #ef476f;
-          border-color: #ef476f;
-          color: #ffffff;
-        }
-
-        @media (max-width: 900px) {
-          .questions-list,
-          .error-message {
-            width: 80%;
-          }
-        }
-
-        @media (max-width: 600px) {
-          .questions-list,
-          .error-message {
-            width: 90%;
-          }
-
-          .question-item {
-            align-items: flex-start;
-            flex-wrap: wrap;
-          }
-
-          .question-content {
-            width: calc(100% - 51px);
-          }
-
-          .delete-button {
-            width: 100%;
-          }
-        }
-      `}</style>
-    </CompanyLayout>
+      </div>    </CompanyLayout>
   );
 }

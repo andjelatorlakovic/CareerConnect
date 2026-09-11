@@ -26,6 +26,7 @@ interface JobFormProps {
   initial?: Partial<JobFormData>;
   loading: boolean;
   submitLabel: string;
+  onBack?: () => void;
   onSubmit: (data: JobFormData) => void;
 }
 
@@ -33,6 +34,7 @@ export default function JobForm({
   initial = {},
   loading,
   submitLabel,
+  onBack,
   onSubmit,
 }: JobFormProps) {
   const [form, setForm] = useState<JobFormData>({
@@ -84,441 +86,29 @@ export default function JobForm({
 
   return (
     <>
-      <style>{`
-        .job-page {
-          width: 100%;
-          min-height: 100vh;
-
-          box-sizing: border-box;
-
-          padding: 0.7%;
-
-          background: #19182d;
-        }
-
-        .job-card {
-          width: 99.6%;
-          min-height: 98.6vh;
-
-          margin: 0 auto;
-
-          background: #ffffff;
-
-          border-radius: 18px;
-
-          padding: 2.5% 3.5% 3.5%;
-
-          box-sizing: border-box;
-
-          box-shadow:
-            0 15px 40px rgba(0, 0, 0, 0.25);
-        }
-
-        /* NASLOV */
-
-        .job-header {
-          text-align: center;
-
-          margin-bottom: 2.5%;
-
-          padding: 1% 2% 2%;
-
-          border-bottom: 1px solid #eeeef3;
-        }
-
-        .job-header h1 {
-          margin: 0;
-
-          font-size: clamp(
-            30px,
-            3vw,
-            44px
-          );
-
-          font-weight: 700;
-
-          color: #ef476f;
-
-          letter-spacing: -1.5px;
-        }
-
-        .job-header p {
-          margin: 0.7% 0 0;
-
-          font-size: clamp(
-            14px,
-            1.2vw,
-            17px
-          );
-
-          color: #8c8c9a;
-        }
-
-        /* FORMA */
-
-        .job-form {
-          display: flex;
-
-          flex-direction: column;
-
-          gap: 1.3vw;
-
-          width: 100%;
-        }
-
-        .job-form-row {
-          display: grid;
-
-          grid-template-columns: 1fr 1fr;
-
-          gap: 2.2%;
-
-          width: 100%;
-        }
-
-        .job-form-group {
-          display: flex;
-
-          flex-direction: column;
-
-          align-items: flex-start;
-
-          gap: 8px;
-
-          width: 100%;
-        }
-
-        .job-form-group label {
-          display: block;
-
-          width: 100%;
-
-          text-align: left;
-
-          font-size: clamp(
-            13px,
-            1vw,
-            15px
-          );
-
-          font-weight: 600;
-
-          color: #333344;
-        }
-
-        /* INPUTI */
-
-        .job-form input:not(
-          [type="checkbox"]
-        ),
-        .job-form textarea,
-        .job-form select {
-          width: 100%;
-
-          box-sizing: border-box;
-
-          border: 1px solid #d9d9e2;
-
-          border-radius: 9px;
-
-          background: #fafafd;
-
-          font-size: clamp(
-            14px,
-            1vw,
-            16px
-          );
-
-          color: #333344;
-
-          outline: none;
-
-          transition: all 0.2s ease;
-        }
-
-        .job-form input:not(
-          [type="checkbox"]
-        ),
-        .job-form select {
-          height: 3vw;
-
-          min-height: 45px;
-
-          padding: 0 1.2%;
-        }
-
-        .job-form textarea {
-          min-height: 8vw;
-
-          padding: 15px;
-
-          resize: vertical;
-
-          font-family: inherit;
-        }
-
-        .job-form input::placeholder,
-        .job-form textarea::placeholder {
-          color: #a6a6b2;
-        }
-
-        .job-form input:focus,
-        .job-form textarea:focus,
-        .job-form select:focus {
-          border-color: #ef476f;
-
-          background: #ffffff;
-
-          box-shadow:
-            0 0 0 3px
-            rgba(239, 71, 111, 0.12);
-        }
-
-        .job-form select {
-          cursor: pointer;
-        }
-
-        /* VEŠTINE */
-
-        .job-form fieldset {
-          width: 100%;
-
-          box-sizing: border-box;
-
-          margin: 0;
-
-          padding: 1.4% 1.7%;
-
-          border: 1px solid #d9d9e2;
-
-          border-radius: 10px;
-
-          background: #fafafd;
-        }
-
-        .job-form legend {
-          padding: 0 1%;
-
-          font-size: clamp(
-            13px,
-            1vw,
-            15px
-          );
-
-          font-weight: 600;
-
-          color: #333344;
-        }
-
-        .job-skills {
-          display: grid;
-
-          grid-template-columns:
-            repeat(6, 1fr);
-
-          gap: 0.8vw 2%;
-
-          margin-top: 0.4%;
-        }
-
-        .job-skill {
-          display: flex !important;
-
-          flex-direction: row !important;
-
-          align-items: center;
-
-          gap: 8px;
-
-          width: auto !important;
-
-          font-size: clamp(
-            13px,
-            1vw,
-            15px
-          ) !important;
-
-          font-weight: 400 !important;
-
-          color: #555566 !important;
-
-          cursor: pointer;
-        }
-
-        /* CHECKBOX */
-
-        .job-skill input[type="checkbox"] {
-          appearance: none;
-
-          -webkit-appearance: none;
-
-          width: 18px !important;
-          height: 18px !important;
-
-          min-width: 18px !important;
-          min-height: 18px !important;
-
-          margin: 0;
-
-          padding: 0;
-
-          background: #ffffff;
-
-          border: 1.5px solid #cfcfd9;
-
-          border-radius: 4px;
-
-          cursor: pointer;
-
-          position: relative;
-
-          transition: all 0.15s ease;
-        }
-
-        /* KADA JE ČEKIRAN */
-
-        .job-skill input[type="checkbox"]:checked {
-          background: #ef476f;
-
-          border-color: #ef476f;
-        }
-
-        /* ŠTIKLICA */
-
-        .job-skill input[type="checkbox"]:checked::after {
-          content: "";
-
-          position: absolute;
-
-          left: 5px;
-          top: 2px;
-
-          width: 5px;
-          height: 9px;
-
-          border: solid #ffffff;
-
-          border-width: 0 2px 2px 0;
-
-          transform: rotate(45deg);
-        }
-
-        .job-skill input[type="checkbox"]:hover {
-          border-color: #ef476f;
-        }
-
-        /* DUGME */
-
-        .job-submit-button {
-          width: 100%;
-
-          height: 3.2vw;
-
-          min-height: 46px;
-
-          margin-top: 0.3%;
-
-          border: none;
-
-          border-radius: 9px;
-
-          background: #ef476f;
-
-          color: #ffffff;
-
-          font-size: clamp(
-            14px,
-            1.1vw,
-            17px
-          );
-
-          font-weight: 600;
-
-          cursor: pointer;
-
-          transition: all 0.2s ease;
-        }
-
-        .job-submit-button:hover:not(:disabled) {
-          background: #df3d65;
-
-          transform: translateY(-1px);
-
-          box-shadow:
-            0 6px 15px
-            rgba(239, 71, 111, 0.25);
-        }
-
-        .job-submit-button:active:not(:disabled) {
-          transform: translateY(0);
-        }
-
-        .job-submit-button:disabled {
-          opacity: 0.6;
-
-          cursor: not-allowed;
-        }
-
-        /* MANJI EKRANI */
-
-        @media (max-width: 700px) {
-          .job-page {
-            padding: 0.5%;
-          }
-
-          .job-card {
-            width: 99.5%;
-
-            padding: 5% 4%;
-          }
-
-          .job-form-row {
-            grid-template-columns: 1fr;
-
-            gap: 20px;
-          }
-
-          .job-skills {
-            grid-template-columns:
-              repeat(3, 1fr);
-          }
-        }
-
-        /* TELEFON */
-
-        @media (max-width: 450px) {
-          .job-page {
-            padding: 0;
-          }
-
-          .job-card {
-            width: 100%;
-
-            border-radius: 12px;
-
-            padding: 7% 5%;
-          }
-
-          .job-skills {
-            grid-template-columns:
-              repeat(2, 1fr);
-          }
-        }
-      `}</style>
-
-      <div className="job-page">
-
-        <div className="job-card">
+      <div className="job-page !min-h-0 !bg-transparent !p-0">
+
+        <div className="job-card !min-h-[86vh] !w-full !rounded-[28px] !border !border-solid !border-[#e3dfe8] !bg-[#f7f7fb] !p-4 !shadow-xl sm:!p-8">
+
+          {onBack && (
+            <button
+              type="button"
+              onClick={onBack}
+              className="mb-6 w-fit border-0 bg-transparent p-0 text-sm font-semibold text-[#c8385c] hover:underline"
+            >
+              ← Nazad
+            </button>
+          )}
 
           {/* NASLOV */}
 
-          <div className="job-header">
+          <div className="job-header !mb-8 !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!p-8">
 
-            <h1>
+            <h1 className="!m-0 !text-3xl !font-bold !tracking-tight !text-white sm:!text-4xl">
               Kreirajte novi oglas
             </h1>
 
-            <p>
+            <p className="!mb-0 !mt-2 !text-base !text-[#d3d1e0]">
               Unesite informacije o poziciji koju želite da ponudite
             </p>
 
@@ -526,14 +116,14 @@ export default function JobForm({
 
           <form
             onSubmit={handleSubmit}
-            className="job-form"
+            className="job-form !mx-auto !grid !max-w-5xl !gap-6"
           >
 
             {/* NAZIV + LOKACIJA */}
 
-            <div className="job-form-row">
+            <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="title">
                   Naziv pozicije
@@ -555,7 +145,7 @@ export default function JobForm({
 
               </div>
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="location">
                   Lokacija
@@ -581,9 +171,9 @@ export default function JobForm({
 
             {/* TIP ZAPOSLENJA + ISKUSTVO */}
 
-            <div className="job-form-row">
+            <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="employmentType">
                   Tip zaposlenja
@@ -618,7 +208,7 @@ export default function JobForm({
 
               </div>
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="experienceLevel">
                   Nivo iskustva
@@ -657,9 +247,9 @@ export default function JobForm({
 
             {/* KATEGORIJA + DATUM */}
 
-            <div className="job-form-row">
+            <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="jobCategory">
                   Kategorija posla
@@ -694,7 +284,7 @@ export default function JobForm({
 
               </div>
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="expiresAt">
                   Datum isteka
@@ -720,9 +310,9 @@ export default function JobForm({
 
             {/* PLATA */}
 
-            <div className="job-form-row">
+            <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="salaryMin">
                   Minimalna plata
@@ -744,7 +334,7 @@ export default function JobForm({
 
               </div>
 
-              <div className="job-form-group">
+              <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="salaryMax">
                   Maksimalna plata
@@ -770,7 +360,7 @@ export default function JobForm({
 
             {/* OPIS POSLA */}
 
-            <div className="job-form-group">
+            <div className="job-form-group !grid !gap-2">
 
               <label htmlFor="description">
                 Opis posla
@@ -801,14 +391,14 @@ export default function JobForm({
                 Potrebne veštine
               </legend>
 
-              <div className="job-skills">
+              <div className="job-skills !grid !grid-cols-2 !gap-3 sm:!grid-cols-3 lg:!grid-cols-4">
 
                 {Object.values(Skill).map(
                   (skill) => (
 
                     <label
                       key={skill}
-                      className="job-skill"
+                      className="job-skill !cursor-pointer !rounded-xl !border !border-solid !border-[#e2dfe9] !bg-white !px-3 !py-3 !text-sm !font-medium !text-[#555466] hover:!border-[#ef476f]"
                     >
 
                       <input
@@ -838,7 +428,7 @@ export default function JobForm({
 
             <button
               type="submit"
-              className="job-submit-button"
+              className="job-submit-button !justify-self-start !rounded-xl !border-0 !bg-[#ef476f] !px-6 !py-3 !font-bold !text-white hover:!bg-[#d9365f] disabled:!opacity-60"
               disabled={loading}
             >
               {loading
