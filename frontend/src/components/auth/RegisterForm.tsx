@@ -17,6 +17,7 @@ export default function RegisterForm() {
   });
 
   const [error, setError] = useState('');
+  const namesRequired = form.role === Role.Candidate;
 
   async function handleSubmit(
     event: React.FormEvent<HTMLFormElement>
@@ -286,7 +287,7 @@ export default function RegisterForm() {
 
             <div className="register-form-group">
               <label htmlFor="firstName">
-                Ime
+                Ime{namesRequired ? '' : ' (opciono)'}
               </label>
 
               <input
@@ -300,13 +301,13 @@ export default function RegisterForm() {
                     firstName: event.target.value,
                   })
                 }
-                required
+                required={namesRequired}
               />
             </div>
 
             <div className="register-form-group">
               <label htmlFor="lastName">
-                Prezime
+                Prezime{namesRequired ? '' : ' (opciono)'}
               </label>
 
               <input
@@ -320,7 +321,7 @@ export default function RegisterForm() {
                     lastName: event.target.value,
                   })
                 }
-                required
+                required={namesRequired}
               />
             </div>
 
@@ -416,4 +417,3 @@ export default function RegisterForm() {
     </>
   );
 }
-

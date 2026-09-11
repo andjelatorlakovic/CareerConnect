@@ -540,6 +540,7 @@ export default function CompanyProfileForm({
                       )
                     }
                     placeholder="Npr. IT, Finansije..."
+                    required
                   />
 
                 </div>
@@ -560,6 +561,7 @@ export default function CompanyProfileForm({
                       )
                     }
                     placeholder="Npr. Novi Sad"
+                    required
                   />
 
                 </div>
@@ -587,6 +589,7 @@ export default function CompanyProfileForm({
                     }
                     placeholder="Unesite opis kompanije, delatnosti i osnovne informacije..."
                     rows={6}
+                    required
                   />
 
                 </div>
@@ -649,6 +652,7 @@ export default function CompanyProfileForm({
                       )
                     }
                     placeholder="kontakt@kompanija.com"
+                    required
                   />
 
                 </div>
@@ -675,6 +679,7 @@ export default function CompanyProfileForm({
                       )
                     }
                     placeholder="+381 60 123 4567"
+                    required
                   />
 
                 </div>

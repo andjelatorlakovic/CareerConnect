@@ -54,7 +54,11 @@ function App() {
           <Route
             path="/company-profile"
             element={
-              <ProtectedRoute roles={[Role.Company]}>
+              <ProtectedRoute
+                roles={[Role.Company]}
+                
+                
+              >
                 <CompanyProfilePage />
               </ProtectedRoute>
             }
@@ -78,7 +82,9 @@ function App() {
           <Route 
             path="/my-jobs/:id" 
             element={
-            <MyJobDetailsPage />
+              <ProtectedRoute roles={[Role.Company]}>
+                <MyJobDetailsPage />
+              </ProtectedRoute>
           } 
           />
           <Route
@@ -108,7 +114,10 @@ function App() {
           <Route
             path="/candidate-profile"
             element={
-              <ProtectedRoute roles={[Role.Candidate]}>
+              <ProtectedRoute
+                roles={[Role.Candidate]}
+                allowIncompleteProfile
+              >
                 <CandidateProfilePage />
               </ProtectedRoute>
             }

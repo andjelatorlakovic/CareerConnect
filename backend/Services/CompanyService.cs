@@ -36,6 +36,17 @@ public class CompanyService: ICompanyService
 
     public async Task<CompanyProfileDto> UpdateCompanyProfileAsync(Guid userId, UpdateCompanyProfileDto profileDto)
     {
+        if (string.IsNullOrWhiteSpace(profileDto.Name) ||
+            string.IsNullOrWhiteSpace(profileDto.Industry) ||
+            string.IsNullOrWhiteSpace(profileDto.Location) ||
+            string.IsNullOrWhiteSpace(profileDto.Description) ||
+            string.IsNullOrWhiteSpace(profileDto.ContactEmail) ||
+            string.IsNullOrWhiteSpace(profileDto.ContactPhone))
+        {
+            throw new InvalidOperationException(
+                "Popunite sva obavezna osnovna polja profila kompanije.");
+        }
+
         var profile = await _context.CompanyProfiles.FirstOrDefaultAsync(p => p.UserId == userId) 
             ?? throw new Exception("Company profile not found.");
         

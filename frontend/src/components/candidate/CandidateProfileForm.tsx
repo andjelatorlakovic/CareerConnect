@@ -29,11 +29,24 @@ export default function CandidateProfileForm({
       skills: [...initial.skills],
       desiredJobCategories: [...initial.desiredJobCategories],
     });
+  const [validationError, setValidationError] = useState('');
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
+    if (
+      form.skills.length === 0 ||
+      form.desiredJobCategories.length === 0
+    ) {
+      setValidationError(
+        'Izaberite najmanje jednu veštinu i jednu željenu kategoriju posla.'
+      );
+      return;
+    }
+
+    setValidationError('');
 
     await onSubmit({
       ...form,
@@ -62,6 +75,7 @@ export default function CandidateProfileForm({
                 });
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm text-[#333344] outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              required
             />
           </label>
 
@@ -101,6 +115,7 @@ export default function CandidateProfileForm({
               });
             }}
             className="min-h-36 w-full resize-y rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm leading-relaxed text-[#333344] outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+            required
           />
         </label>
 
@@ -176,6 +191,12 @@ export default function CandidateProfileForm({
             ))}
           </div>
         </fieldset>
+
+        {validationError && (
+          <p className="m-0 rounded-lg border border-solid border-[#f2c5ce] bg-[#fff2f4] p-3 text-sm text-[#a43651]">
+            {validationError}
+          </p>
+        )}
 
         <button
           type="submit"

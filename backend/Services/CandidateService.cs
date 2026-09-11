@@ -123,6 +123,15 @@ public class CandidateService : ICandidateService
 
     public async Task<CandidateProfileDto> UpdateCandidateProfileAsync(Guid userId, UpdateCandidateProfileRequest request)
     {
+        if (string.IsNullOrWhiteSpace(request.Bio) ||
+            string.IsNullOrWhiteSpace(request.Location) ||
+            request.Skills.Count == 0 ||
+            request.DesiredJobCategories.Count == 0)
+        {
+            throw new InvalidOperationException(
+                "Popunite biografiju, lokaciju, najmanje jednu veštinu i željenu kategoriju posla.");
+        }
+
         var profile = await _context.CandidateProfiles
             .Include(p => p.Skills)
             .Include(p => p.Education)

@@ -50,8 +50,8 @@ public class UserService : IUserService
         return users.Select(u => new UserDto
         {
             Id = u.Id,
-            FirstName = u.FirstName,
-            LastName = u.LastName,
+            FirstName = u.FirstName ?? string.Empty,
+            LastName = u.LastName ?? string.Empty,
             Email = u.Email,
             Role = u.Role,
             IsActive = u.IsActive,
@@ -65,8 +65,8 @@ public class UserService : IUserService
         return new UserDto
         {
             Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = user.FirstName ?? string.Empty,
+            LastName = user.LastName ?? string.Empty,
             Email = user.Email,
             Role = user.Role,
             IsActive = user.IsActive,
@@ -86,8 +86,8 @@ public class UserService : IUserService
         return new UserDto
         {
             Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = user.FirstName ?? string.Empty,
+            LastName = user.LastName ?? string.Empty,
             Email = user.Email,
             Role = user.Role,
             IsActive = user.IsActive,

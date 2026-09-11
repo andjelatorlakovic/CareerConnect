@@ -22,6 +22,14 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
     {
+        if (registerDto.Role != UserRole.Company &&
+            (string.IsNullOrWhiteSpace(registerDto.FirstName) ||
+             string.IsNullOrWhiteSpace(registerDto.LastName)))
+        {
+            throw new InvalidOperationException(
+                "Ime i prezime su obavezni za kandidata.");
+        }
+
         var email = registerDto.Email.ToLower();
         var userAlreadyExists = await _context.Users.AnyAsync(u => u.Email.ToLower() == email);
         if (userAlreadyExists)
@@ -30,8 +38,12 @@ public class AuthService : IAuthService
         }
         var user = new User
         {
-            FirstName = registerDto.FirstName,
-            LastName = registerDto.LastName,
+            FirstName = string.IsNullOrWhiteSpace(registerDto.FirstName)
+                ? null
+                : registerDto.FirstName.Trim(),
+            LastName = string.IsNullOrWhiteSpace(registerDto.LastName)
+                ? null
+                : registerDto.LastName.Trim(),
             Email = email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
             Role = registerDto.Role

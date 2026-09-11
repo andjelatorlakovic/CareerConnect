@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { authApi } from '../../api_services/auth/AuthApiService';
+import { candidateApi } from '../../api_services/candidate/CandidateApiService';
+import { companyApi } from '../../api_services/company/CompanyApiService';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { Role } from '../../models/auth/Role';
 
@@ -32,9 +34,34 @@ export default function LoginForm() {
     login(response.data);
 
     if (response.data.role === Role.Company) {
-      navigate('/my-jobs');
+      try {
+        const profile = await companyApi.getCompanyProfile();
+        const completed = [
+          profile.name,
+          profile.industry,
+          profile.location,
+          profile.description,
+          profile.contactEmail,
+          profile.contactPhone,
+        ].every((value) => value.trim().length > 0);
+
+        navigate(completed ? '/my-jobs' : '/company-profile');
+      } catch {
+        navigate('/company-profile');
+      }
     } else if (response.data.role === Role.Candidate) {
-      navigate('/jobs');
+      try {
+        const profile = await candidateApi.getCandidateProfile();
+        const completed =
+          profile.bio.trim().length > 0 &&
+          profile.location.trim().length > 0 &&
+          profile.skills.length > 0 &&
+          profile.desiredJobCategories.length > 0;
+
+        navigate(completed ? '/jobs' : '/candidate-profile');
+      } catch {
+        navigate('/candidate-profile');
+      }
     } else {
       navigate('/admin/users');
     }
@@ -343,4 +370,3 @@ export default function LoginForm() {
     </>
   );
 }
-
