@@ -79,13 +79,13 @@ export default function JobsPage() {
 
   return (
     <CandidateLayout>
-      <div className="grid min-h-[86vh] gap-6 rounded-2xl border border-solid border-[#dedde8] bg-white p-5 shadow-xl sm:p-8">
-        <header className="border-0 border-b border-solid border-[#ebe9f1] pb-6">
-          <h1 className="m-0 text-3xl font-bold tracking-tight text-[#ef476f] sm:text-4xl">
+      <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
+        <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
+          <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Oglasi za posao
           </h1>
 
-          <p className="m-0 mt-2 text-sm text-[#8c8c9a]">
+          <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
             Pronađite posao prema lokaciji, iskustvu i veštinama.
           </p>
         </header>

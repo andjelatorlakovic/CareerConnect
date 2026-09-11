@@ -22,9 +22,16 @@ public class JobListingController : ControllerBase
     }
     //Korisnici mogu da pogledaju oglase
     [HttpGet]
-    public async Task<IActionResult> GetAll(string? location, ExperienceLevel? experienceLevel, List<Skill> skills)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? location,
+        [FromQuery] ExperienceLevel? experienceLevel,
+        [FromQuery] List<Skill>? skills)
     {
-        var jobs= await _jobService.GetAllAsync(location,experienceLevel,skills);
+        var jobs = await _jobService.GetAllAsync(
+            location,
+            experienceLevel,
+            skills ?? []
+        );
         return Ok(jobs);
     }
     //Pronadji oglas po id-ju

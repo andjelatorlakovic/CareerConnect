@@ -89,14 +89,14 @@ export default function NotificationsPage() {
 
   return (
     <CandidateLayout>
-      <div className="grid min-h-[86vh] gap-6 rounded-2xl border border-solid border-[#dedde8] bg-white p-5 shadow-xl sm:p-8">
-        <header className="flex flex-wrap items-center justify-between gap-4 border-0 border-b border-solid border-[#ebe9f1] pb-6">
+      <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
+        <header className="relative isolate flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
           <div>
-            <h1 className="m-0 text-3xl font-bold tracking-tight text-[#ef476f] sm:text-4xl">
+            <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Obaveštenja
             </h1>
 
-            <p className="m-0 mt-2 text-sm text-[#8c8c9a]">
+            <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
               Pratite promene statusa svojih prijava.
             </p>
           </div>
