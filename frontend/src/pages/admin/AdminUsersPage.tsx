@@ -44,7 +44,7 @@ export default function AdminUsersPage() {
         }
       } catch {
         if (active) {
-          setError('Korisnici se ne mogu učitati.');
+          setError('Users could not be loaded.');
         }
       } finally {
         if (active) {
@@ -96,7 +96,7 @@ export default function AdminUsersPage() {
           : 'Korisnik je aktiviran.'
       );
     } catch {
-      setActionError('Status korisnika nije moguće promeniti.');
+      setActionError('User status could not be updated.');
     } finally {
       setUpdatingId(null);
     }
@@ -129,19 +129,19 @@ export default function AdminUsersPage() {
           <div aria-hidden="true" className="pointer-events-none absolute -right-4 -bottom-20 -z-10 size-48 rounded-full bg-[#ef476f]/10" />
           <span className="mb-4 inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] text-[#ffb4c8] uppercase">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-[#ef476f]" />
-            Administracija
+            Administration
           </span>
           <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Korisnici
+            Users
           </h1>
           <p className="m-0 mt-3 max-w-lg text-sm leading-relaxed text-[#d3d1e0]">
-            Upravljajte nalozima i pregledajte oglase kompanija na jednom mestu.
+            Manage accounts and view company jobs in one place.
           </p>
         </header>
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje korisnika...
+            Loading users...
           </p>
         )}
 
@@ -176,11 +176,11 @@ export default function AdminUsersPage() {
           <>
             <div className="grid items-end gap-5 rounded-2xl border border-solid border-[#e5e4ed] bg-white p-5 shadow-[0_4px_16px_-10px_rgba(25,24,45,0.15)] sm:p-6 md:grid-cols-[2fr_1fr_1fr]">
               <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-                Pretraga
+                Search
 
                 <input
                   value={search}
-                  placeholder="Ime, prezime ili email"
+                  placeholder="First name, last name or email"
                   onChange={(event) => {
                     setSearch(event.target.value);
                   }}
@@ -189,7 +189,7 @@ export default function AdminUsersPage() {
               </label>
 
               <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-                Uloga
+                Role
 
                 <select
                   value={roleFilter}
@@ -198,10 +198,10 @@ export default function AdminUsersPage() {
                   }}
                   className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e2dfe9] bg-[#f8f8fc] px-4 py-3 text-sm text-[#333344] outline-none transition-colors placeholder:text-[#857b86] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
-                  <option value="">Sve uloge</option>
-                  <option value={Role.Candidate}>Kandidati</option>
-                  <option value={Role.Company}>Kompanije</option>
-                  <option value={Role.Admin}>Administratori</option>
+                  <option value="">All roles</option>
+                  <option value={Role.Candidate}>Candidates</option>
+                  <option value={Role.Company}>Companies</option>
+                  <option value={Role.Admin}>Administrators</option>
                 </select>
               </label>
 
@@ -217,26 +217,26 @@ export default function AdminUsersPage() {
                   }}
                   className="h-12 w-full min-w-0 rounded-xl border border-solid border-[#e2dfe9] bg-[#f8f8fc] px-4 py-3 text-sm text-[#333344] outline-none transition-colors placeholder:text-[#857b86] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 >
-                  <option value="all">Svi korisnici</option>
-                  <option value="active">Aktivni</option>
-                  <option value="inactive">Neaktivni</option>
+                  <option value="all">All users</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
                 </select>
               </label>
             </div>
 
             <div className="flex items-center justify-between gap-3 px-1">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Lista korisnika
+                User list
               </h2>
 
               <span className="rounded-full border border-solid border-[#f4ccd7] bg-[#ffe8ef] px-3 py-1.5 text-xs font-semibold text-[#a83053]">
-                Pronađeno: {filteredUsers.length}
+                Found: {filteredUsers.length}
               </span>
             </div>
 
             {filteredUsers.length === 0 ? (
               <p className="m-0 py-10 text-center text-[#858592]">
-                Nema korisnika koji odgovaraju izabranim filterima.
+                No users match the selected filters.
               </p>
             ) : (
               <div className="grid gap-4">

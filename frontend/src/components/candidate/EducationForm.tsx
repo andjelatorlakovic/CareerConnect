@@ -48,7 +48,7 @@ export default function EducationForm({
       className="border-0 border-t border-solid border-[#e5e2ec] pt-5"
     >
       <h3 className="m-0 mb-4 text-base font-bold text-[#333344]">
-        Dodaj obrazovanje
+        Add education
       </h3>
 
       <fieldset
@@ -56,7 +56,7 @@ export default function EducationForm({
         className="m-0 grid min-w-0 gap-5 border-0 p-0"
       >
         <label className="grid gap-2 text-sm font-semibold">
-          Obrazovna ustanova
+            Institution
 
           <input
             required
@@ -70,7 +70,7 @@ export default function EducationForm({
 
         <div className="grid gap-5 md:grid-cols-2">
           <label className="grid gap-2 text-sm font-semibold">
-            Stepen obrazovanja
+            Degree
 
             <input
               required
@@ -83,7 +83,7 @@ export default function EducationForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Oblast studija
+            Field of Study
 
             <input
               required
@@ -96,7 +96,7 @@ export default function EducationForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Datum početka
+            Start date
 
             <input
               type="date"
@@ -111,7 +111,7 @@ export default function EducationForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Datum završetka
+            End date
 
             <input
               type="date"
@@ -130,7 +130,7 @@ export default function EducationForm({
           type="submit"
           className="w-fit cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Čuvanje...' : '+ Dodaj obrazovanje'}
+          {loading ? 'Saving...' : '+ Add education'}
         </button>
       </fieldset>
     </form>

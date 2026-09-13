@@ -112,47 +112,52 @@ export default function CandidateLayout({
   return (
     <div className="min-h-screen w-full bg-[#19182d] text-left font-sans text-sm leading-normal text-[#333344] [color-scheme:light] [&_*]:box-border [&_button]:font-sans [&_input]:font-sans [&_select]:font-sans [&_textarea]:font-sans">
       <header className="flex flex-col items-center justify-between gap-5 border-0 border-b border-solid border-[#d9d9e2] bg-white px-6 py-5 lg:flex-row">
-        <Link
-          to="/jobs"
-          className="text-3xl font-extrabold tracking-tight whitespace-nowrap text-[#ef476f] no-underline hover:text-[#d9365f]"
-        >
-          CareerConnect
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/jobs"
+            className="text-3xl font-extrabold tracking-tight whitespace-nowrap text-[#ef476f] no-underline hover:text-[#d9365f]"
+          >
+            CareerConnect
+          </Link>
+          <span className="rounded-md bg-[#24233d] px-2 py-1 text-[10px] font-bold tracking-wider text-white">
+            CANDIDATE
+          </span>
+        </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm font-semibold">
           <NavLink
             to="/jobs"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Oglasi
+            Jobs
           </NavLink>
 
           <NavLink
             to="/matching-jobs"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Za tebe
+            For you
           </NavLink>
 
           <NavLink
             to="/my-applications"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Moje prijave
+            My applications
           </NavLink>
 
           <NavLink
             to="/candidate-profile"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Moj profil
+            My profile
           </NavLink>
 
           <NavLink
             to="/notifications"
             className="inline-flex items-center gap-2 border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Obaveštenja
+            Notifications
             {unreadNotifications > 0 && (
               <span className="grid min-w-5 place-items-center rounded-full bg-[#ef476f] px-1.5 py-0.5 text-[11px] font-bold leading-none text-white">
                 {unreadNotifications > 99 ? '99+' : unreadNotifications}
@@ -164,7 +169,7 @@ export default function CandidateLayout({
             to="/account"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Moj nalog
+            My account
           </NavLink>
 
           <div
@@ -184,7 +189,7 @@ export default function CandidateLayout({
           >
             <button
               type="button"
-              aria-label="Otvori meni naloga"
+              aria-label="Open account menu"
               aria-expanded={profileOpen}
               onClick={() => {
                 setProfileOpen((previous) => !previous);
@@ -203,7 +208,7 @@ export default function CandidateLayout({
 
                   <div className="grid min-w-0 gap-1">
                     <span className="text-xs text-[#92919e]">
-                      Prijavljeni ste kao
+                      Signed in as
                     </span>
 
                     <strong className="text-sm break-all">
@@ -217,7 +222,7 @@ export default function CandidateLayout({
                   onClick={handleLogout}
                   className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-3 text-sm font-semibold text-[#c8385c] transition hover:bg-[#fce5ec]"
                 >
-                  Odjavi se
+                  Sign out
                 </button>
               </div>
             )}

@@ -37,7 +37,7 @@ export default function CreateJobPage() {
       await jobsApi.createJob(request);
       navigate('/my-jobs');
     } catch {
-      setError('Oglas nije moguće kreirati.');
+      setError('Job could not be created.');
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,7 @@ export default function CreateJobPage() {
 
       <JobForm
         loading={loading}
-        submitLabel="Objavi oglas"
+        submitLabel="Create Job Posting"
         onBack={() => navigate(-1)}
         onSubmit={(form) => void handleSubmit(form)}
       />

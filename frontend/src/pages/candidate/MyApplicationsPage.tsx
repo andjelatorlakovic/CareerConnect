@@ -13,10 +13,10 @@ import CandidateLayout from '../../components/candidate/CandidateLayout';
 import { useRealtimeEvent } from '../../hooks/realtime/useRealtimeEvent';
 
 const statusLabels: Record<ApplicationStatus, string> = {
-  Pending: 'Na čekanju',
-  Reviewed: 'Pregledana',
-  Accepted: 'Prihvaćena',
-  Rejected: 'Odbijena',
+  Pending: 'Pending',
+  Reviewed: 'Reviewed',
+  Accepted: 'Accepted',
+  Rejected: 'Rejected',
 };
 
 export default function MyApplicationsPage() {
@@ -82,7 +82,7 @@ export default function MyApplicationsPage() {
         }
       } catch {
         if (active) {
-          setError('Prijave se ne mogu učitati.');
+          setError('Applications could not be loaded.');
         }
       } finally {
         if (active) {
@@ -109,18 +109,18 @@ export default function MyApplicationsPage() {
         {!jobId && (
           <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
             <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Moje prijave
+              My Applications
             </h1>
 
             <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-              Pratite svoje prijave i odgovore kompanija.
+              Track your applications and company responses.
             </p>
           </header>
         )}
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje prijava...
+            Loading applications...
           </p>
         )}
 
@@ -140,7 +140,7 @@ export default function MyApplicationsPage() {
                 <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
                   <div className="grid gap-2 rounded-xl border border-solid border-[#e2deed] bg-[#f5f2fa] p-4">
                     <span className="text-xs text-[#858092]">
-                      Ukupno prijava
+                  Total applications
                     </span>
 
                     <strong className="text-2xl">{applications.length}</strong>
@@ -167,7 +167,7 @@ export default function MyApplicationsPage() {
                 </div>
 
                 <label className="grid gap-2 text-sm font-semibold">
-                  Filtriraj po statusu
+              Filter by status
 
                   <select
                     value={status}
@@ -178,7 +178,7 @@ export default function MyApplicationsPage() {
                     }}
                     className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
                   >
-                    <option value="">Sve prijave</option>
+                <option value="">All applications</option>
 
                     {Object.values(ApplicationStatus).map((item) => (
                       <option key={item} value={item}>
@@ -194,15 +194,15 @@ export default function MyApplicationsPage() {
               <div className="grid justify-items-center gap-4 py-10 text-center">
                 <h2 className="m-0 text-lg font-bold text-[#333344]">
                   {applications.length === 0
-                    ? 'Još nemate prijava'
-                    : 'Nema prijava sa izabranim statusom'}
+                    ? 'You do not have any applications yet'
+                    : 'No applications match the selected status'}
                 </h2>
 
                 <Link
                   to="/jobs"
                   className="rounded-lg bg-[#ef476f] px-5 py-3 font-semibold text-white no-underline hover:bg-[#df3d65]"
                 >
-                  Pronađi posao
+                  Find jobs
                 </Link>
               </div>
             ) : (
@@ -237,7 +237,7 @@ export default function MyApplicationsPage() {
 
                       <p className="m-0 text-xs text-[#858592]">
                         {job && `${job.location} · `}
-                        Prijavljeno:{' '}
+                        Applied:{' '}
                         {new Date(application.appliedAt)
                           .toLocaleDateString('sr-Latn-RS')}
                       </p>
@@ -245,7 +245,7 @@ export default function MyApplicationsPage() {
                       {application.coverLetter && (
                         <details>
                           <summary className="cursor-pointer text-sm font-semibold text-[#c8385c]">
-                            Moje motivaciono pismo
+                            My cover letter
                           </summary>
 
                           <p className="m-0 mt-3 text-sm leading-relaxed whitespace-pre-wrap break-words text-[#5e5d6c]">
@@ -259,7 +259,7 @@ export default function MyApplicationsPage() {
                           to={`/jobs/${job.id}`}
                           className="w-fit rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-2 text-sm font-semibold text-[#c8385c] no-underline hover:bg-[#fce5ec]"
                         >
-                          Pogledaj oglas
+                          View job
                         </Link>
                       )}
                     </article>

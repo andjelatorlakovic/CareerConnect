@@ -26,12 +26,12 @@ export default function ChangePasswordForm({
     setError('');
 
     if (newPassword !== confirmation) {
-      setError('Nove lozinke se ne poklapaju.');
+      setError('New passwords do not match.');
       return;
     }
 
     if (currentPassword === newPassword) {
-      setError('Nova lozinka mora biti drugačija od trenutne.');
+      setError('The new password must be different from the current password.');
       return;
     }
 
@@ -64,8 +64,8 @@ export default function ChangePasswordForm({
       >
         <div className="grid items-end gap-5 lg:grid-cols-3">
           <label className="grid min-w-0 gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-            Trenutna lozinka
-  
+            Current Password
+
             <input
               type="password"
               required
@@ -80,13 +80,13 @@ export default function ChangePasswordForm({
           </label>
 
           <label className="grid min-w-0 gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-            Nova lozinka
+            New Password
 
             <input
               type="password"
               required
               autoComplete="new-password"
-              placeholder="Unesite novu lozinku"
+              placeholder="Enter new password"
               value={newPassword}
               onChange={(event) => {
                 setNewPassword(event.target.value);
@@ -96,13 +96,13 @@ export default function ChangePasswordForm({
           </label>
 
           <label className="grid min-w-0 gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-            Potvrdi novu lozinku
+            Confirm New Password
 
             <input
               type="password"
               required
               autoComplete="new-password"
-              placeholder="Ponovite novu lozinku"
+              placeholder="Confirm new password"
               value={confirmation}
               onChange={(event) => {
                 setConfirmation(event.target.value);
@@ -116,7 +116,7 @@ export default function ChangePasswordForm({
           type="submit"
           className="mt-1 w-fit max-w-full justify-self-end cursor-pointer rounded-xl border-0 bg-[#24233d] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#393750] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Čuvanje...' : 'Promeni lozinku'}
+          {loading ? 'Saving...' : 'Change password'}
         </button>
       </fieldset>
     </form>

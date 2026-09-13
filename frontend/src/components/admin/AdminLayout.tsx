@@ -49,14 +49,14 @@ export default function AdminLayout({
             to="/admin/users"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Korisnici
+            Users
           </NavLink>
 
           <NavLink
             to="/account"
             className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]"
           >
-            Moj nalog
+            My account
           </NavLink>
 
           <div
@@ -78,7 +78,7 @@ export default function AdminLayout({
           >
             <button
               type="button"
-              aria-label="Otvori meni naloga"
+              aria-label="Open account menu"
               aria-expanded={profileOpen}
               onClick={() => {
                 setProfileOpen((previous) => !previous);
@@ -92,7 +92,7 @@ export default function AdminLayout({
               <div className="absolute top-full right-0 z-50 mt-3 grid w-72 max-w-[85vw] gap-4 rounded-xl border border-solid border-[#dedde8] bg-white p-4 shadow-xl">
                 <div className="grid gap-1">
                   <span className="text-xs text-[#92919e]">
-                    Prijavljeni administrator
+                    Signed in as administrator
                   </span>
 
                   <strong className="text-sm break-all">
@@ -105,7 +105,7 @@ export default function AdminLayout({
                   onClick={handleLogout}
                   className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-3 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec]"
                 >
-                  Odjavi se
+                  Sign out
                 </button>
               </div>
             )}

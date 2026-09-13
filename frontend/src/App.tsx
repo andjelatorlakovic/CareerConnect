@@ -56,8 +56,7 @@ function App() {
             element={
               <ProtectedRoute
                 roles={[Role.Company]}
-                
-                
+                allowIncompleteProfile
               >
                 <CompanyProfilePage />
               </ProtectedRoute>

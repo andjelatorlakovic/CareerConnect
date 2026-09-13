@@ -32,7 +32,7 @@ export default function EditJobPage() {
 
         setJob(data);
       } catch {
-        setError('Oglas nije pronađen.');
+        setError('Job not found.');
       } finally {
         setLoading(false);
       }
@@ -71,7 +71,7 @@ export default function EditJobPage() {
 
       navigate('/my-jobs');
     } catch {
-      setError('Oglas nije moguće izmeniti.');
+      setError('Job could not be updated.');
     } finally {
       setLoading(false);
     }
@@ -97,9 +97,9 @@ export default function EditJobPage() {
             salaryMax: job.salaryMax?.toString() ?? '',
           }}
           loading={loading}
-          submitLabel="Sačuvaj izmene"
+          submitLabel="Save changes"
           title="Uredite oglas"
-          subtitle="Izmenite informacije o poziciji i sačuvajte promene."
+          subtitle="Update the position information and save your changes."
           onBack={() => navigate(`/my-jobs/${job.id}`)}
           onSubmit={(form) => void handleSubmit(form)}
         />

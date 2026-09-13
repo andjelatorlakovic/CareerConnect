@@ -57,7 +57,7 @@ export default function JobCard({ job }: JobCardProps) {
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="text-xs text-[#858592]">
-            Rok:{' '}
+            Deadline:{' '}
             {new Date(job.expiresAt).toLocaleDateString('sr-Latn-RS')}
           </span>
 
@@ -65,7 +65,7 @@ export default function JobCard({ job }: JobCardProps) {
             to={`/jobs/${job.id}`}
             className="inline-flex items-center gap-2 text-xs font-bold text-[#92919e] no-underline hover:text-[#ef476f]"
           >
-            Detalji
+            Details
 
             <span className="grid size-8 place-items-center rounded-lg bg-[#24233d] text-lg text-white">
               →

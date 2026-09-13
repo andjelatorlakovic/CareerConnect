@@ -46,7 +46,7 @@ export default function NotificationsPage() {
         }
       } catch {
         if (active) {
-          setError('Obaveštenja se ne mogu učitati.');
+          setError('Notifications could not be loaded.');
         }
       } finally {
         if (active) {
@@ -80,7 +80,7 @@ export default function NotificationsPage() {
         new CustomEvent('careerconnect:notification-read')
       );
     } catch {
-      setActionError('Obaveštenje nije označeno kao pročitano.');
+      setActionError('Notification could not be marked as read.');
     } finally {
       setSaving(false);
     }
@@ -102,9 +102,9 @@ export default function NotificationsPage() {
         new CustomEvent('careerconnect:notifications-marked-read')
       );
 
-      setSuccess('Sva obaveštenja su označena kao pročitana.');
+      setSuccess('All notifications have been marked as read.');
     } catch {
-      setActionError('Obaveštenja nisu označena kao pročitana.');
+      setActionError('Notifications could not be marked as read.');
     } finally {
       setSaving(false);
     }
@@ -119,11 +119,11 @@ export default function NotificationsPage() {
         <header className="relative isolate flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
           <div>
             <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Obaveštenja
+              Notifications
             </h1>
 
             <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-              Pratite promene statusa svojih prijava.
+              Track changes to your application statuses.
             </p>
           </div>
 
@@ -136,14 +136,14 @@ export default function NotificationsPage() {
               }}
               className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-3 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec] disabled:opacity-60"
             >
-              Označi sve kao pročitano
+              Mark all as read
             </button>
           )}
         </header>
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje obaveštenja...
+            Loading notifications...
           </p>
         )}
 
@@ -169,17 +169,17 @@ export default function NotificationsPage() {
           notifications.length === 0 ? (
             <div className="grid justify-items-center gap-3 py-10 text-center">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Nemate obaveštenja
+                You have no notifications
               </h2>
 
               <p className="m-0 text-sm text-[#858592]">
-                Nova obaveštenja biće prikazana ovde.
+                New notifications will appear here.
               </p>
             </div>
           ) : (
             <>
               <p className="m-0 text-sm text-[#858592]">
-                Nepročitana obaveštenja: {unreadCount}
+                Unread notifications: {unreadCount}
               </p>
 
               <div className="grid gap-4">
@@ -201,8 +201,8 @@ export default function NotificationsPage() {
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <h3 className="m-0 text-base font-bold text-[#333344]">
                           {notification.isRead
-                            ? 'Obaveštenje'
-                            : 'Novo obaveštenje'}
+                            ? 'Notification'
+                            : 'New notification'}
                         </h3>
 
                         <span className="text-xs text-[#858592]">
@@ -220,7 +220,7 @@ export default function NotificationsPage() {
                           to={`/my-applications?jobId=${notification.jobListingId}`}
                           className="w-fit rounded-lg bg-[#24233d] px-4 py-2 text-sm font-semibold text-white no-underline hover:bg-[#353451]"
                         >
-                          Pogledaj moju prijavu
+                          View my application
                         </Link>
                       )}
 
@@ -233,7 +233,7 @@ export default function NotificationsPage() {
                           }}
                           className="w-fit cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-2 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec] disabled:opacity-60"
                         >
-                          Označi kao pročitano
+                          Mark as read
                         </button>
                       )}
                     </article>

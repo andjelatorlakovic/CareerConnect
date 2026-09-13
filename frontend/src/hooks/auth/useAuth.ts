@@ -7,7 +7,7 @@ export function useAuth() {
 
   if (!context) {
     throw new Error(
-      'useAuth mora biti korišćen unutar AuthProvider.'
+      'useAuth must be used within an AuthProvider.'
     );
   }
 

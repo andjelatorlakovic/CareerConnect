@@ -50,7 +50,7 @@ export default function WorkExperienceForm({
       className="border-0 border-t border-solid border-[#e5e2ec] pt-5"
     >
       <h3 className="m-0 mb-4 text-base font-bold text-[#333344]">
-        Dodaj radno iskustvo
+        Add work experience
       </h3>
 
       <fieldset
@@ -59,7 +59,7 @@ export default function WorkExperienceForm({
       >
         <div className="grid gap-5 md:grid-cols-2">
           <label className="grid gap-2 text-sm font-semibold">
-            Kompanija
+            Company
 
             <input
               required
@@ -72,7 +72,7 @@ export default function WorkExperienceForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Pozicija
+            Position
 
             <input
               required
@@ -85,7 +85,7 @@ export default function WorkExperienceForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Datum početka
+            Start date
 
             <input
               type="date"
@@ -100,7 +100,7 @@ export default function WorkExperienceForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Datum završetka
+            End date
 
             <input
               type="date"
@@ -113,13 +113,13 @@ export default function WorkExperienceForm({
             />
 
             <small className="text-xs font-normal text-[#8c8c9a]">
-              Ostavite prazno ako još radite ovde.
+              Leave empty if you still work here.
             </small>
           </label>
         </div>
 
         <label className="grid gap-2 text-sm font-semibold">
-          Opis posla
+          Job description
 
           <textarea
             value={form.description}
@@ -134,7 +134,7 @@ export default function WorkExperienceForm({
           type="submit"
           className="w-fit cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Čuvanje...' : '+ Dodaj iskustvo'}
+          {loading ? 'Saving...' : '+ Add experience'}
         </button>
       </fieldset>
     </form>

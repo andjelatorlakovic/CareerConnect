@@ -42,15 +42,16 @@ export default function QuestionForm({
           }}
         >
           <span>←</span>
-          Nazad
+          Back
         </button>
 
         <div className="question-header !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!p-8">
-          <h1 className="!m-0 !text-3xl !font-bold !text-white">Dodavanje pitanja</h1>
+          <h1 className="!m-0 !text-3xl !font-bold !text-white">Add question</h1>
 
           <p className="!mb-0 !mt-2 !text-sm !leading-relaxed !text-[#d3d1e0]">
-            Dodajte pitanje koje će kandidatima pomoći
-            da bolje razumeju poziciju.
+            Add a question that will help candidates
+            demonstrate their skills and knowledge for this job.
+          
           </p>
         </div>
 
@@ -60,7 +61,7 @@ export default function QuestionForm({
         >
           <div className="form-field">
             <label htmlFor="question" className="text-sm font-semibold text-[#45445a]">
-              Pitanje
+              Question
             </label>
 
             <textarea
@@ -69,7 +70,7 @@ export default function QuestionForm({
               onChange={(event) =>
                 setQuestionText(event.target.value)
               }
-              placeholder="Unesite pitanje..."
+              placeholder="Enter a question..."
               rows={4}
               className="min-h-28 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 py-3 text-sm text-[#333344] outline-none placeholder:text-[#aaa8b4] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
               required
@@ -84,12 +85,12 @@ export default function QuestionForm({
             {loading ? (
               <>
                 <span className="button-spinner" />
-                Dodavanje...
+                Adding...
               </>
             ) : (
               <>
                 <span className="plus-icon">+</span>
-                Dodaj pitanje
+                Add question
               </>
             )}
           </button>

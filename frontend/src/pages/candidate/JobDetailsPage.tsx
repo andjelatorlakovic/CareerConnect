@@ -62,7 +62,7 @@ export default function JobDetailsPage() {
         }
       } catch {
         if (active) {
-          setError('Detalji oglasa se ne mogu učitati.');
+          setError('Job details could not be loaded.');
         }
       } finally {
         if (active) {
@@ -108,10 +108,10 @@ export default function JobDetailsPage() {
       await jobApplicationsApi.applyForJob(id, request);
 
       setAlreadyApplied(true);
-      setSuccess('Uspešno ste se prijavili na oglas.');
+      setSuccess('Your application was submitted successfully.');
     } catch {
       setSubmitError(
-        'Prijava nije poslata. Proverite da li ste već prijavljeni ili je oglas istekao.'
+        'Your application could not be submitted. Check whether you have already applied or the job has expired.'
       );
     } finally {
       setSubmitting(false);
@@ -125,12 +125,12 @@ export default function JobDetailsPage() {
           to="/jobs"
           className="w-fit text-sm font-semibold text-[#c8385c] no-underline hover:underline"
         >
-          ← Svi oglasi
+          ← All jobs
         </Link>
 
         {loading && id && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje oglasa...
+            Loading job...
           </p>
         )}
 
@@ -139,7 +139,7 @@ export default function JobDetailsPage() {
             role="alert"
             className="rounded-lg border border-solid border-[#f2c5ce] bg-[#fff2f4] p-4 text-[#a43651]"
           >
-            {!id ? 'Oglas nije pronađen.' : error}
+            {!id ? 'Job not found.' : error}
           </div>
         )}
 
@@ -167,7 +167,7 @@ export default function JobDetailsPage() {
               </div>
 
               <div className="grid gap-2 rounded-xl border border-solid border-[#d6eadc] bg-[#f0f8f3] p-4">
-                <span className="text-xs text-[#92919e]">Datum objave</span>
+                <span className="text-xs text-[#92919e]">Published on</span>
 
                 <strong>
                   {new Date(job.createdAt)
@@ -176,7 +176,7 @@ export default function JobDetailsPage() {
               </div>
 
               <div className="grid gap-2 rounded-xl border border-solid border-[#ebe2cb] bg-[#f8f5ed] p-4">
-                <span className="text-xs text-[#92919e]">Plata</span>
+                <span className="text-xs text-[#92919e]">Salary</span>
 
                 <strong>
                   {job.salaryMin !== null && job.salaryMax !== null
@@ -190,7 +190,7 @@ export default function JobDetailsPage() {
               </div>
 
               <div className="grid gap-2 rounded-xl border border-solid border-[#f6d5dc] bg-[#fff4f6] p-4">
-                <span className="text-xs text-[#92919e]">Rok za prijavu</span>
+                <span className="text-xs text-[#92919e]">Application deadline</span>
 
                 <strong>
                   {new Date(job.expiresAt)
@@ -201,7 +201,7 @@ export default function JobDetailsPage() {
 
             <section className="grid gap-4 rounded-xl border border-solid border-[#e7e5ed] bg-[#f7f6fa] p-5">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Opis pozicije
+                Job description
               </h2>
 
               <p className="m-0 text-sm leading-relaxed whitespace-pre-wrap break-words text-[#5e5d6c]">
@@ -211,7 +211,7 @@ export default function JobDetailsPage() {
 
             <section className="grid gap-4">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Potrebne veštine
+                Required skills
               </h2>
 
               <div className="flex flex-wrap gap-2">
@@ -227,7 +227,7 @@ export default function JobDetailsPage() {
 
               {job.skills.length === 0 && (
                 <p className="m-0 text-sm text-[#858592]">
-                  Veštine nisu navedene.
+                  No skills listed.
                 </p>
               )}
             </section>
@@ -253,20 +253,20 @@ export default function JobDetailsPage() {
             {alreadyApplied ? (
               <section className="grid gap-4 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
                 <h2 className="m-0 text-lg font-bold text-[#333344]">
-                  Već ste poslali prijavu
+                  You have already applied
                 </h2>
 
                 <Link
                   to="/my-applications"
                   className="w-fit rounded-lg bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white no-underline hover:bg-[#df3d65]"
                 >
-                  Moje prijave
+                  My Applications
                 </Link>
               </section>
             ) : canApply ? (
               <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
                 <h2 className="m-0 text-lg font-bold text-[#333344]">
-                  Prijavi se na oglas
+                  Apply for this job
                 </h2>
 
                 <JobApplicationForm
@@ -278,7 +278,7 @@ export default function JobDetailsPage() {
               </section>
             ) : (
               <div className="rounded-xl bg-[#f7f6fa] p-5 text-sm text-[#858592]">
-                Oglas je zatvoren ili je istekao rok za prijavu.
+                This job is closed or the application deadline has passed.
               </div>
             )}
           </>

@@ -69,7 +69,7 @@ export default function JobApplicationsPage() {
 
         setApplications(data);
       } catch {
-        setError('Prijave nisu dostupne.');
+        setError('Applications could not be loaded.');
       } finally {
         setLoading(false);
       }
@@ -104,7 +104,7 @@ export default function JobApplicationsPage() {
       );
     } catch {
       setError(
-        'Status prijave nije moguće promeniti.'
+        'Application status could not be updated.'
       );
     }
   };
@@ -175,7 +175,7 @@ export default function JobApplicationsPage() {
               <div className="spinner" />
 
               <p>
-                Učitavanje prijava...
+                Loading applications...
               </p>
 
             </div>
@@ -195,7 +195,7 @@ export default function JobApplicationsPage() {
               <div>
 
                 <strong>
-                  Došlo je do greške
+                  Something went wrong
                 </strong>
 
                 <p>
@@ -221,12 +221,11 @@ export default function JobApplicationsPage() {
                 </div>
 
                 <h2>
-                  Još nema prijava
+                  No applications yet
                 </h2>
 
                 <p>
-                  Za ovaj oglas još nije stigla
-                  nijedna prijava kandidata.
+                  No applications have been received for this job yet.                  
                 </p>
 
                 <button
@@ -237,7 +236,7 @@ export default function JobApplicationsPage() {
                   }
                 >
                   <span>←</span>
-                  Nazad na detalje oglasa
+                  Back to job details
                 </button>
 
               </div>
@@ -262,17 +261,17 @@ export default function JobApplicationsPage() {
                   <div>
 
                     <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                      Prijave kandidata
+                      Applications
                     </h2>
 
                     <span className="!mt-1 !block !text-sm !text-[#777686]">
-                      Pregledajte informacije i odgovore kandidata.
+                      Review candidate information and responses.
                     </span>
 
                   </div>
 
                   <span className="application-count !rounded-full !bg-[#fce8ee] !px-3 !py-1 !text-sm !font-bold !text-[#c8385c]">
-                    {applications.length} prijava
+                    {applications.length} applications
                   </span>
 
                 </div>
@@ -346,7 +345,7 @@ export default function JobApplicationsPage() {
                                 <div className="candidate-title-row">
 
                                   <h3>
-                                    Kandidat
+                                    Candidate
                                   </h3>
 
                                   <span
@@ -362,10 +361,10 @@ export default function JobApplicationsPage() {
                                     <span className="sticker-dot" />
 
                                     {isAccepted
-                                      ? 'PRIHVAĆENA'
+                                      ? 'ACCEPTED'
                                       : isRejected
-                                      ? 'ODBIJENA'
-                                      : 'NA ČEKANJU'}
+                                      ? 'REJECTED'
+                                      : 'PENDING'}
 
                                   </span>
 
@@ -382,7 +381,7 @@ export default function JobApplicationsPage() {
                             <div className="application-date">
 
                               <span>
-                                Datum prijave
+                                Applied on
                               </span>
 
                               <strong>
@@ -406,14 +405,12 @@ export default function JobApplicationsPage() {
                               <span className="label-icon">
                                 ✎
                               </span>
-
-                              Motivaciono pismo
-
+                              Cover Letter
                             </div>
 
                             <p>
                               {application.coverLetter ||
-                                'Kandidat nije uneo motivaciono pismo.'}
+                                'Candidate has not submitted a cover letter.'}
                             </p>
 
                           </div>
@@ -429,7 +426,7 @@ export default function JobApplicationsPage() {
                               <label
                                 htmlFor={`status-${application.id}`}
                               >
-                                Status prijave
+                                Application Status
                               </label>
 
                               <select
@@ -479,7 +476,7 @@ export default function JobApplicationsPage() {
                               {openAnswersId ===
                               application.id
                                 ? 'Sakrij odgovore'
-                                : 'Prikaži odgovore'}
+                                : 'Show answers'}
 
                             </button>
 
@@ -498,11 +495,11 @@ export default function JobApplicationsPage() {
                                 <div>
 
                                   <h4>
-                                    Odgovori na pitanja
+                                    Candidate Answers
                                   </h4>
 
                                   <span>
-                                    Odgovori kandidata na pitanja oglasa.
+                                    Candidate answers to job questions.
                                   </span>
 
                                 </div>
@@ -542,11 +539,11 @@ export default function JobApplicationsPage() {
                                         <div className="answer-content">
 
                                           <span>
-                                            Pitanje {index + 1}
+                                            Question {index + 1}
                                           </span>
 
                                           <small>
-                                            ID pitanja: {answer.jobListingQuestionId}
+                                            Question ID: {answer.jobListingQuestionId}
                                           </small>
 
                                           <p>
@@ -562,8 +559,8 @@ export default function JobApplicationsPage() {
                                 </div>
                               ) : (
                                 <div className="no-answers">
-                                  Kandidat nije odgovorio
-                                  na pitanja.
+                                  Candidate has not answered
+                                  the questions.
                                 </div>
                               )}
 

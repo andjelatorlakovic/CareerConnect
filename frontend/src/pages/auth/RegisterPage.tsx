@@ -8,14 +8,14 @@ export default function RegisterPage() {
       <div style={box}>
         <h1 style={heading}>CareerConnect</h1>
 
-        <h2 style={subheading}>Registracija</h2>
+        <h2 style={subheading}>Registration</h2>
 
         <RegisterForm />
 
         <p style={paragraph}>
-          Već imate nalog?{' '}
+          Already have an account?{' '}
           <Link to="/login">
-            Prijavite se
+            Login
           </Link>
         </p>
       </div>

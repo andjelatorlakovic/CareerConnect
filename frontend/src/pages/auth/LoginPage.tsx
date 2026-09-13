@@ -8,14 +8,14 @@ export default function LoginPage() {
       <div style={box}>
         <h1 style={heading}>CareerConnect</h1>
 
-        <h2 style={subheading}>Prijava</h2>
+        <h2 style={subheading}>Login</h2>
 
         <LoginForm />
 
         <p style={paragraph}>
-          Nemate nalog?{' '}
+          Don't have an account?{' '}
           <Link to="/register">
-            Registrujte se
+            Register
           </Link>
         </p>
       </div>

@@ -64,7 +64,7 @@ export default function AdminUserCard({
 
             {isCurrentUser && (
               <span className="mt-2 inline-block text-xs font-semibold text-[#a13b60]">
-                Vaš nalog
+                Your account
               </span>
             )}
           </div>
@@ -73,10 +73,10 @@ export default function AdminUserCard({
         <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
           <span className="inline-flex items-center rounded-full border border-solid border-[#e6e4ed] bg-[#f5f4f8] px-3 py-1.5 text-xs font-semibold text-[#24233d]">
             {isCompany
-              ? 'Kompanija'
+              ? 'Company'
               : user.role === Role.Candidate
-                ? 'Kandidat'
-                : 'Administrator'}
+                ? 'Candidate'
+                : 'Admin'}
           </span>
 
           <span
@@ -136,8 +136,8 @@ export default function AdminUserCard({
             disabled={disabled || updating || isCurrentUser}
             aria-label={
               isCurrentUser
-                ? 'Ne možete deaktivirati sopstveni nalog'
-                : `${user.isActive ? 'Deaktiviraj' : 'Aktiviraj'} nalog: ${fullName}`
+                ? 'You cannot deactivate your own account'
+                : `${user.isActive ? 'Deactivate' : 'Activate'} account: ${fullName}`
             }
             onClick={() => {
               void onToggleStatus(user);
@@ -149,12 +149,12 @@ export default function AdminUserCard({
             }
           >
             {updating
-              ? 'Čuvanje...'
+              ? 'Saving...'
               : isCurrentUser
-                ? 'Vaš nalog'
+                ? 'Your account'
                 : user.isActive
-                  ? 'Deaktiviraj'
-                  : 'Aktiviraj'}
+                  ? 'Deactivate'
+                  : 'Activate'}
           </button>
 
           {isCompany && (
@@ -162,7 +162,7 @@ export default function AdminUserCard({
               to={`/admin/companies/${user.id}/jobs`}
               className="group inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-solid border-[#24233d] bg-[#24233d] px-4 py-2 text-xs font-semibold text-white no-underline transition-colors hover:border-[#393750] hover:bg-[#393750] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f]"
             >
-              Pogledaj oglase
+              View Jobs
 
               <svg
                 aria-hidden="true"

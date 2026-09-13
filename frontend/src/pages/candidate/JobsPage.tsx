@@ -43,7 +43,7 @@ export default function JobsPage() {
         }
       } catch {
         if (active) {
-          setError('Oglasi se ne mogu učitati.');
+          setError('Jobs could not be loaded.');
         }
       } finally {
         if (active) {
@@ -89,11 +89,11 @@ export default function JobsPage() {
       <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
         <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
           <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Oglasi za posao
+            Job listings
           </h1>
 
           <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-            Pronađite posao prema lokaciji, iskustvu i veštinama.
+            Find jobs by location, experience and skills.
           </p>
         </header>
 
@@ -103,7 +103,7 @@ export default function JobsPage() {
         >
           <div className="grid gap-5 md:grid-cols-2">
             <label className="grid gap-2 text-sm font-semibold">
-              Lokacija
+              Location
 
               <input
                 value={location}
@@ -116,7 +116,7 @@ export default function JobsPage() {
             </label>
 
             <label className="grid gap-2 text-sm font-semibold">
-              Nivo iskustva
+              Experience Level
 
               <select
                 value={experienceLevel}
@@ -127,7 +127,7 @@ export default function JobsPage() {
                 }}
                 className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
               >
-                <option value="">Svi nivoi</option>
+                <option value="">All levels</option>
 
                 {Object.values(ExperienceLevel).map((level) => (
                   <option key={level} value={level}>
@@ -140,7 +140,7 @@ export default function JobsPage() {
 
           <fieldset className="m-0 min-w-0 border-0 p-0">
             <legend className="mb-3 text-sm font-semibold">
-              Veštine koje oglas treba da sadrži
+              Required skills
             </legend>
 
             <div className="flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export default function JobsPage() {
               disabled={loading}
               className="cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#df3d65] disabled:opacity-60"
             >
-              Pretraži oglase
+              Search jobs
             </button>
 
             <button
@@ -187,14 +187,14 @@ export default function JobsPage() {
               onClick={handleReset}
               className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-5 py-3 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec] disabled:opacity-60"
             >
-              Poništi filtere
+              Reset filters
             </button>
           </div>
         </form>
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje oglasa...
+            Loading jobs...
           </p>
         )}
 
@@ -211,11 +211,11 @@ export default function JobsPage() {
           <>
             <div className="flex items-center justify-between gap-3">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Dostupni oglasi
+                Jobs
               </h2>
 
               <span className="text-xs text-[#858592]">
-                Pronađeno: {jobs.length}
+                Found: {jobs.length}
               </span>
             </div>
 
@@ -228,11 +228,11 @@ export default function JobsPage() {
             ) : (
               <div className="grid justify-items-center gap-3 py-10 text-center">
                 <h2 className="m-0 text-lg font-bold text-[#333344]">
-                  Nema odgovarajućih oglasa
+                  No matching jobs
                 </h2>
 
                 <p className="m-0 text-sm text-[#858592]">
-                  Promenite filtere i pokušajte ponovo.
+                  Change the filters and try again.
                 </p>
               </div>
             )}

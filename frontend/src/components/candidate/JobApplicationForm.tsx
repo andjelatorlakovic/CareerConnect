@@ -49,11 +49,11 @@ export default function JobApplicationForm({
         className="m-0 grid min-w-0 gap-5 border-0 p-0"
       >
         <label className="grid gap-2 text-sm font-semibold">
-          Motivaciono pismo
+          Cover Letter
 
           <textarea
             value={coverLetter}
-            placeholder="Napišite zašto ste zainteresovani za ovu poziciju."
+            placeholder="Tell the company why you are interested in this position."
             onChange={(event) => {
               setCoverLetter(event.target.value);
             }}
@@ -64,7 +64,7 @@ export default function JobApplicationForm({
         {sortedQuestions.length > 0 && (
           <div className="grid gap-5 border-0 border-t border-solid border-[#e5e2ec] pt-5">
             <h3 className="m-0 text-base font-bold text-[#333344]">
-              Pitanja kompanije
+              Company questions
             </h3>
 
             {sortedQuestions.map((question, index) => (
@@ -76,7 +76,7 @@ export default function JobApplicationForm({
 
                 <textarea
                   value={answers[question.id] ?? ''}
-                  placeholder="Unesite odgovor"
+                  placeholder="Enter your answer"
                   onChange={(event) => {
                     setAnswers((previous) => ({
                       ...previous,
@@ -94,7 +94,7 @@ export default function JobApplicationForm({
           type="submit"
           className="w-fit cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Slanje prijave...' : 'Pošalji prijavu'}
+          {loading ? 'Submitting application...' : 'Submit application'}
         </button>
       </fieldset>
     </form>

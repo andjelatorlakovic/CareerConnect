@@ -6,6 +6,9 @@ import { companyApi } from '../../api_services/company/CompanyApiService';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { Role } from '../../models/auth/Role';
 
+const isFilled = (value: unknown): boolean =>
+  typeof value === 'string' && value.trim().length > 0;
+
 interface ProtectedRouteProps {
   children: ReactNode;
   roles?: Role[];
@@ -42,14 +45,14 @@ export default function ProtectedRoute({
             profile.description,
             profile.contactEmail,
             profile.contactPhone,
-          ].every((value) => value.trim().length > 0);
+          ].every(isFilled);
 
           if (active) setProfileComplete(completed);
         } else if (activeUser.role === Role.Candidate) {
           const profile = await candidateApi.getCandidateProfile();
           const completed =
-            profile.bio.trim().length > 0 &&
-            profile.location.trim().length > 0 &&
+            isFilled(profile.bio) &&
+            isFilled(profile.location) &&
             profile.skills.length > 0 &&
             profile.desiredJobCategories.length > 0;
 
@@ -70,7 +73,7 @@ export default function ProtectedRoute({
   }, [allowIncompleteProfile, user]);
 
   if (isLoading) {
-    return <p>Učitavanje...</p>;
+    return <p>Loading...</p>;
   }
 
   if (!user) {
@@ -82,7 +85,7 @@ export default function ProtectedRoute({
   }
 
   if (checkingProfile) {
-    return <p>Učitavanje...</p>;
+    return <p>Loading...</p>;
   }
 
   if (!profileComplete) {

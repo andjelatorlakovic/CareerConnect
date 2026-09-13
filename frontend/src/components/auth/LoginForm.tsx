@@ -7,6 +7,9 @@ import { companyApi } from '../../api_services/company/CompanyApiService';
 import { useAuth } from '../../hooks/auth/useAuth';
 import { Role } from '../../models/auth/Role';
 
+const isFilled = (value: unknown): boolean =>
+  typeof value === 'string' && value.trim().length > 0;
+
 export default function LoginForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -43,7 +46,7 @@ export default function LoginForm() {
           profile.description,
           profile.contactEmail,
           profile.contactPhone,
-        ].every((value) => value.trim().length > 0);
+        ].every(isFilled);
 
         navigate(completed ? '/my-jobs' : '/company-profile');
       } catch {
@@ -53,8 +56,8 @@ export default function LoginForm() {
       try {
         const profile = await candidateApi.getCandidateProfile();
         const completed =
-          profile.bio.trim().length > 0 &&
-          profile.location.trim().length > 0 &&
+          isFilled(profile.bio) &&
+          isFilled(profile.location) &&
           profile.skills.length > 0 &&
           profile.desiredJobCategories.length > 0;
 
@@ -297,7 +300,7 @@ export default function LoginForm() {
 
           <div className="login-header">
             <h1>CareerConnect</h1>
-            <p>Prijavite se na svoj nalog</p>
+            <p>Please sign in to your account</p>
           </div>
 
           <form
@@ -319,7 +322,7 @@ export default function LoginForm() {
               <input
                 id="email"
                 type="email"
-                placeholder="Unesite email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(event) =>
                   setEmail(event.target.value)
@@ -330,13 +333,13 @@ export default function LoginForm() {
 
             <div className="form-group">
               <label htmlFor="password">
-                Lozinka
+                Password
               </label>
 
               <input
                 id="password"
                 type="password"
-                placeholder="Unesite lozinku"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(event) =>
                   setPassword(event.target.value)
@@ -349,19 +352,19 @@ export default function LoginForm() {
               type="submit"
               className="login-button"
             >
-              Prijavi se
+              Sign in
             </button>
 
           </form>
 
           <div className="login-footer">
-            <span>Nemate nalog?</span>
+            <span>Don't have an account?</span>
 
             <button
               type="button"
               onClick={() => navigate('/register')}
             >
-              Registrujte se
+              Register
             </button>
           </div>
 

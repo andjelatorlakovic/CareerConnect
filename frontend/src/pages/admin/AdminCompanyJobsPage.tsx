@@ -83,7 +83,7 @@ export default function AdminCompanyJobsPage() {
         if (active) {
           setCompanyUser(null);
           setJobs([]);
-          setError('Oglasi kompanije se ne mogu učitati.');
+          setError('Company jobs could not be loaded.');
         }
       } finally {
         if (active) {
@@ -105,8 +105,8 @@ export default function AdminCompanyJobsPage() {
     }
 
     const confirmed = window.confirm(
-      `Da li želite da obrišete oglas "${job.title}"?\n\n` +
-      'Biće obrisane i njegove povezane prijave i pitanja.'
+      `Do you want to delete the job "${job.title}"?\n\n` +
+      'Its related applications and questions will also be deleted.'
     );
 
     if (!confirmed) {
@@ -126,7 +126,7 @@ export default function AdminCompanyJobsPage() {
 
       setSuccess(`Oglas "${job.title}" je obrisan.`);
     } catch {
-      setActionError('Oglas nije moguće obrisati.');
+      setActionError('Job could not be deleted.');
     } finally {
       setDeletingId(null);
     }
@@ -170,24 +170,24 @@ export default function AdminCompanyJobsPage() {
           to="/admin/users"
           className="w-fit text-sm font-semibold text-[#c8385c] no-underline hover:underline"
         >
-          ← Svi korisnici
+          ← All users
         </Link>
 
         <header className="border-0 border-b border-solid border-[#ebe9f1] pb-6">
           <h1 className="m-0 text-3xl font-bold tracking-tight text-[#ef476f] sm:text-4xl">
-            Oglasi kompanije
+            Company Jobs
           </h1>
 
           {!loading && companyUser && (
             <p className="m-0 mt-2 text-sm break-all text-[#8c8c9a]">
-              Nalog kompanije: {companyUser.email}
+              Company Account: {companyUser.email}
             </p>
           )}
         </header>
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje oglasa kompanije...
+            Loading company jobs...
           </p>
         )}
 
@@ -196,7 +196,7 @@ export default function AdminCompanyJobsPage() {
             role="alert"
             className="rounded-lg border border-solid border-[#f2c5ce] bg-[#fff2f4] p-4 text-[#a43651]"
           >
-            {!userId ? 'Kompanija nije pronađena.' : error}
+            {!userId ? 'Company not found.' : error}
           </div>
         )}
 
@@ -222,11 +222,11 @@ export default function AdminCompanyJobsPage() {
 
             <div className="grid gap-4 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5 md:grid-cols-2">
               <label className="grid gap-2 text-sm font-semibold">
-                Pretraga oglasa
+                Search Jobs
 
                 <input
                   value={search}
-                  placeholder="Naslov, lokacija ili opis"
+                  placeholder="Title, location or description"
                   onChange={(event) => {
                     setSearch(event.target.value);
                   }}
@@ -235,7 +235,7 @@ export default function AdminCompanyJobsPage() {
               </label>
 
               <label className="grid gap-2 text-sm font-semibold">
-                Status oglasa
+                Job Status
 
                 <select
                   value={statusFilter}
@@ -247,21 +247,21 @@ export default function AdminCompanyJobsPage() {
                   }}
                   className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f]"
                 >
-                  <option value="all">Svi oglasi</option>
-                  <option value="active">Aktivni</option>
-                  <option value="closed">Zatvoreni</option>
-                  <option value="expired">Istekli</option>
+                  <option value="all">All Jobs</option>
+                  <option value="active">Active</option>
+                  <option value="closed">Closed</option>
+                  <option value="expired">Expired</option>
                 </select>
               </label>
             </div>
 
             <div className="flex items-center justify-between gap-3">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Objavljeni oglasi
+                Published Jobs
               </h2>
 
               <span className="text-xs text-[#858592]">
-                Prikazano: {filteredJobs.length} / {jobs.length}
+                Displayed: {filteredJobs.length} / {jobs.length}
               </span>
             </div>
 
@@ -269,8 +269,8 @@ export default function AdminCompanyJobsPage() {
               <div className="grid justify-items-center gap-3 py-10 text-center">
                 <h2 className="m-0 text-lg font-bold text-[#333344]">
                   {jobs.length === 0
-                    ? 'Kompanija nema oglasa'
-                    : 'Nema oglasa za izabrane filtere'}
+                    ? 'Company has no jobs'
+                    : 'No jobs available for the selected filters'}
                 </h2>
               </div>
             ) : (

@@ -19,7 +19,7 @@ export default function MyJobDetailsPage() {
   useEffect(() => {
     const loadJob = async () => {
       if (!id) {
-        setError('Oglas nije pronađen.');
+        setError('Job not found.');
         setLoading(false);
         return;
       }
@@ -31,7 +31,7 @@ export default function MyJobDetailsPage() {
         const data = await jobsApi.getJobById(id);
         setJob(data);
       } catch {
-        setError('Oglas nije moguće učitati.');
+        setError('Job could not be loaded.');
       } finally {
         setLoading(false);
       }
@@ -46,7 +46,7 @@ export default function MyJobDetailsPage() {
     }
 
     const confirmed = window.confirm(
-      'Da li ste sigurni da želite da zatvorite ovaj oglas?'
+      'Are you sure you want to close this job?'
     );
 
     if (!confirmed) {
@@ -64,7 +64,7 @@ export default function MyJobDetailsPage() {
         status: JobStatus.Closed,
       });
     } catch {
-      setError('Oglas nije moguće zatvoriti.');
+      setError('Job could not be closed.');
     } finally {
       setClosing(false);
     }
@@ -105,7 +105,7 @@ export default function MyJobDetailsPage() {
         <div className="details-page">
           <div className="loading-container">
             <div className="spinner" />
-            <p>Učitavanje oglasa...</p>
+            <p>Loading job...</p>
           </div>
         </div>
       </CompanyLayout>
@@ -119,10 +119,10 @@ export default function MyJobDetailsPage() {
           <div className="details-container error-container">
             <div className="error-icon">!</div>
 
-            <h2>Oglas nije dostupan</h2>
+            <h2>Job is not available</h2>
 
             <p>
-              {error || 'Traženi oglas nije pronađen.'}
+              {error || 'The requested job was not found.'}
             </p>
 
             <button
@@ -130,7 +130,7 @@ export default function MyJobDetailsPage() {
               className="back-main-button"
               onClick={() => navigate('/my-jobs')}
             >
-              Nazad na oglase
+              Back to Jobs
             </button>
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function MyJobDetailsPage() {
             onClick={() => navigate('/my-jobs')}
           >
             <span>←</span>
-            Moji oglasi
+            My Jobs
           </button>
 
           {/* HEADER */}
@@ -183,14 +183,14 @@ export default function MyJobDetailsPage() {
                     <span className="status-dot" />
 
                     {isActive
-                      ? 'Aktivan'
-                      : 'Zatvoren'}
+                      ? 'Active'
+                      : 'Closed'}
                   </span>
 
                 </div>
 
                 <p className="!mb-0 !mt-2 !text-[#d3d1e0]">
-                  Detalji i informacije o oglasu
+                  Details and information about the job posting
                 </p>
 
               </div>
@@ -200,13 +200,13 @@ export default function MyJobDetailsPage() {
             <div className="expiration-card !grid !gap-1 !rounded-2xl !bg-white/10 !px-5 !py-4 !text-white">
 
               <span className="expiration-label !text-xs !font-bold !tracking-wide !text-[#d3d1e0]">
-                ROK ZA PRIJAVE
+                Application Deadline
               </span>
 
               <strong className="!text-lg !font-bold">
                 {job.expiresAt
                   ? formatDate(job.expiresAt)
-                  : 'Nije naveden'}
+                  : 'Not specified'}
               </strong>
 
             </div>
@@ -224,10 +224,10 @@ export default function MyJobDetailsPage() {
               </div>
 
               <div>
-                <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">Upravljanje oglasom</h2>
+                <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">Job Management</h2>
 
                 <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
-                  Izaberite akciju koju želite da izvršite
+                  Select the action you want to perform
                 </p>
               </div>
 
@@ -247,7 +247,7 @@ export default function MyJobDetailsPage() {
                 </span>
 
                 <span>
-                  Uredi oglas
+                  Edit Job
                 </span>
               </button>
 
@@ -283,7 +283,7 @@ export default function MyJobDetailsPage() {
                 </span>
 
                 <span>
-                  Pitanja
+                  Questions
                 </span>
               </button>
 
@@ -295,8 +295,8 @@ export default function MyJobDetailsPage() {
                   disabled={closing}
                 >
                   {closing
-                    ? 'Zatvaranje...'
-                    : 'Zatvori oglas'}
+                    ? 'Closing...'
+                    : 'Close Job'}
                 </button>
               )}
 
@@ -320,11 +320,11 @@ export default function MyJobDetailsPage() {
 
                   <div>
                     <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                      Osnovne informacije
+                      Basic Information
                     </h2>
 
                     <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
-                      Informacije o poziciji i uslovima rada
+                      Information about the position and working conditions
                     </p>
                   </div>
 
@@ -340,7 +340,7 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Lokacija
+                        Location
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
@@ -358,7 +358,7 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Tip zaposlenja
+                        Employment Type
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
@@ -376,7 +376,7 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Iskustvo
+                        Experience Level
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
@@ -394,7 +394,7 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Kategorija
+                        Category
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
@@ -412,7 +412,7 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Plata
+                        Salary
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
@@ -433,13 +433,13 @@ export default function MyJobDetailsPage() {
 
                     <div className="!grid !gap-1">
                       <span className="info-label !text-xs !font-semibold !text-[#858592]">
-                        Rok za prijavu
+                        Application Deadline
                       </span>
 
                       <strong className="!text-base !font-bold !text-[#333344]">
                         {job.expiresAt
                           ? formatDate(job.expiresAt)
-                          : 'Nije naveden'}
+                          : 'Not specified'}
                       </strong>
                     </div>
 
@@ -459,11 +459,11 @@ export default function MyJobDetailsPage() {
 
                   <div>
                     <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                      Opis pozicije
+                      Job Description
                     </h2>
 
                     <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
-                      Detaljan opis radnog mesta
+                      Detailed description of the job position
                     </p>
                   </div>
 
@@ -489,11 +489,11 @@ export default function MyJobDetailsPage() {
 
                   <div>
                     <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                      Potrebne veštine
+                      Required skills
                     </h2>
 
                     <p className="!mb-0 !mt-1 !text-sm !text-[#777686]">
-                      Veštine i tehnologije koje kandidat treba da poseduje
+                      Skills and technologies the candidate should have
                     </p>
                   </div>
 
@@ -519,7 +519,7 @@ export default function MyJobDetailsPage() {
                 ) : (
 
                   <div className="no-skills !rounded-xl !bg-[#f8f8fc] !p-4 !text-sm !text-[#777686]">
-                    Nisu navedene posebne veštine.
+                    No specific skills listed.
                   </div>
 
                 )}

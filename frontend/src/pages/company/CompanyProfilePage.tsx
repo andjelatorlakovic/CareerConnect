@@ -21,7 +21,7 @@ export default function CompanyProfilePage() {
       try {
         setProfile(await companyApi.getCompanyProfile());
       } catch {
-        setError('Profil kompanije nije moguće učitati.');
+        setError('Company profile could not be loaded.');
       } finally {
         setLoading(false);
       }
@@ -43,9 +43,9 @@ export default function CompanyProfilePage() {
       );
 
       setProfile(updated);
-      setSuccess('Profil je uspešno sačuvan.');
+      setSuccess('Profile saved successfully.');
     } catch {
-      setError('Profil nije moguće sačuvati.');
+      setError('Company profile could not be saved.');
     } finally {
       setSaving(false);
     }
@@ -55,7 +55,7 @@ export default function CompanyProfilePage() {
     <CompanyLayout>
 
 
-      {loading && <p>Učitavanje...</p>}
+      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {success && <p>{success}</p>}
 

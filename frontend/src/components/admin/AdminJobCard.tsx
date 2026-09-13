@@ -84,7 +84,7 @@ export default function AdminJobCard({
 
         <div className="grid gap-1 rounded-lg bg-[#f0f8f3] p-3">
           <span className="text-xs text-[#92919e]">
-            Datum objave
+            Date of posting
           </span>
 
           <strong className="text-sm">
@@ -94,7 +94,7 @@ export default function AdminJobCard({
 
         <div className="grid gap-1 rounded-lg bg-[#f5f3f8] p-3">
           <span className="text-xs text-[#92919e]">
-            Rok za prijavu
+            Deadline for applications
           </span>
 
           <strong className="text-sm">
@@ -104,7 +104,7 @@ export default function AdminJobCard({
 
         <div className="grid gap-1 rounded-lg bg-[#f8f5ed] p-3">
           <span className="text-xs text-[#92919e]">
-            Plata
+            Salary
           </span>
 
           <strong className="text-sm">
@@ -114,14 +114,14 @@ export default function AdminJobCard({
                 ? `Od ${job.salaryMin.toLocaleString('sr-Latn-RS')}`
                 : job.salaryMax !== null
                   ? `Do ${job.salaryMax.toLocaleString('sr-Latn-RS')}`
-                  : 'Nije navedena'}
+                  : ' Nije navedeno'}
           </strong>
         </div>
       </div>
 
       <section className="grid gap-2">
         <h3 className="m-0 text-sm font-bold text-[#333344]">
-          Opis pozicije
+          Position Description
         </h3>
 
         <p className="m-0 text-sm leading-relaxed whitespace-pre-wrap break-words text-[#5e5d6c]">
@@ -131,12 +131,12 @@ export default function AdminJobCard({
 
       <section className="grid gap-3">
         <h3 className="m-0 text-sm font-bold text-[#333344]">
-          Potrebne veštine
+          Required skills
         </h3>
 
         {job.skills.length === 0 ? (
           <p className="m-0 text-sm text-[#858592]">
-            Veštine nisu navedene.
+            No skills listed.
           </p>
         ) : (
           <div className="flex flex-wrap gap-2">
@@ -161,7 +161,7 @@ export default function AdminJobCard({
           }}
           className="cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#d9365f] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {deleting ? 'Brisanje...' : 'Obriši oglas'}
+          {deleting ? 'Deleting...' : 'Delete job'}
         </button>
       </div>
     </article>

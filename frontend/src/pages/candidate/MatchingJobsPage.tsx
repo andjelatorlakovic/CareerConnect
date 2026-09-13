@@ -32,7 +32,7 @@ export default function MatchingJobsPage() {
         }
       } catch {
         if (active) {
-          setError('Preporučeni oglasi se ne mogu učitati.');
+          setError('Recommended jobs could not be loaded.');
         }
       } finally {
         if (active) {
@@ -54,11 +54,11 @@ export default function MatchingJobsPage() {
         <header className="relative isolate flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
           <div>
             <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Poslovi za tebe
+              Recommended jobs
             </h1>
 
             <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-              Preporuke prema željenim kategorijama i veštinama.
+              Recommendations based on your desired categories and skills.
             </p>
           </div>
 
@@ -66,7 +66,7 @@ export default function MatchingJobsPage() {
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje preporuka...
+            Loading recommendations...
           </p>
         )}
 
@@ -83,20 +83,19 @@ export default function MatchingJobsPage() {
           matches.length === 0 ? (
             <div className="grid justify-items-center gap-4 py-10 text-center">
               <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Trenutno nema preporuka
+                No recommendations found
               </h2>
 
               <p className="m-0 max-w-xl text-sm leading-relaxed text-[#858592]">
-                Dodajte veštine i željene kategorije poslova u profil.
-                Preporuke se prikazuju kada postoje odgovarajući
-                aktivni oglasi.
+                Add skills and desired job categories to your profile.
+                Recommendations are shown when matching jobs are found based on your profile.
               </p>
 
               <Link
                 to="/candidate-profile"
                 className="rounded-lg bg-[#ef476f] px-5 py-3 font-semibold text-white no-underline hover:bg-[#df3d65]"
               >
-                Dopuni profil
+                Update Profile
               </Link>
             </div>
           ) : (
@@ -116,7 +115,7 @@ export default function MatchingJobsPage() {
                         'sr-Latn-RS',
                         { maximumFractionDigits: 2 }
                       )}
-                      % poklapanja
+                      % match
                     </span>
                   </div>
 
@@ -127,12 +126,12 @@ export default function MatchingJobsPage() {
                   <progress
                     max={100}
                     value={match.matchPercentage}
-                    aria-label="Procenat poklapanja veština"
+                    aria-label="Skill match percentage"
                     className="h-3 w-full accent-[#ef476f]"
                   />
 
                   <h3 className="m-0 text-sm font-bold text-[#333344]">
-                    Veštine koje imate
+                    Skills you have
                   </h3>
 
                   <div className="flex flex-wrap gap-2">
@@ -149,7 +148,7 @@ export default function MatchingJobsPage() {
                   {match.missingSkills.length > 0 && (
                     <>
                       <h3 className="m-0 text-sm font-bold text-[#333344]">
-                        Veštine koje nisu na vašem profilu
+                        Skills missing from your profile
                       </h3>
 
                       <div className="flex flex-wrap gap-2">
@@ -169,7 +168,7 @@ export default function MatchingJobsPage() {
                     to={`/jobs/${match.jobId}`}
                     className="w-fit rounded-lg bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white no-underline hover:bg-[#df3d65]"
                   >
-                    Pogledaj oglas
+                    View Job Details
                   </Link>
                 </article>
               ))}

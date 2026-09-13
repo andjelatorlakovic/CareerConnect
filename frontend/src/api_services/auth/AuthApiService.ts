@@ -26,7 +26,7 @@ export const authApi: IAuthApiService = {
 
       return {
         success: true,
-        message: 'Uspešna prijava.',
+        message: 'Signed in successfully.',
         data: response.data,
       };
     } catch (error) {
@@ -34,7 +34,7 @@ export const authApi: IAuthApiService = {
         success: false,
         message: errorMessage(
           error,
-          'Pogrešan email ili lozinka.'
+          'Incorrect email or password.'
         ),
       };
     }
@@ -49,7 +49,7 @@ export const authApi: IAuthApiService = {
 
       return {
         success: true,
-        message: 'Uspešna registracija.',
+        message: 'Registration successful.',
         data: response.data,
       };
     } catch (error) {
@@ -57,7 +57,7 @@ export const authApi: IAuthApiService = {
         success: false,
         message: errorMessage(
           error,
-          'Greška pri registraciji.'
+          'Registration failed.'
         ),
       };
     }

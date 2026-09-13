@@ -271,7 +271,7 @@ export default function RegisterForm() {
 
           <div className="register-header">
             <h1>CareerConnect</h1>
-            <p>Kreirajte svoj nalog</p>
+            <p>Create your account</p>
           </div>
 
           <form
@@ -287,13 +287,13 @@ export default function RegisterForm() {
 
             <div className="register-form-group">
               <label htmlFor="firstName">
-                Ime{namesRequired ? '' : ' (opciono)'}
+                First name{namesRequired ? '' : ' (optional)'}
               </label>
 
               <input
                 id="firstName"
                 type="text"
-                placeholder="Unesite ime"
+                placeholder="Enter first name"
                 value={form.firstName}
                 onChange={(event) =>
                   setForm({
@@ -307,13 +307,13 @@ export default function RegisterForm() {
 
             <div className="register-form-group">
               <label htmlFor="lastName">
-                Prezime{namesRequired ? '' : ' (opciono)'}
+                Last name{namesRequired ? '' : ' (optional)'}
               </label>
 
               <input
                 id="lastName"
                 type="text"
-                placeholder="Unesite prezime"
+                placeholder="Enter last name"
                 value={form.lastName}
                 onChange={(event) =>
                   setForm({
@@ -333,7 +333,7 @@ export default function RegisterForm() {
               <input
                 id="email"
                 type="email"
-                placeholder="Unesite email"
+                placeholder="Enter email"
                 value={form.email}
                 onChange={(event) =>
                   setForm({
@@ -347,13 +347,13 @@ export default function RegisterForm() {
 
             <div className="register-form-group">
               <label htmlFor="password">
-                Lozinka
+                Password
               </label>
 
               <input
                 id="password"
                 type="password"
-                placeholder="Unesite lozinku"
+                placeholder="Enter password"
                 value={form.password}
                 onChange={(event) =>
                   setForm({
@@ -368,7 +368,7 @@ export default function RegisterForm() {
 
             <div className="register-form-group">
               <label htmlFor="role">
-                Tip naloga
+                Account type
               </label>
 
               <select
@@ -383,11 +383,11 @@ export default function RegisterForm() {
                 }
               >
                 <option value={Role.Candidate}>
-                  Kandidat
+                  Candidate
                 </option>
 
                 <option value={Role.Company}>
-                  Kompanija
+                  Company
                 </option>
               </select>
             </div>
@@ -396,19 +396,19 @@ export default function RegisterForm() {
               type="submit"
               className="register-button"
             >
-              Registruj se
+              Sign up
             </button>
 
           </form>
 
           <div className="register-footer">
-            <span>Već imate nalog?</span>
+            <span>Already have an account?</span>
 
             <button
               type="button"
               onClick={() => navigate('/login')}
             >
-              Prijavite se
+              Sign in
             </button>
           </div>
 

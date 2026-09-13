@@ -41,7 +41,7 @@ export default function CandidateProfileForm({
       form.desiredJobCategories.length === 0
     ) {
       setValidationError(
-        'Izaberite najmanje jednu veštinu i jednu željenu kategoriju posla.'
+        'Select at least one skill and one desired job category.'
       );
       return;
     }
@@ -63,11 +63,11 @@ export default function CandidateProfileForm({
       >
         <div className="grid gap-5 md:grid-cols-2">
           <label className="grid gap-2 text-sm font-semibold">
-            Lokacija
+            Location
 
             <input
               value={form.location}
-              placeholder="Na primer: Novi Sad"
+              placeholder="E.g. Novi Sad"
               onChange={(event) => {
                 setForm({
                   ...form,
@@ -80,7 +80,7 @@ export default function CandidateProfileForm({
           </label>
 
           <label className="grid gap-2 text-sm font-semibold">
-            Nivo iskustva
+            Experience level
 
             <select
               value={form.experienceLevel}
@@ -103,11 +103,11 @@ export default function CandidateProfileForm({
         </div>
 
         <label className="grid gap-2 text-sm font-semibold">
-          O meni
+          About me
 
           <textarea
             value={form.bio}
-            placeholder="Predstavite svoje iskustvo i interesovanja."
+            placeholder="Tell us about your experience and interests."
             onChange={(event) => {
               setForm({
                 ...form,
@@ -121,7 +121,7 @@ export default function CandidateProfileForm({
 
         <fieldset className="m-0 min-w-0 border-0 p-0">
           <legend className="mb-3 text-sm font-semibold">
-            Veštine
+            Skills
           </legend>
 
           <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ export default function CandidateProfileForm({
 
         <fieldset className="m-0 min-w-0 border-0 p-0">
           <legend className="mb-3 text-sm font-semibold">
-            Željene kategorije poslova
+            Desired job categories
           </legend>
 
           <div className="flex flex-wrap gap-2">
@@ -202,7 +202,7 @@ export default function CandidateProfileForm({
           type="submit"
           className="w-full cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Čuvanje...' : 'Sačuvaj profil'}
+          {loading ? 'Saving...' : 'Save profile'}
         </button>
       </fieldset>
     </form>

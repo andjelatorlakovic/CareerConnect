@@ -37,7 +37,7 @@ export default function JobForm({
   loading,
   submitLabel,
   title = 'Kreirajte novi oglas',
-  subtitle = 'Unesite informacije o poziciji koju želite da ponudite',
+  subtitle = 'Enter information about the position you want to offer.',
   onBack,
   onSubmit,
 }: JobFormProps) {
@@ -100,7 +100,7 @@ export default function JobForm({
               onClick={onBack}
               className="mb-6 w-fit border-0 bg-transparent p-0 text-sm font-semibold text-[#c8385c] hover:underline"
             >
-              ← Nazad
+              ← Back
             </button>
           )}
 
@@ -123,21 +123,21 @@ export default function JobForm({
             className="job-form !mx-auto !grid !max-w-5xl !gap-6"
           >
 
-            {/* NAZIV + LOKACIJA */}
+        
 
             <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="title" className="text-sm font-semibold text-[#45445a]">
-                  Naziv pozicije
+                  Name of the position
                 </label>
 
                 <input
                   id="title"
                   type="text"
                   value={form.title}
-                  placeholder="Npr. Software Developer"
+                  placeholder="E.g. Software Developer"
                   onChange={(event) =>
                     setForm({
                       ...form,
@@ -153,14 +153,14 @@ export default function JobForm({
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="location" className="text-sm font-semibold text-[#45445a]">
-                  Lokacija
+                  Location
                 </label>
 
                 <input
                   id="location"
                   type="text"
                   value={form.location}
-                  placeholder="Npr. Novi Sad"
+                  placeholder="E.g. Novi Sad"
                   onChange={(event) =>
                     setForm({
                       ...form,
@@ -175,14 +175,14 @@ export default function JobForm({
 
             </div>
 
-            {/* TIP ZAPOSLENJA + ISKUSTVO */}
+           
 
             <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="employmentType" className="text-sm font-semibold text-[#45445a]">
-                  Tip zaposlenja
+                  Employment Type
                 </label>
 
                 <select
@@ -218,7 +218,7 @@ export default function JobForm({
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="experienceLevel" className="text-sm font-semibold text-[#45445a]">
-                  Nivo iskustva
+                  Experience Level
                 </label>
 
                 <select
@@ -253,7 +253,7 @@ export default function JobForm({
 
             </div>
 
-            {/* KATEGORIJA + DATUM */}
+           
 
             <div className="job-form-row !grid !grid-cols-1 !gap-5 md:!grid-cols-2">
 
@@ -296,7 +296,7 @@ export default function JobForm({
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="expiresAt" className="text-sm font-semibold text-[#45445a]">
-                  Datum isteka
+                  Expiration date
                 </label>
 
                 <input
@@ -325,7 +325,7 @@ export default function JobForm({
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="salaryMin" className="text-sm font-semibold text-[#45445a]">
-                  Minimalna plata
+                  Minimum Salary
                 </label>
 
                 <input
@@ -348,7 +348,7 @@ export default function JobForm({
               <div className="job-form-group !grid !gap-2">
 
                 <label htmlFor="salaryMax" className="text-sm font-semibold text-[#45445a]">
-                  Maksimalna plata
+                  Maximum Salary
                 </label>
 
                 <input
@@ -370,18 +370,18 @@ export default function JobForm({
 
             </div>
 
-            {/* OPIS POSLA */}
+            
 
             <div className="job-form-group !grid !gap-2">
 
               <label htmlFor="description" className="text-sm font-semibold text-[#45445a]">
-                Opis posla
+                Job description
               </label>
 
               <textarea
                 id="description"
                 value={form.description}
-                placeholder="Unesite opis posla, odgovornosti i očekivanja..."
+                placeholder="Enter the job description, responsibilities and expectations..."
                 onChange={(event) =>
                   setForm({
                     ...form,
@@ -396,12 +396,11 @@ export default function JobForm({
 
             </div>
 
-            {/* VEŠTINE */}
 
             <fieldset className="m-0 grid gap-4 rounded-2xl border border-solid border-[#e6e2eb] bg-white p-5">
 
               <legend className="px-1 text-sm font-semibold text-[#45445a]">
-                Potrebne veštine
+                Required skills
               </legend>
 
               <div className="job-skills !grid !grid-cols-2 !gap-3 sm:!grid-cols-3 lg:!grid-cols-4">
@@ -446,7 +445,7 @@ export default function JobForm({
               disabled={loading}
             >
               {loading
-                ? 'Čuvanje...'
+                ? 'Saving...'
                 : submitLabel}
             </button>
 

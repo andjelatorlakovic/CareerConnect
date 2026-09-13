@@ -26,19 +26,19 @@ export default function CompanyLayout({ children }: CompanyLayoutProps) {
             CareerConnect
           </Link>
           <span className="rounded-md bg-[#24233d] px-2 py-1 text-[10px] font-bold tracking-wider text-white">
-            KOMPANIJA
+            COMPANY
           </span>
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm font-semibold">
           <NavLink to="/my-jobs" className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]">
-            Moji oglasi
+            My jobs
           </NavLink>
           <NavLink to="/company-profile" className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]">
-            Profil kompanije
+            Company profile
           </NavLink>
           <NavLink to="/account" className="border-0 border-b-2 border-solid border-transparent py-2 text-[#333344] no-underline hover:text-[#ef476f] [&.active]:border-[#ef476f] [&.active]:text-[#ef476f]">
-            Moj nalog
+            My account
           </NavLink>
 
           <div
@@ -54,7 +54,7 @@ export default function CompanyLayout({ children }: CompanyLayoutProps) {
           >
             <button
               type="button"
-              aria-label="Otvori profil"
+              aria-label="Open account menu"
               aria-expanded={profileOpen}
               onClick={() => setProfileOpen((previous) => !previous)}
               className="grid size-11 cursor-pointer place-items-center rounded-full border-0 bg-[#24233d] text-sm font-extrabold text-white transition hover:bg-[#ef476f]"
@@ -69,7 +69,7 @@ export default function CompanyLayout({ children }: CompanyLayoutProps) {
                     {userLetter}
                   </div>
                   <div className="grid min-w-0 gap-1">
-                    <span className="text-xs text-[#92919e]">Prijavljeni ste kao</span>
+                    <span className="text-xs text-[#92919e]">Signed in as</span>
                     <strong className="text-sm break-all">{user?.email}</strong>
                   </div>
                 </div>
@@ -78,7 +78,7 @@ export default function CompanyLayout({ children }: CompanyLayoutProps) {
                   onClick={handleLogout}
                   className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-3 text-sm font-semibold text-[#c8385c] transition hover:bg-[#fce5ec]"
                 >
-                  Odjavi se
+                  Sign out
                 </button>
               </div>
             )}

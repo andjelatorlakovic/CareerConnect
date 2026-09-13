@@ -38,7 +38,7 @@ export default function AccountPage() {
         }
       } catch {
         if (active) {
-          setError('Podaci naloga se ne mogu učitati.');
+          setError('Account details could not be loaded.');
         }
       } finally {
         if (active) {
@@ -74,9 +74,9 @@ export default function AccountPage() {
         });
       }
 
-      setSuccess('Podaci naloga su uspešno sačuvani.');
+      setSuccess('Account details saved successfully.');
     } catch {
-      setError('Podatke naloga nije moguće sačuvati.');
+      setError('Account details could not be saved.');
     } finally {
       setSaving(false);
     }
@@ -92,7 +92,7 @@ export default function AccountPage() {
 
       await userApi.changePassword(request);
 
-      setSuccess('Lozinka je uspešno promenjena.');
+      setSuccess('Password changed successfully.');
 
       return true;
     } catch {
@@ -125,14 +125,14 @@ export default function AccountPage() {
         <div className="grid min-h-[86vh] content-start gap-6 rounded-[28px] border border-solid border-[#dedde8] bg-[#f7f7fb] p-5 text-left font-sans text-sm leading-normal text-[#333344] shadow-xl [color-scheme:light] [&_*]:box-border [&_button]:font-sans [&_input]:font-sans sm:p-8">
           <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
             <div aria-hidden="true" className="pointer-events-none absolute -top-16 -right-12 -z-10 size-64 rounded-full border-[40px] border-solid border-[#ef476f]/15" />
-            <span className="mb-4 inline-block text-xs font-semibold tracking-[0.16em] text-[#ffb4c8] uppercase">Lični nalog</span>
+            <span className="mb-4 inline-block text-xs font-semibold tracking-[0.16em] text-[#ffb4c8] uppercase">Personal account</span>
             <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">Moj nalog</h1>
-            <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">Vaši podaci i podešavanja na jednom mestu.</p>
+            <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">Your details and settings in one place.</p>
           </header>
 
           {loading && (
             <p className="m-0 py-10 text-center text-[#858592]">
-              Učitavanje naloga...
+              Loading account...
             </p>
           )}
 
@@ -187,8 +187,8 @@ export default function AccountPage() {
                   className="flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-[#fff0f5] p-6 text-left transition-colors hover:bg-[#ffe5ee] focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <span>
-                    <span className="block text-base font-bold text-[#a83053]">Podešavanja naloga</span>
-                    <span className="mt-1 block text-sm text-[#77616d]">Izmenite lične podatke ili promenite lozinku.</span>
+                    <span className="block text-base font-bold text-[#a83053]">Account settings</span>
+                    <span className="mt-1 block text-sm text-[#77616d]">Update your personal details or change your password.</span>
                   </span>
                   <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={settingsOpen ? 'shrink-0 rotate-180 text-[#a83053]' : 'shrink-0 text-[#a83053]'}><path d="m6 9 6 6 6-6" /></svg>
                 </button>
@@ -200,7 +200,7 @@ export default function AccountPage() {
                           <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#fff0f5] text-[#b73359]">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M4 21v-2a8 8 0 0 1 16 0v2" /></svg>
                           </span>
-                          <div><h2 className="m-0 text-base font-bold text-[#24233d]">Lični podaci</h2><p className="m-0 mt-1 text-xs leading-relaxed text-[#777586]">Ažurirajte ime, prezime i email adresu svog naloga.</p></div>
+                          <div><h2 className="m-0 text-base font-bold text-[#24233d]">Personal details</h2><p className="m-0 mt-1 text-xs leading-relaxed text-[#777586]">Update your account first name, last name and email address.</p></div>
                         </div>
                         <AccountForm initial={account} loading={saving} onSubmit={handleSaveAccount} />
                       </section>

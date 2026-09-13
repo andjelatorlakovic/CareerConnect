@@ -43,7 +43,7 @@ export default function AccountForm({
       >
         <div className="grid gap-5 md:grid-cols-2">
           <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-            Ime
+            First name
 
             <input
               required
@@ -57,7 +57,7 @@ export default function AccountForm({
           </label>
 
           <label className="grid gap-2.5 text-xs font-semibold tracking-wide text-[#625d76]">
-            Prezime
+            Last name
 
             <input
               required
@@ -90,7 +90,7 @@ export default function AccountForm({
           type="submit"
           className="mt-1 w-fit max-w-full justify-self-end cursor-pointer rounded-xl border-0 bg-[#ef476f] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#df3d65] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef476f] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {loading ? 'Čuvanje...' : 'Sačuvaj podatke'}
+          {loading ? 'Saving...' : 'Save details'}
         </button>
       </fieldset>
     </form>

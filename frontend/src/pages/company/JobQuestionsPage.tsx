@@ -34,7 +34,7 @@ export default function JobQuestionsPage() {
         error
       );
 
-      setError('Pitanja nisu dostupna.');
+      setError('Questions are unavailable.');
     }
   };
 
@@ -66,7 +66,7 @@ export default function JobQuestionsPage() {
       );
 
       setError(
-        'Pitanje nije moguće dodati.'
+        'Question could not be added.'
       );
     } finally {
       setLoading(false);
@@ -99,7 +99,7 @@ export default function JobQuestionsPage() {
       );
 
       setError(
-        'Pitanje nije moguće obrisati.'
+        'Question could not be deleted.'
       );
     }
   };
@@ -126,7 +126,7 @@ export default function JobQuestionsPage() {
             <div className="questions-list !mx-auto !mt-6 !grid !max-w-3xl !gap-3">
 
               <div className="questions-list-header !flex !items-center !gap-3">
-                <h2 className="!m-0 !text-2xl !font-bold !text-[#333344]">Pitanja</h2>
+                <h2 className="!m-0 !text-2xl !font-bold !text-[#333344]">Questions</h2>
 
                 <span className="!grid !size-8 !place-items-center !rounded-full !bg-[#fce8ee] !text-sm !font-bold !text-[#c8385c]">
                   {questions.length}
@@ -144,7 +144,7 @@ export default function JobQuestionsPage() {
 
                   <div className="question-content !min-w-0 !flex-1">
                     <span className="!text-sm !font-semibold !text-[#45445a]">
-                      Pitanje {question.orderIndex}
+                      Question {question.orderIndex}
                     </span>
 
                     <p className="!mb-0 !mt-1 !text-[#555466]">
@@ -161,7 +161,7 @@ export default function JobQuestionsPage() {
                       )
                     }
                   >
-                    Obriši
+                    Delete
                   </button>
                 </article>
               ))}

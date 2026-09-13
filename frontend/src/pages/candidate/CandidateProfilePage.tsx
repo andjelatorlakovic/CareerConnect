@@ -33,7 +33,7 @@ export default function CandidateProfilePage() {
         }
       } catch {
         if (active) {
-          setError('Profil kandidata nije moguće učitati.');
+          setError('Candidate profile could not be loaded.');
         }
       } finally {
         if (active) {
@@ -61,9 +61,9 @@ export default function CandidateProfilePage() {
         await candidateApi.updateCandidateProfile(request);
 
       setProfile(updated);
-      setSuccess('Profil je uspešno sačuvan.');
+      setSuccess('Profile saved successfully.');
     } catch {
-      setError('Profil nije moguće sačuvati.');
+      setError('Profile could not be saved.');
     } finally {
       setSaving(false);
     }
@@ -88,10 +88,10 @@ export default function CandidateProfilePage() {
           : previous
       );
 
-      setSuccess('Obrazovanje je uspešno dodato.');
+      setSuccess('Education added successfully.');
       return true;
     } catch {
-      setError('Obrazovanje nije moguće dodati.');
+      setError('Education could not be added.');
       return false;
     } finally {
       setSaving(false);
@@ -107,7 +107,7 @@ export default function CandidateProfilePage() {
       const deleted = await candidateApi.deleteEducation(id);
 
       if (!deleted) {
-        setError('Obrazovanje nije pronađeno.');
+        setError('Education was not found.');
         return;
       }
 
@@ -122,9 +122,9 @@ export default function CandidateProfilePage() {
           : previous
       );
 
-      setSuccess('Obrazovanje je uklonjeno.');
+      setSuccess('Education removed successfully.');
     } catch {
-      setError('Obrazovanje nije moguće ukloniti.');
+      setError('Education could not be removed.');
     } finally {
       setSaving(false);
     }
@@ -153,10 +153,10 @@ export default function CandidateProfilePage() {
           : previous
       );
 
-      setSuccess('Radno iskustvo je uspešno dodato.');
+      setSuccess('Work experience added successfully.');
       return true;
     } catch {
-      setError('Radno iskustvo nije moguće dodati.');
+      setError('Work experience could not be added.');
       return false;
     } finally {
       setSaving(false);
@@ -173,7 +173,7 @@ export default function CandidateProfilePage() {
         await candidateApi.deleteWorkExperience(id);
 
       if (!deleted) {
-        setError('Radno iskustvo nije pronađeno.');
+        setError('Work experience was not found.');
         return;
       }
 
@@ -188,9 +188,9 @@ export default function CandidateProfilePage() {
           : previous
       );
 
-      setSuccess('Radno iskustvo je uklonjeno.');
+      setSuccess('Work experience removed successfully.');
     } catch {
-      setError('Radno iskustvo nije moguće ukloniti.');
+      setError('Work experience could not be removed.');
     } finally {
       setSaving(false);
     }
@@ -201,17 +201,17 @@ export default function CandidateProfilePage() {
       <div className="grid min-h-[86vh] content-start gap-7 rounded-[28px] border border-solid border-[#e3dfe8] bg-[#f7f7fb] p-4 shadow-xl sm:p-8">
         <header className="relative isolate overflow-hidden rounded-3xl bg-[#24233d] p-6 sm:p-8">
           <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Moj profil
+            My Profile
           </h1>
 
           <p className="m-0 mt-3 text-sm leading-relaxed text-[#d3d1e0]">
-            Predstavite svoje veštine, obrazovanje i iskustvo.
+            Showcase your skills, education and experience.
           </p>
         </header>
 
         {loading && (
           <p className="m-0 py-10 text-center text-[#858592]">
-            Učitavanje profila...
+            Loading profile...
           </p>
         )}
 
@@ -237,7 +237,7 @@ export default function CandidateProfilePage() {
           <>
             <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
               <h2 className="m-0 border-0 border-l-4 border-solid border-[#ef476f] pl-3 text-lg font-bold text-[#333344]">
-                Osnovne informacije
+                Basic Information
               </h2>
 
               <CandidateProfileForm
@@ -249,12 +249,12 @@ export default function CandidateProfilePage() {
 
             <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
               <h2 className="m-0 border-0 border-l-4 border-solid border-[#ef476f] pl-3 text-lg font-bold text-[#333344]">
-                Obrazovanje
+                Education
               </h2>
 
               {profile.education.length === 0 && (
                 <p className="m-0 text-sm text-[#858592]">
-                  Još niste dodali obrazovanje.
+                  You have not added any education yet.
                 </p>
               )}
 
@@ -282,7 +282,7 @@ export default function CandidateProfilePage() {
                       }}
                       className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-2 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec] disabled:opacity-60"
                     >
-                      Ukloni
+                      Remove
                     </button>
                   </div>
 
@@ -304,12 +304,12 @@ export default function CandidateProfilePage() {
 
             <section className="grid gap-5 rounded-xl border border-solid border-[#d9d9e2] bg-[#fafafd] p-5">
               <h2 className="m-0 border-0 border-l-4 border-solid border-[#ef476f] pl-3 text-lg font-bold text-[#333344]">
-                Radno iskustvo
+                Work Experience
               </h2>
 
               {profile.workExperience.length === 0 && (
                 <p className="m-0 text-sm text-[#858592]">
-                  Još niste dodali radno iskustvo.
+                  You have not added any work experience yet.
                 </p>
               )}
 
@@ -337,7 +337,7 @@ export default function CandidateProfilePage() {
                       }}
                       className="cursor-pointer rounded-lg border border-solid border-[#f0c4d0] bg-[#fff3f6] px-4 py-2 text-sm font-semibold text-[#c8385c] hover:bg-[#fce5ec] disabled:opacity-60"
                     >
-                      Ukloni
+                      Remove
                     </button>
                   </div>
 
@@ -348,7 +348,7 @@ export default function CandidateProfilePage() {
                     {experience.endDate
                       ? new Date(experience.endDate)
                           .toLocaleDateString('sr-Latn-RS')
-                      : 'Trenutno'}
+                      : 'Current'}
                   </p>
 
                   <p className="m-0 text-sm leading-relaxed whitespace-pre-wrap break-words text-[#5e5d6c]">

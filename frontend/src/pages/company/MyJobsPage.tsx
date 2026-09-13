@@ -31,7 +31,7 @@ export default function MyJobsPage() {
         const data = await jobsApi.getMyJobs();
         setJobs(data);
       } catch {
-        setError('Oglasi se ne mogu učitati.');
+        setError('Jobs could not be loaded.');
       } finally {
         setLoading(false);
       }
@@ -68,7 +68,7 @@ export default function MyJobsPage() {
                 </div>
 
                 <p className="!mb-0 !mt-2 !text-base !text-[#d3d1e0]">
-                  Pregled i upravljanje oglasima vaše kompanije.
+                  View and manage your company job listings.
                 </p>
 
               </div>
@@ -86,7 +86,7 @@ export default function MyJobsPage() {
                 +
               </span>
 
-              Novi oglas
+              Add Job
             </button>
 
           </div>
@@ -99,7 +99,7 @@ export default function MyJobsPage() {
               <div className="spinner" />
 
               <p>
-                Učitavanje oglasa...
+                Loading jobs...
               </p>
 
             </div>
@@ -117,7 +117,7 @@ export default function MyJobsPage() {
               <div>
 
                 <strong>
-                  Došlo je do greške
+                  Something went wrong
                 </strong>
 
                 <p>
@@ -141,12 +141,12 @@ export default function MyJobsPage() {
                 </div>
 
                 <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                  Još nemate oglasa
+                  You do not have any jobs yet
                 </h2>
 
                 <p className="!m-0 !text-[#777686]">
-                  Objavite prvi oglas i pronađite
-                  odgovarajuće kandidate.
+                  Publish your first job and find
+                  suitable candidates.
                 </p>
 
                 <button
@@ -160,7 +160,7 @@ export default function MyJobsPage() {
                     +
                   </span>
 
-                  Objavi prvi oglas
+                  Add Job
                 </button>
 
               </div>
@@ -210,7 +210,7 @@ export default function MyJobsPage() {
                     <div className="stat-info !flex !flex-col !items-start !justify-center !gap-2">
 
                       <span className="!block !text-xs !font-bold !uppercase !tracking-wide !text-[#858592]">
-                        Ukupno neaktivnih
+                        Total Inactive
                       </span>
 
                       <strong className="!block !text-2xl !font-bold !leading-none !text-[#c8385c]">
@@ -230,11 +230,11 @@ export default function MyJobsPage() {
                   <div>
 
                     <h2 className="!m-0 !text-xl !font-bold !text-[#333344]">
-                      Objavljeni oglasi
+                      Published Jobs
                     </h2>
 
                     <span className="!mt-1 !block !text-sm !text-[#777686]">
-                      Izaberite oglas za pregled detalja
+                      Select a job to view details
                     </span>
 
                   </div>
@@ -371,7 +371,7 @@ export default function MyJobsPage() {
                         <div className="job-details !flex !items-center !gap-2 !p-5 !font-semibold !text-[#c8385c]">
 
                           <span>
-                            Detalji
+                            Details
                           </span>
 
                           <div className="job-arrow">
