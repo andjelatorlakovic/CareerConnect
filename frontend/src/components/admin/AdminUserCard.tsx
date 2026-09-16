@@ -95,7 +95,7 @@ export default function AdminUserCard({
               }
             />
 
-            {user.isActive ? 'Aktivan' : 'Neaktivan'}
+            {user.isActive ? 'Active' : 'Inactive'}
           </span>
         </div>
       </div>

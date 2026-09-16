@@ -15,7 +15,21 @@ public class CandidateController : ControllerBase
     {
         _candidateService = candidateService;
     }
-    private Guid GetUserId() => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    private Guid GetUserId()
+    {
+        var claimValue = User.FindFirstValue(
+            ClaimTypes.NameIdentifier
+        );
+
+        if (!Guid.TryParse(claimValue, out var userId))
+        {
+            throw new UnauthorizedAccessException(
+                "User ID claim is missing or invalid."
+            );
+        }
+
+        return userId;
+    }
 
     [HttpGet]
     public async Task<IActionResult> Get()
@@ -56,7 +70,7 @@ public class CandidateController : ControllerBase
     {
         var userId = GetUserId();
         var deletedEducation = await _candidateService.RemoveEducationAsync(userId, educationId);
-        if (deletedEducation == null)
+        if (!deletedEducation)
         {
             return NotFound();
         }
@@ -78,7 +92,7 @@ public class CandidateController : ControllerBase
     {
         var userId = GetUserId();
         var deletedWorkExperience = await _candidateService.RemoveWorkExperienceAsync(userId, workExperienceId);
-        if (deletedWorkExperience == null)  
+        if (!deletedWorkExperience)
         {
             return NotFound();
         }

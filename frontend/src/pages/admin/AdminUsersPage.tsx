@@ -92,8 +92,8 @@ export default function AdminUsersPage() {
 
       setSuccess(
         selectedUser.isActive
-          ? 'Korisnik je deaktiviran.'
-          : 'Korisnik je aktiviran.'
+          ? 'User deactivated.'
+          : 'User activated.'
       );
     } catch {
       setActionError('User status could not be updated.');

@@ -169,8 +169,8 @@ public class CandidateService : ICandidateService
     {
         Id = profile.Id,
         UserId = profile.UserId,
-        Bio = profile.Bio,
-        Location = profile.Location,
+        Bio = profile.Bio ?? string.Empty,
+        Location = profile.Location ?? string.Empty,
         ExperienceLevel = profile.ExperienceLevel,
         Skills = profile.Skills.Select(s => s.Skill).ToList(),
         DesiredJobCategories = profile.DesiredJobCategories

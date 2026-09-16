@@ -57,7 +57,9 @@ public class JobService : IJobService
     {
         var query = _context.JobListings
         .Include(j=>j.JobSkills)
-        .Where(j=> j.Status==JobStatus.Active && (j.ExpiresAt==null || j.ExpiresAt>DateTime.UtcNow));
+        .Where(j =>
+            j.Status == JobStatus.Active &&
+            j.ExpiresAt > DateTime.UtcNow);
         if (!string.IsNullOrEmpty(location))
         {
             query = query.Where(j=> j.Location.ToLower().Contains(location.ToLower()));
