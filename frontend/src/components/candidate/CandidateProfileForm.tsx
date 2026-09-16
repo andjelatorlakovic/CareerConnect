@@ -76,6 +76,8 @@ export default function CandidateProfileForm({
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm text-[#333344] outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
               required
+              minLength={2}
+              maxLength={120}
             />
           </label>
 
@@ -116,6 +118,8 @@ export default function CandidateProfileForm({
             }}
             className="min-h-36 w-full resize-y rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm leading-relaxed text-[#333344] outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
             required
+            minLength={20}
+            maxLength={2000}
           />
         </label>
 

@@ -74,6 +74,8 @@ export default function QuestionForm({
               rows={4}
               className="min-h-28 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 py-3 text-sm text-[#333344] outline-none placeholder:text-[#aaa8b4] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
               required
+              minLength={5}
+              maxLength={1000}
             />
           </div>
 

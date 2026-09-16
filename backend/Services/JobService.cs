@@ -34,6 +34,8 @@ public class JobService : IJobService
     //Kreiranje oglasa 
     public async Task<JobListingDto> CreateAsync(Guid companyProfileId, CreateJobListingRequest request)
     {
+        ValidateJobRequest(request.ExpiresAt, request.SalaryMin, request.SalaryMax);
+
         var job = new JobListing
         {
             CompanyProfileId =companyProfileId,
@@ -96,6 +98,8 @@ public class JobService : IJobService
 
     public async Task<JobListingDto> UpdateAsync(Guid companyProfileId,Guid jobId, UpdateJobListingRequest request)
     {
+        ValidateJobRequest(request.ExpiresAt, request.SalaryMin, request.SalaryMax);
+
         var job = await _context.JobListings
         .Include(j=>j.JobSkills)
         .FirstOrDefaultAsync(j=>j.CompanyProfileId==companyProfileId && j.Id==jobId) ?? throw new InvalidOperationException("Job for update not found");
@@ -117,6 +121,11 @@ public class JobService : IJobService
 
     public async Task<bool> UpdateExpiresAtasync(Guid companyProfileId, Guid jobId, DateTime expiresAt)
     {
+        if (expiresAt.Date < DateTime.UtcNow.Date)
+        {
+            throw new ArgumentException("The expiration date cannot be in the past.");
+        }
+
         var job = await _context.JobListings
         .FirstOrDefaultAsync(j=>j.CompanyProfileId==companyProfileId && j.Id==jobId);
 
@@ -174,4 +183,20 @@ public class JobService : IJobService
         SalaryMin= job.SalaryMin,
         SalaryMax = job.SalaryMax
     };
+
+    private static void ValidateJobRequest(
+        DateTime expiresAt,
+        decimal? salaryMin,
+        decimal? salaryMax)
+    {
+        if (expiresAt.Date < DateTime.UtcNow.Date)
+        {
+            throw new ArgumentException("The expiration date cannot be in the past.");
+        }
+
+        if (salaryMin.HasValue && salaryMax.HasValue && salaryMin > salaryMax)
+        {
+            throw new ArgumentException("Minimum salary cannot exceed maximum salary.");
+        }
+    }
 }

@@ -47,6 +47,8 @@ export default function AccountForm({
 
             <input
               required
+              minLength={2}
+              maxLength={80}
               autoComplete="given-name"
               value={form.firstName}
               onChange={(event) => {
@@ -61,6 +63,8 @@ export default function AccountForm({
 
             <input
               required
+              minLength={2}
+              maxLength={80}
               autoComplete="family-name"
               value={form.lastName}
               onChange={(event) => {
@@ -77,6 +81,7 @@ export default function AccountForm({
           <input
             type="email"
             required
+            maxLength={254}
             autoComplete="email"
             value={form.email}
             onChange={(event) => {

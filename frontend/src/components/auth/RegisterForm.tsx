@@ -302,6 +302,8 @@ export default function RegisterForm() {
                   })
                 }
                 required={namesRequired}
+                minLength={2}
+                maxLength={80}
               />
             </div>
 
@@ -322,6 +324,8 @@ export default function RegisterForm() {
                   })
                 }
                 required={namesRequired}
+                minLength={2}
+                maxLength={80}
               />
             </div>
 
@@ -342,6 +346,7 @@ export default function RegisterForm() {
                   })
                 }
                 required
+                maxLength={254}
               />
             </div>
 
@@ -362,6 +367,7 @@ export default function RegisterForm() {
                   })
                 }
                 minLength={6}
+                maxLength={128}
                 required
               />
             </div>

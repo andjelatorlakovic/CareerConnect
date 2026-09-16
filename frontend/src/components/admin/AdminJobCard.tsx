@@ -44,10 +44,10 @@ export default function AdminJobCard({
           }
         >
           {isClosed
-            ? 'Zatvoren'
+            ? 'Closed'
             : isExpired
-              ? 'Istekao'
-              : 'Aktivan'}
+              ? 'Expired'
+              : 'Active'}
         </span>
       </div>
 

@@ -70,9 +70,16 @@ public class JobListingController : ControllerBase
     [Authorize(Roles ="Company")]
     public async Task<IActionResult> Create(CreateJobListingRequest request)
     {
-        var profile = await GetCompanyProfileAsync();
-        var job = await _jobService.CreateAsync(profile.Id,request);
-        return CreatedAtAction(nameof(GetById), new { jobId = job.Id }, job);
+        try
+        {
+            var profile = await GetCompanyProfileAsync();
+            var job = await _jobService.CreateAsync(profile.Id,request);
+            return CreatedAtAction(nameof(GetById), new { jobId = job.Id }, job);
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new { message = exception.Message });
+        }
     }
     [HttpPut("{jobId}")]
     [Authorize(Roles ="Company")]
@@ -83,6 +90,10 @@ public class JobListingController : ControllerBase
             var profile = await GetCompanyProfileAsync();
             var job = await _jobService.UpdateAsync(profile.Id,jobId,request);
             return Ok(job);
+        }
+        catch (ArgumentException exception)
+        {
+            return BadRequest(new { message = exception.Message });
         }
         catch (InvalidOperationException)
         {

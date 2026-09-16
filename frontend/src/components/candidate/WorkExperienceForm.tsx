@@ -18,6 +18,8 @@ const initialForm = {
   endDate: '',
 };
 
+const today = new Date().toISOString().slice(0, 10);
+
 export default function WorkExperienceForm({
   loading,
   onSubmit,
@@ -68,6 +70,8 @@ export default function WorkExperienceForm({
                 setForm({ ...form, company: event.target.value });
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              minLength={2}
+              maxLength={150}
             />
           </label>
 
@@ -81,6 +85,8 @@ export default function WorkExperienceForm({
                 setForm({ ...form, position: event.target.value });
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              minLength={2}
+              maxLength={150}
             />
           </label>
 
@@ -91,7 +97,7 @@ export default function WorkExperienceForm({
               type="date"
               required
               value={form.startDate}
-              max={form.endDate || undefined}
+              max={form.endDate || today}
               onChange={(event) => {
                 setForm({ ...form, startDate: event.target.value });
               }}
@@ -106,6 +112,7 @@ export default function WorkExperienceForm({
               type="date"
               value={form.endDate}
               min={form.startDate || undefined}
+              max={today}
               onChange={(event) => {
                 setForm({ ...form, endDate: event.target.value });
               }}
@@ -127,6 +134,7 @@ export default function WorkExperienceForm({
               setForm({ ...form, description: event.target.value });
             }}
             className="min-h-32 w-full resize-y rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+            maxLength={2000}
           />
         </label>
 

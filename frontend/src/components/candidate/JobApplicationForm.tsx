@@ -58,6 +58,7 @@ export default function JobApplicationForm({
               setCoverLetter(event.target.value);
             }}
             className="min-h-36 w-full resize-y rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm leading-relaxed outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+            maxLength={3000}
           />
         </label>
 
@@ -84,6 +85,7 @@ export default function JobApplicationForm({
                     }));
                   }}
                   className="min-h-28 w-full resize-y rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+                  maxLength={3000}
                 />
               </label>
             ))}

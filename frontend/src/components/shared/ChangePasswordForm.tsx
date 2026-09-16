@@ -69,6 +69,8 @@ export default function ChangePasswordForm({
             <input
               type="password"
               required
+              minLength={6}
+              maxLength={128}
               autoComplete="current-password"
               placeholder="Unesite trenutnu lozinku"
               value={currentPassword}
@@ -85,6 +87,8 @@ export default function ChangePasswordForm({
             <input
               type="password"
               required
+              minLength={6}
+              maxLength={128}
               autoComplete="new-password"
               placeholder="Enter new password"
               value={newPassword}
@@ -101,6 +105,8 @@ export default function ChangePasswordForm({
             <input
               type="password"
               required
+              minLength={6}
+              maxLength={128}
               autoComplete="new-password"
               placeholder="Confirm new password"
               value={confirmation}

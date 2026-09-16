@@ -18,6 +18,8 @@ const initialForm: AddEducationRequest = {
   endDate: '',
 };
 
+const today = new Date().toISOString().slice(0, 10);
+
 export default function EducationForm({
   loading,
   onSubmit,
@@ -65,6 +67,8 @@ export default function EducationForm({
               setForm({ ...form, institution: event.target.value });
             }}
             className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+            minLength={2}
+            maxLength={150}
           />
         </label>
 
@@ -79,6 +83,8 @@ export default function EducationForm({
                 setForm({ ...form, degree: event.target.value });
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              minLength={2}
+              maxLength={150}
             />
           </label>
 
@@ -92,6 +98,8 @@ export default function EducationForm({
                 setForm({ ...form, fieldOfStudy: event.target.value });
               }}
               className="w-full rounded-lg border border-solid border-[#d9d9e2] bg-white px-3 py-3 text-sm outline-none focus:border-[#ef476f] focus:ring-2 focus:ring-[#ef476f]/15"
+              minLength={2}
+              maxLength={150}
             />
           </label>
 
@@ -102,7 +110,7 @@ export default function EducationForm({
               type="date"
               required
               value={form.startDate}
-              max={form.endDate || undefined}
+              max={form.endDate || today}
               onChange={(event) => {
                 setForm({ ...form, startDate: event.target.value });
               }}
@@ -118,6 +126,7 @@ export default function EducationForm({
               required
               value={form.endDate}
               min={form.startDate || undefined}
+              max={today}
               onChange={(event) => {
                 setForm({ ...form, endDate: event.target.value });
               }}

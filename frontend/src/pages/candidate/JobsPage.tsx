@@ -209,13 +209,19 @@ export default function JobsPage() {
 
         {!loading && !error && (
           <>
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="m-0 text-lg font-bold text-[#333344]">
-                Jobs
-              </h2>
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-solid border-[#e6e2eb] bg-white p-5">
+              <div>
+                <h2 className="m-0 text-xl font-bold text-[#333344]">
+                  Published Jobs
+                </h2>
 
-              <span className="text-xs text-[#858592]">
-                Found: {jobs.length}
+                <span className="mt-1 block text-sm text-[#777686]">
+                  Browse available job opportunities
+                </span>
+              </div>
+
+              <span className="rounded-full bg-[#fce8ee] px-3 py-1 text-sm font-bold text-[#c8385c]">
+                {jobs.length} {jobs.length === 1 ? 'job' : 'jobs'}
               </span>
             </div>
 

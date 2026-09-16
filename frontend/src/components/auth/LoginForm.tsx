@@ -328,6 +328,7 @@ export default function LoginForm() {
                   setEmail(event.target.value)
                 }
                 required
+                maxLength={254}
               />
             </div>
 
@@ -345,6 +346,8 @@ export default function LoginForm() {
                   setPassword(event.target.value)
                 }
                 required
+                minLength={6}
+                maxLength={128}
               />
             </div>
 

@@ -18,6 +18,8 @@ public class CandidateService : ICandidateService
     }
     public async Task<EducationDto> AddEducationAsync(Guid userId, AddEducationRequest request)
     {
+        ValidateDates(request.StartDate, request.EndDate);
+
         var profile = await _context.CandidateProfiles.FirstOrDefaultAsync(p => p.UserId == userId)?? throw new InvalidOperationException("Candidate profile not found.");
         var education = new Education
         {
@@ -26,8 +28,14 @@ public class CandidateService : ICandidateService
             Institution = request.Institution,
             Degree = request.Degree,
             FieldOfStudy = request.FieldOfStudy,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate
+            StartDate = DateTime.SpecifyKind(
+                request.StartDate,
+                DateTimeKind.Utc
+            ),
+            EndDate = DateTime.SpecifyKind(
+                request.EndDate,
+                DateTimeKind.Utc
+            )
         };
         _context.Educations.Add(education);
         await _context.SaveChangesAsync();
@@ -44,6 +52,8 @@ public class CandidateService : ICandidateService
 
     public  async Task<WorkExperienceDto> AddWorkExperienceAsync(Guid userId, AddWorkExperienceRequest request)
     {
+        ValidateDates(request.StartDate, request.EndDate);
+
         var profile = await _context.CandidateProfiles.FirstOrDefaultAsync(p => p.UserId == userId) ?? throw new InvalidOperationException("Candidate profile not found.");
         var experience = new WorkExperience
         {
@@ -52,8 +62,16 @@ public class CandidateService : ICandidateService
             CompanyName = request.Company,
             Position = request.Position,
             Description = request.Description,
-            StartDate = request.StartDate,
-            EndDate = request.EndDate
+            StartDate = DateTime.SpecifyKind(
+                request.StartDate,
+                DateTimeKind.Utc
+            ),
+            EndDate = request.EndDate.HasValue
+                ? DateTime.SpecifyKind(
+                    request.EndDate.Value,
+                    DateTimeKind.Utc
+                )
+                : null
         };
         _context.WorkExperiences.Add(experience);
         await _context.SaveChangesAsync();
@@ -195,4 +213,32 @@ public class CandidateService : ICandidateService
             EndDate = w.EndDate
         }).ToList()
     };
+
+    private static void ValidateDates(
+        DateTime startDate,
+        DateTime? endDate)
+    {
+        var today = DateTime.UtcNow.Date;
+
+        if (startDate.Date > today)
+        {
+            throw new InvalidOperationException(
+                "Start date cannot be in the future."
+            );
+        }
+
+        if (endDate.HasValue && endDate.Value.Date > today)
+        {
+            throw new InvalidOperationException(
+                "End date cannot be in the future."
+            );
+        }
+
+        if (endDate.HasValue && startDate.Date > endDate.Value.Date)
+        {
+            throw new InvalidOperationException(
+                "Start date cannot be later than end date."
+            );
+        }
+    }
 }

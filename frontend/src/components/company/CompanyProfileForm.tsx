@@ -72,6 +72,8 @@ export default function CompanyProfileForm({
                     placeholder="Enter company name"
                     className={inputClassName}
                     required
+                    minLength={2}
+                    maxLength={120}
                   />
                 </label>
 
@@ -83,6 +85,8 @@ export default function CompanyProfileForm({
                     placeholder="E.g. IT, finance..."
                     className={inputClassName}
                     required
+                    minLength={2}
+                    maxLength={100}
                   />
                 </label>
 
@@ -94,6 +98,8 @@ export default function CompanyProfileForm({
                     placeholder="E.g. Novi Sad"
                     className={inputClassName}
                     required
+                    minLength={2}
+                    maxLength={120}
                   />
                 </label>
 
@@ -106,6 +112,8 @@ export default function CompanyProfileForm({
                     rows={6}
                     className={`${inputClassName} min-h-36 resize-y`}
                     required
+                    minLength={20}
+                    maxLength={2000}
                   />
                 </label>
               </div>
@@ -129,6 +137,7 @@ export default function CompanyProfileForm({
                     onChange={(event) => setField('website', event.target.value)}
                     placeholder="https://example.com"
                     className={inputClassName}
+                    maxLength={300}
                   />
                 </label>
 
@@ -141,17 +150,22 @@ export default function CompanyProfileForm({
                     placeholder="kontakt@kompanija.com"
                     className={inputClassName}
                     required
+                    maxLength={254}
                   />
                 </label>
 
                 <label className="grid gap-2 text-sm font-semibold text-[#333344]">
                   Contact phone
                   <input
+                    type="tel"
                     value={form.contactPhone}
                     onChange={(event) => setField('contactPhone', event.target.value)}
                     placeholder="+381 60 123 4567"
                     className={inputClassName}
                     required
+                    minLength={6}
+                    maxLength={32}
+                    pattern="[0-9+() -]+"
                   />
                 </label>
               </div>

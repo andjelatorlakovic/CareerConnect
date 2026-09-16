@@ -11,10 +11,8 @@ export default function JobCard({ job }: JobCardProps) {
     <article className="flex overflow-hidden rounded-xl border border-solid border-[#e2dfeb] bg-white transition hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transform-none">
       <div
         aria-hidden="true"
-        className="flex w-12 shrink-0 justify-center bg-[#24233d] pt-6 text-2xl text-[#f4d8e0] sm:w-16"
-      >
-        ▤
-      </div>
+        className="w-12 shrink-0 bg-[#24233d] sm:w-16"
+      />
 
       <div className="grid min-w-0 flex-1 gap-4 p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">

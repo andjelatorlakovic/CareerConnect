@@ -41,6 +41,8 @@ export default function JobForm({
   onBack,
   onSubmit,
 }: JobFormProps) {
+  const today = new Date().toISOString().slice(0, 10);
+
   const [form, setForm] = useState<JobFormData>({
     title: initial.title ?? '',
     description: initial.description ?? '',
@@ -67,6 +69,7 @@ export default function JobForm({
     salaryMax:
       initial.salaryMax ?? '',
   });
+  const [validationError, setValidationError] = useState('');
 
   const toggleSkill = (skill: SkillValue) => {
     setForm((previous) => ({
@@ -85,6 +88,30 @@ export default function JobForm({
   ) => {
     event.preventDefault();
 
+    const salaryMin = form.salaryMin === '' ? null : Number(form.salaryMin);
+    const salaryMax = form.salaryMax === '' ? null : Number(form.salaryMax);
+
+    if (
+      form.title.trim().length < 3 ||
+      form.location.trim().length < 2 ||
+      form.description.trim().length < 20 ||
+      form.skills.length === 0
+    ) {
+      setValidationError('Complete all required fields and select at least one skill.');
+      return;
+    }
+
+    if (form.expiresAt < today) {
+      setValidationError('The expiration date cannot be in the past.');
+      return;
+    }
+
+    if (salaryMin !== null && salaryMax !== null && salaryMin > salaryMax) {
+      setValidationError('Minimum salary cannot be greater than maximum salary.');
+      return;
+    }
+
+    setValidationError('');
     onSubmit(form);
   };
 
@@ -146,6 +173,8 @@ export default function JobForm({
                   }
                   className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
+                  minLength={3}
+                  maxLength={150}
                 />
 
               </div>
@@ -169,6 +198,8 @@ export default function JobForm({
                   }
                   className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
+                  minLength={2}
+                  maxLength={120}
                 />
 
               </div>
@@ -312,6 +343,7 @@ export default function JobForm({
                   }
                   className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                   required
+                  min={today}
                 />
 
               </div>
@@ -331,7 +363,7 @@ export default function JobForm({
                 <input
                   id="salaryMin"
                   type="number"
-                  placeholder="Npr. 1000"
+                  placeholder="E.g. 1000"
                   value={form.salaryMin}
                   onChange={(event) =>
                     setForm({
@@ -341,6 +373,8 @@ export default function JobForm({
                     })
                   }
                   className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
+                  min="0"
+                  step="0.01"
                 />
 
               </div>
@@ -354,7 +388,7 @@ export default function JobForm({
                 <input
                   id="salaryMax"
                   type="number"
-                  placeholder="Npr. 2000"
+                  placeholder="E.g. 2000"
                   value={form.salaryMax}
                   onChange={(event) =>
                     setForm({
@@ -364,6 +398,8 @@ export default function JobForm({
                     })
                   }
                   className="h-12 w-full rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 text-sm text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
+                  min={form.salaryMin || '0'}
+                  step="0.01"
                 />
 
               </div>
@@ -392,6 +428,8 @@ export default function JobForm({
                 rows={6}
                 className="min-h-36 w-full resize-y rounded-xl border border-solid border-[#e2dfe9] bg-white px-4 py-3 text-sm leading-relaxed text-[#333344] outline-none transition placeholder:text-[#aaa8b4] hover:border-[#f3a0b5] focus:border-[#ef476f] focus:ring-4 focus:ring-[#ef476f]/10"
                 required
+                minLength={20}
+                maxLength={5000}
               />
 
             </div>
@@ -436,6 +474,12 @@ export default function JobForm({
               </div>
 
             </fieldset>
+
+            {validationError && (
+              <p className="m-0 rounded-xl border border-solid border-[#f2c5ce] bg-[#fff2f4] px-4 py-3 text-sm font-medium text-[#a43651]">
+                {validationError}
+              </p>
+            )}
 
             {/* DUGME */}
 
