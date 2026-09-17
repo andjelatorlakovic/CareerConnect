@@ -3,13 +3,20 @@ using Domain.Dto.Quiz;
 using Domain.Models;
 using Domain.Models.Quiz;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
+using backend.Hubs;
 
 public class QuizService : IQuizService
 {
     private readonly AppDbContext _context;
-    public QuizService(AppDbContext context)
+    private readonly IHubContext<RealtimeHub> _hubContext;
+
+    public QuizService(
+        AppDbContext context,
+        IHubContext<RealtimeHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
     }
 
     public async  Task<JobListingQuestionDto> AddQuestionAsync(Guid companyProfileId, Guid jobId, AddQuestionRequest request)
@@ -29,6 +36,7 @@ public class QuizService : IQuizService
 
         _context.JobListingQuestions.Add(question);
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.All.SendAsync("JobQuestionsChanged", jobId);
 
         return new JobListingQuestionDto
         {
@@ -96,6 +104,7 @@ public class QuizService : IQuizService
 
         _context.JobListingQuestions.Remove(question);
         await _context.SaveChangesAsync();
+        await _hubContext.Clients.All.SendAsync("JobQuestionsChanged", jobId);
         return true;
     }
 

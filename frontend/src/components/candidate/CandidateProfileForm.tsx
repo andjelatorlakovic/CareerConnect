@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 import type { CandidateProfile } from '../../models/candidate/CandidateProfile';
 import type { UpdateCandidateProfileRequest } from '../../types/candidate/UpdateCandidateProfileRequest';
@@ -21,15 +21,33 @@ export default function CandidateProfileForm({
   loading,
   onSubmit,
 }: CandidateProfileFormProps) {
-  const [form, setForm] =
-    useState<UpdateCandidateProfileRequest>({
+  const profileToForm = (): UpdateCandidateProfileRequest =>
+    ({
       bio: initial.bio,
       location: initial.location,
       experienceLevel: initial.experienceLevel,
       skills: [...initial.skills],
       desiredJobCategories: [...initial.desiredJobCategories],
     });
+  const [form, setForm] = useState<UpdateCandidateProfileRequest>(profileToForm);
   const [validationError, setValidationError] = useState('');
+
+  useEffect(() => {
+    setForm(profileToForm());
+  }, [initial]);
+
+  const isDirty =
+    form.bio !== initial.bio ||
+    form.location !== initial.location ||
+    form.experienceLevel !== initial.experienceLevel ||
+    JSON.stringify(form.skills) !== JSON.stringify(initial.skills) ||
+    JSON.stringify(form.desiredJobCategories) !==
+      JSON.stringify(initial.desiredJobCategories);
+  const isInitialProfile =
+    !initial.bio.trim() ||
+    !initial.location.trim() ||
+    initial.skills.length === 0 ||
+    initial.desiredJobCategories.length === 0;
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
@@ -202,12 +220,14 @@ export default function CandidateProfileForm({
           </p>
         )}
 
-        <button
-          type="submit"
-          className="w-full cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {loading ? 'Saving...' : 'Save profile'}
-        </button>
+        {(isInitialProfile || isDirty) && (
+          <button
+            type="submit"
+            className="w-full cursor-pointer rounded-lg border-0 bg-[#ef476f] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? 'Saving...' : 'Save profile'}
+          </button>
+        )}
       </fieldset>
     </form>
   );

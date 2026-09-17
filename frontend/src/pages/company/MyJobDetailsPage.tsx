@@ -83,7 +83,7 @@ export default function MyJobDetailsPage() {
     salaryMax: number | null
   ) => {
     if (salaryMin === null && salaryMax === null) {
-      return 'Nije navedeno';
+      return 'Not specified';
     }
 
     if (salaryMin !== null && salaryMax !== null) {
@@ -159,7 +159,7 @@ export default function MyJobDetailsPage() {
 
           {/* HEADER */}
 
-          <div className="job-header !flex !flex-col !gap-5 !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!flex-row sm:!items-center sm:!justify-between sm:!p-8">
+          <div className="job-header !rounded-3xl !border-0 !bg-[#24233d] !p-6 sm:!p-8">
 
             <div className="job-header-main !flex !items-center !gap-4">
 
@@ -196,21 +196,6 @@ export default function MyJobDetailsPage() {
               </div>
 
             </div>
-
-            <div className="expiration-card !grid !gap-1 !rounded-2xl !bg-white/10 !px-5 !py-4 !text-white">
-
-              <span className="expiration-label !text-xs !font-bold !tracking-wide !text-[#d3d1e0]">
-                Application Deadline
-              </span>
-
-              <strong className="!text-lg !font-bold">
-                {job.expiresAt
-                  ? formatDate(job.expiresAt)
-                  : 'Not specified'}
-              </strong>
-
-            </div>
-
           </div>
 
           {/* MANAGEMENT */}

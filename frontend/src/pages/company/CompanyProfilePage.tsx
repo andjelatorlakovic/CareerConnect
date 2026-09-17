@@ -17,6 +17,15 @@ export default function CompanyProfilePage() {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
+    if (!success) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setSuccess(''), 3000);
+    return () => window.clearTimeout(timeoutId);
+  }, [success]);
+
+  useEffect(() => {
     async function loadProfile() {
       try {
         setProfile(await companyApi.getCompanyProfile());
@@ -57,7 +66,14 @@ export default function CompanyProfilePage() {
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {success && <p>{success}</p>}
+      {success && (
+        <div
+          role="status"
+          className="fixed right-5 top-5 z-50 rounded-xl border border-solid border-[#d5ebdd] bg-[#edf8f1] px-5 py-4 text-sm font-semibold text-[#287648] shadow-lg"
+        >
+          ✓ {success}
+        </div>
+      )}
 
       {profile && (
         <CompanyProfileForm

@@ -139,7 +139,7 @@ export default function JobApplicationsPage() {
       setOpenAnswersId(applicationId);
     } catch {
       setError(
-        'Odgovori kandidata nisu dostupni.'
+        'Answers could not be loaded.'
       );
     }
   };
@@ -162,8 +162,20 @@ export default function JobApplicationsPage() {
             }
           >
             <span>←</span>
-            Nazad
+            Back
           </button>
+
+          <header className="rounded-3xl bg-[#24233d] p-6 sm:p-8">
+            <div>
+              <h1 className="m-0 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Job Applications
+              </h1>
+
+              <p className="m-0 mt-2 text-sm leading-relaxed text-[#d3d1e0]">
+                Review applications submitted for this job posting.
+              </p>
+            </div>
+          </header>
 
           {/* ========================================
               LOADING
@@ -214,17 +226,12 @@ export default function JobApplicationsPage() {
           {!loading &&
             !error &&
             applications.length === 0 && (
-              <div className="empty-container !mx-auto !mt-10 !grid !max-w-xl !justify-items-center !gap-3 !rounded-2xl !border !border-dashed !border-[#d9d9e2] !bg-white !p-10 !text-center">
-
-                <div className="empty-icon">
-                  <span>♢</span>
-                </div>
-
-                <h2>
+              <div className="empty-container !mt-10 !grid !w-full !max-w-none !justify-items-center !gap-4 !rounded-2xl !border !border-dashed !border-[#d9d9e2] !bg-white !p-10 !text-center !shadow-sm">
+                <h2 className="!m-0 !text-2xl !font-bold !text-[#333344]">
                   No applications yet
                 </h2>
 
-                <p>
+                <p className="!m-0 !text-base !leading-relaxed !text-[#666576]">
                   No applications have been received for this job yet.                  
                 </p>
 
@@ -421,10 +428,11 @@ export default function JobApplicationsPage() {
 
                           <div className="application-actions !mt-5 !flex !flex-wrap !items-end !justify-between !gap-4">
 
-                            <div className="status-control">
+                            <div className="status-control !grid !gap-2 !rounded-xl !border !border-solid !border-[#e6e2eb] !bg-[#f8f8fc] !px-4 !py-3">
 
                               <label
                                 htmlFor={`status-${application.id}`}
+                                className="!text-xs !font-bold !uppercase !tracking-wide !text-[#777686]"
                               >
                                 Application Status
                               </label>
@@ -439,6 +447,7 @@ export default function JobApplicationsPage() {
                                       .value as ApplicationStatusValue
                                   )
                                 }
+                                className="!h-10 !min-w-40 !rounded-lg !border !border-solid !border-[#d9d5e2] !bg-white !px-3 !text-sm !font-semibold !text-[#333344] !outline-none hover:!border-[#ef476f] focus:!border-[#ef476f] focus:!ring-4 focus:!ring-[#ef476f]/10"
                               >
 
                                 {Object.values(

@@ -22,6 +22,15 @@ export default function CandidateProfilePage() {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
+    if (!success) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => setSuccess(''), 3000);
+    return () => window.clearTimeout(timeoutId);
+  }, [success]);
+
+  useEffect(() => {
     let active = true;
 
     async function loadProfile() {
@@ -227,9 +236,9 @@ export default function CandidateProfilePage() {
         {success && (
           <div
             role="status"
-            className="rounded-lg border border-solid border-[#d5ebdd] bg-[#edf8f1] p-4 text-sm text-[#287648]"
+            className="fixed right-5 top-5 z-50 rounded-xl border border-solid border-[#d5ebdd] bg-[#edf8f1] px-5 py-4 text-sm font-semibold text-[#287648] shadow-lg"
           >
-            {success}
+            ✓ {success}
           </div>
         )}
 

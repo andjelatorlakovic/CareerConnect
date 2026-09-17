@@ -118,7 +118,7 @@ export default function AdminUserCard({
           </svg>
 
           <span>
-            Registrovan{' '}
+            Registered{' '}
             <time
               dateTime={user.createdAt}
               className="font-medium text-[#625f73]"

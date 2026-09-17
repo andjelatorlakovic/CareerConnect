@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 import type { CompanyProfile } from '../../models/company/CompanyProfile';
 import type { UpdateCompanyProfileRequest } from '../../types/company/UpdateCompanyProfileRequest';
@@ -14,7 +14,7 @@ export default function CompanyProfileForm({
   loading,
   onSubmit,
 }: CompanyProfileFormProps) {
-  const [form, setForm] = useState<UpdateCompanyProfileRequest>({
+  const profileToForm = (): UpdateCompanyProfileRequest => ({
     name: initial.name,
     description: initial.description,
     location: initial.location,
@@ -23,6 +23,22 @@ export default function CompanyProfileForm({
     contactEmail: initial.contactEmail,
     contactPhone: initial.contactPhone,
   });
+  const [form, setForm] = useState<UpdateCompanyProfileRequest>(profileToForm);
+
+  useEffect(() => {
+    setForm(profileToForm());
+  }, [initial]);
+
+  const isDirty = Object.entries(form).some(([key, value]) =>
+    value !== initial[key as keyof UpdateCompanyProfileRequest]
+  );
+  const isInitialProfile =
+    !initial.name.trim() ||
+    !initial.description.trim() ||
+    !initial.location.trim() ||
+    !initial.industry.trim() ||
+    !initial.contactEmail.trim() ||
+    !initial.contactPhone.trim();
 
   const setField = (
     field: keyof UpdateCompanyProfileRequest,
@@ -171,12 +187,14 @@ export default function CompanyProfileForm({
               </div>
             </section>
 
-            <button
-              type="submit"
-              className="w-full cursor-pointer rounded-xl border-0 bg-[#ef476f] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {loading ? 'Saving...' : 'Save changes'}
-            </button>
+            {(isInitialProfile || isDirty) && (
+              <button
+                type="submit"
+                className="w-full cursor-pointer rounded-xl border-0 bg-[#ef476f] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#df3d65] disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? 'Saving...' : 'Save profile'}
+              </button>
+            )}
           </fieldset>
         </form>
       </div>

@@ -166,14 +166,14 @@ export default function AccountPage() {
                     <p className="m-0 mt-1 text-sm break-all text-[#777586]">{account.email}</p>
                   </div>
                   <span className="rounded-full border border-solid border-[#f4ccd7] bg-[#ffe8ef] px-4 py-2 text-xs font-semibold text-[#a83053]">
-                    {account.role === Role.Admin ? 'Administrator' : account.role === Role.Company ? 'Kompanija' : 'Kandidat'}
+                    {account.role === Role.Admin ? 'Administrator' : account.role === Role.Company ? 'Company' : 'Candidate'}
                   </span>
                 </div>
                 <dl className="m-0 grid gap-6 p-6 sm:grid-cols-2">
-                  <div><dt className="text-xs font-semibold text-[#777586]">Ime</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.firstName || '—'}</dd></div>
-                  <div><dt className="text-xs font-semibold text-[#777586]">Prezime</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.lastName || '—'}</dd></div>
-                  <div><dt className="text-xs font-semibold text-[#777586]">Email adresa</dt><dd className="m-0 mt-2 text-base font-semibold break-all text-[#24233d]">{account.email}</dd></div>
-                  <div><dt className="text-xs font-semibold text-[#777586]">Datum registracije</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{new Date(account.createdAt).toLocaleDateString('sr-Latn-RS')}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Name</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.firstName || '—'}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Last Name</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{account.lastName || '—'}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Email Address</dt><dd className="m-0 mt-2 text-base font-semibold break-all text-[#24233d]">{account.email}</dd></div>
+                  <div><dt className="text-xs font-semibold text-[#777586]">Registration Date</dt><dd className="m-0 mt-2 text-base font-semibold text-[#24233d]">{new Date(account.createdAt).toLocaleDateString('sr-Latn-RS')}</dd></div>
                 </dl>
               </section>
 

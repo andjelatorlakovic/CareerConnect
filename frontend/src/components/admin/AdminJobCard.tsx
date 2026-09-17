@@ -114,7 +114,7 @@ export default function AdminJobCard({
                 ? `Od ${job.salaryMin.toLocaleString('sr-Latn-RS')}`
                 : job.salaryMax !== null
                   ? `Do ${job.salaryMax.toLocaleString('sr-Latn-RS')}`
-                  : ' Nije navedeno'}
+                  : ' Not specified'}
           </strong>
         </div>
       </div>
