@@ -11,6 +11,7 @@ import CandidateLayout from '../../components/candidate/CandidateLayout';
 import CandidateProfileForm from '../../components/candidate/CandidateProfileForm';
 import EducationForm from '../../components/candidate/EducationForm';
 import WorkExperienceForm from '../../components/candidate/WorkExperienceForm';
+import { getApiErrorMessage } from '../../utils/getApiErrorMessage';
 
 export default function CandidateProfilePage() {
   const [profile, setProfile] =
@@ -18,7 +19,7 @@ export default function CandidateProfilePage() {
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState('');
+  const [, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
@@ -71,8 +72,8 @@ export default function CandidateProfilePage() {
 
       setProfile(updated);
       setSuccess('Profile saved successfully.');
-    } catch {
-      setError('Profile could not be saved.');
+    } catch (error) {
+      setError(getApiErrorMessage(error, 'Profile could not be saved.'));
     } finally {
       setSaving(false);
     }
@@ -99,8 +100,8 @@ export default function CandidateProfilePage() {
 
       setSuccess('Education added successfully.');
       return true;
-    } catch {
-      setError('Education could not be added.');
+    } catch (error) {
+      setError(getApiErrorMessage(error, 'Education could not be added.'));
       return false;
     } finally {
       setSaving(false);
@@ -132,8 +133,8 @@ export default function CandidateProfilePage() {
       );
 
       setSuccess('Education removed successfully.');
-    } catch {
-      setError('Education could not be removed.');
+    } catch (error) {
+      setError(getApiErrorMessage(error, 'Education could not be removed.'));
     } finally {
       setSaving(false);
     }
@@ -164,8 +165,11 @@ export default function CandidateProfilePage() {
 
       setSuccess('Work experience added successfully.');
       return true;
-    } catch {
-      setError('Work experience could not be added.');
+    } catch (error) {
+      setError(getApiErrorMessage(
+        error,
+        'Work experience could not be added.'
+      ));
       return false;
     } finally {
       setSaving(false);
@@ -198,8 +202,11 @@ export default function CandidateProfilePage() {
       );
 
       setSuccess('Work experience removed successfully.');
-    } catch {
-      setError('Work experience could not be removed.');
+    } catch (error) {
+      setError(getApiErrorMessage(
+        error,
+        'Work experience could not be removed.'
+      ));
     } finally {
       setSaving(false);
     }
@@ -222,15 +229,6 @@ export default function CandidateProfilePage() {
           <p className="m-0 py-10 text-center text-[#858592]">
             Loading profile...
           </p>
-        )}
-
-        {error && (
-          <div
-            role="alert"
-            className="rounded-lg border border-solid border-[#f2c5ce] bg-[#fff2f4] p-4 text-sm text-[#a43651]"
-          >
-            {error}
-          </div>
         )}
 
         {success && (
