@@ -45,6 +45,19 @@ public class JobApplicationService : IJobApplicationService
         {
             throw new InvalidOperationException("You already applied for this job.");
         }
+
+        var questions = await _quizService.GetQuestionsAsync(jobListingId);
+        var answeredQuestionIds = request.Answers
+            .Where(answer => !string.IsNullOrWhiteSpace(answer.Answer))
+            .Select(answer => answer.QuestionId)
+            .ToHashSet();
+
+        if (questions.Any(question => !answeredQuestionIds.Contains(question.Id)))
+        {
+            throw new InvalidOperationException(
+                "Please answer all company questions before submitting your application.");
+        }
+
         var application = new JobApplication
         {
             CandidateProfileId=candidateProfileId,

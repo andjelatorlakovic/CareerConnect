@@ -53,7 +53,7 @@ public class CompanyService: ICompanyService
         profile.Name = profileDto.Name;
         profile.Description = profileDto.Description;
         profile.Location = profileDto.Location;
-        profile.Website = profileDto.Website;
+        profile.Website = profileDto.Website?.Trim() ?? string.Empty;
         profile.Industry = profileDto.Industry;
         profile.ContactEmail=profileDto.ContactEmail;
         profile.ContactPhone=profileDto.ContactPhone;
