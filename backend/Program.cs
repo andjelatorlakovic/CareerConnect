@@ -113,3 +113,4 @@ app.MapControllers();
 app.MapHub<RealtimeHub>("/hubs/realtime");
 
 app.Run();
+public partial class Program { }
