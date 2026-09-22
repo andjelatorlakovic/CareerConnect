@@ -85,7 +85,9 @@ public class JobApplicationService : IJobApplicationService
             );
 
             await _hubContext.Clients.User(company.UserId.ToString())
-                .SendAsync("ApplicationCreated", applicationDto);
+                .SendAsync(
+                    "JobApplicationsChanged",
+                    application.JobListingId.ToString());
         }
 
         return applicationDto;

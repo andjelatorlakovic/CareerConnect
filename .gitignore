@@ -1,6 +1,6 @@
 # .NET build files
-backend/bin/
-backend/obj/
+[Bb]in/
+[Oo]bj/
 
 # React dependencies and build output
 frontend/node_modules/
