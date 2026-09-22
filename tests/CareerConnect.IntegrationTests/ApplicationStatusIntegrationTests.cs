@@ -65,6 +65,23 @@ public class ApplicationStatusIntegrationTests
         Assert.False(notification.IsRead);
     }
 
+    [Fact]
+    public async Task UpdateApplicationStatus_WithCandidateToken_ReturnsForbidden()
+    {
+        var company = await RegisterAndGetTokenAsync("Company");
+        var jobId = await CreateJobAsync(company.Token);
+        var candidate = await RegisterAndGetTokenAsync("Candidate");
+        var applicationId = await ApplyForJobAsync(jobId, candidate.Token);
+
+        var response = await SendAuthorizedRequestAsync(
+            HttpMethod.Patch,
+            $"/api/job-applications/{applicationId}/status",
+            candidate.Token,
+            new { status = "Accepted" });
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+
     private async Task<Guid> CreateJobAsync(string companyToken)
     {
         var title = $"Status test job {Guid.NewGuid():N}";

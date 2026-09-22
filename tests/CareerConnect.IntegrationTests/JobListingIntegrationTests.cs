@@ -119,6 +119,51 @@ public class JobListingIntegrationTests
         Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
     }
 
+    [Fact]
+    public async Task UpdateAnotherCompanyJob_ReturnsNotFound()
+    {
+        var owner = await RegisterCompanyAndGetTokenAsync();
+        var title = $"Owned job {Guid.NewGuid():N}";
+        var createResponse = await _client.SendAsync(CreateAuthorizedRequest(
+            HttpMethod.Post,
+            "/api/jobs",
+            owner.Token,
+            CreateJobBody(title)));
+
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+
+        using var scope = _factory.Services.CreateScope();
+        var dbContext = scope.ServiceProvider
+            .GetRequiredService<AppDbContext>();
+        var jobId = await dbContext.JobListings
+            .Where(job => job.Title == title)
+            .Select(job => job.Id)
+            .SingleAsync();
+
+        var otherCompany = await RegisterCompanyAndGetTokenAsync();
+        var updateResponse = await _client.SendAsync(CreateAuthorizedRequest(
+            HttpMethod.Put,
+            $"/api/jobs/{jobId}",
+            otherCompany.Token,
+            CreateJobBody("Attempted change")));
+
+        Assert.Equal(HttpStatusCode.NotFound, updateResponse.StatusCode);
+    }
+
+    private static object CreateJobBody(string title) => new
+    {
+        title,
+        description = "A valid description for an integration test job listing.",
+        location = "Novi Sad",
+        experienceLevel = "Junior",
+        jobCategory = "SoftwareDevelopment",
+        expiresAt = DateTime.UtcNow.AddDays(14),
+        skills = new[] { "CSharp" },
+        employmentType = "FullTime",
+        salaryMin = 1000,
+        salaryMax = 1500
+    };
+
     private static HttpRequestMessage CreateAuthorizedRequest(
         HttpMethod method,
         string url,

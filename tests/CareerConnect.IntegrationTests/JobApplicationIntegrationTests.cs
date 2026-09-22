@@ -83,6 +83,35 @@ public class JobApplicationIntegrationTests
             duplicateResponse.StatusCode);
     }
 
+    [Fact]
+    public async Task ApplyForExpiredJob_ReturnsBadRequest()
+    {
+        var jobId = await CreateJobAsync();
+        var candidate = await RegisterAndGetTokenAsync("Candidate");
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider
+                .GetRequiredService<AppDbContext>();
+            var job = await dbContext.JobListings.SingleAsync(
+                listing => listing.Id == jobId);
+            job.ExpiresAt = DateTime.UtcNow.AddDays(-1);
+            await dbContext.SaveChangesAsync();
+        }
+
+        var response = await SendAuthorizedRequestAsync(
+            HttpMethod.Post,
+            $"/api/job-applications/jobs/{jobId}",
+            candidate.Token,
+            new
+            {
+                coverLetter = "I would like to apply for this expired job.",
+                answers = Array.Empty<object>()
+            });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
     private async Task<Guid> CreateJobAsync()
     {
         var company = await RegisterAndGetTokenAsync("Company");
